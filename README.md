@@ -4,6 +4,7 @@
 If wget command is not found download wget using this link https://sourceforge.net/projects/gnuwin32/files/wget/
 
 Then use this command to install
+
      $ wget -q -O - --no-check-certificate https://github.com/nvie/gitflow/raw/develop/contrib/gitflow-installer.sh | bash
 
 # Intialize 
@@ -26,6 +27,7 @@ Notes:
 
 To use the defaults you can use the `-d` flag
 You can set a default version tag prefix if you prefer. eg: `v`
+
     $ git flow init [-d]
     Which branch should be used for bringing forth production releases?
     - develop
@@ -50,6 +52,7 @@ If you've previously installed create-react-app globally, it is recommended that
 To uninstall, run this command: npm uninstall -g create-react-app
 
 Run this command to create a React application named my-react-app:
+
      $ npx create-react-app my-react-app
 
 # Run React App
