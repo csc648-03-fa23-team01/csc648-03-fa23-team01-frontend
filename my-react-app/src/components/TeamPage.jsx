@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+
 
 const TeamPage1 = styled('div')({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -192,6 +194,7 @@ function TeamPage(props) {
         <Team1>{`Team 1`}</Team1>
       </Section>
       <Section1>
+        <Link to="/about-Mahdi Hassanpour">
         <ButtonContained1
           variant="contained"
           disabled={false}
@@ -199,15 +202,20 @@ function TeamPage(props) {
           color={'primary'}
         >
           {'Mahdi Hassanpour'}
-        </ButtonContained1>
+        </ButtonContained1> 
+        </Link>
+
+        <Link to="/about-David chen">
         <ButtonContained2
           variant="contained"
           disabled={false}
           size={'large'}
           color={'primary'}
         >
-          {'David chen'}
+          {'David Chen'}
         </ButtonContained2>
+        </Link>
+        <Link to="/about-John Kongtcheu">
         <ButtonContained3
           variant="contained"
           disabled={false}
@@ -216,6 +224,8 @@ function TeamPage(props) {
         >
           {'John Kongtcheu'}
         </ButtonContained3>
+        </Link>
+        <Link to="/about-Aria Samandi">
         <ButtonContained4
           variant="contained"
           disabled={false}
@@ -224,6 +234,8 @@ function TeamPage(props) {
         >
           {'Aria Samandi'}
         </ButtonContained4>
+        </Link>
+        <Link to="/about-Leo Powers">
         <ButtonContained5
           variant="contained"
           disabled={false}
@@ -232,6 +244,8 @@ function TeamPage(props) {
         >
           {'Leo Powers'}
         </ButtonContained5>
+        </Link>
+        <Link to="/about-Yuiel A Gebredngl">
         <ButtonContained6
           variant="contained"
           disabled={false}
@@ -240,6 +254,7 @@ function TeamPage(props) {
         >
           {'Yuiel A Gebredngl'}
         </ButtonContained6>
+        </Link>
       </Section1>
     </TeamPage1>
   );
