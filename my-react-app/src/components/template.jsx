@@ -1,6 +1,6 @@
 import React from 'react';
-
-
+import { Link } from 'react-router-dom';
+import {backButton} from '../constants/about_page_constants.jsx';
 
 import {
   styled
@@ -36,6 +36,15 @@ const Hellotemplate = styled("div")({
   position: `absolute`,
   left: `639px`,
   top: `212px`,
+});
+
+const BackButton = styled("img")({
+  height: `84px`,
+    left: `0`,
+    'object-fit': `cover`,
+    position: `fixed`,
+    top: `0`,
+    width: `86px`,
 });
 
 const Aboutme = styled("div")({
@@ -103,8 +112,12 @@ const Image1 = styled("img")({
 
 
 function Template(props) {
+  console.log(props.image);
   return (
     <Template1>
+      <Link to="/">
+        <BackButton src={backButton} alt = "Back Button"/>
+      </Link>
       <Hellotemplate>
         {'Hello, I am ' + props.names }
       </Hellotemplate>
