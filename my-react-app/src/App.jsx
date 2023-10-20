@@ -5,6 +5,7 @@ import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import questTheme from './QuestUiKitLightTheme';
 import TeamPage from './components/TeamPage';
 import Template from './components/template';
+import HomePage from './components/HomePage';
 import {names, email,summary, image, role} from './constants/about_page_constants';
 import {Provider} from "react-redux";
 import store from "./store/store.js";
@@ -15,6 +16,7 @@ function App() {
         <Provider store={store}>
           <ThemeProvider theme={questTheme}>
             <Routes>
+              <Route path="/home" element={<HomePage className = " Home " />} />
               <Route path="/" element={<TeamPage className = " Team " />} />
               <Route path="/about-Mahdi Hassanpour" element={<Template names = {names[4]} summary = {summary[4]} email = {email[4]} role = {role[4]} image={image[4]} />} />
               <Route path="/about-David Chen" element={<Template names = {names[1]} summary = {summary[1]} email = {email[1]} role = {role[1]} image={image[1]} />} />
