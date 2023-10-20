@@ -339,6 +339,29 @@ const StyledHomePage = styled.div`
     top: 131px;
     white-space: nowrap;
   }
+  .rectangle-5 {
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #000000;
+    border-radius: 10px;
+    height: 209px;
+    left: 200px;
+    position: absolute;
+    top: 300px;
+    width: 845px;
+    }
+    .home-page .text-wrapper-12 {
+      color: #000000;
+      font-family: "Inter-Regular", Helvetica;
+      font-size: 32px;
+      font-weight: 400;
+      left: 21px;
+      letter-spacing: 0;
+      line-height: normal;
+      position: absolute;
+      top: 0;
+      width: 850px;
+      }
 `;
 
 export const HomePage = () => {
@@ -366,18 +389,26 @@ export const HomePage = () => {
           <div className="rectangle-3" />
           {/* <img className="line" alt="Line" src="line-1.svg" /> */}
           {/* <img className="line-2" alt="Line" src="line-2.svg" /> */}
-          <div className="text-wrapper-9">best tutor</div>
+          <div className="text-wrapper-9">recently applied</div>
         </div>
         <div className="overlap-2">
           <div className="rectangle-4" />
           {/* <img className="line-3" alt="Line" src="line-3.svg" /> */}
           {/* <img className="line-4" alt="Line" src="line-4.svg" /> */}
-          <div className="text-wrapper-10">best tutor</div>
+          <div className="text-wrapper-10">recently applied</div>
         </div>
         <div className="overlap-3">
           {/* <img className="line-5" alt="Line" src="line-5.svg" /> */}
           {/* <img className="line-6" alt="Line" src="line-6.svg" /> */}
-          <div className="text-wrapper-11">best tutor</div>
+          <div className="text-wrapper-11">recently applied</div>
+        </div>
+        <div className="overlap-4">
+        <div className="rectangle-5" />
+          <p className="text-wrapper-12">
+          Welcome to our platform, where knowledge and opportunity converge. Explore a world of learning, connect with
+          top tutors, discover engaging courses, and search any department or subject effortlessly to unlock your full
+          potential.
+          </p>
         </div>
       </div>
     </StyledHomePage>
