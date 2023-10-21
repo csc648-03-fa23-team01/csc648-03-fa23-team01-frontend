@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import  Navbar  from "./NavBar.jsx";
+import Navbar from "./NavBar.jsx";
+import SearchBar from "./SearchBar.jsx";
+import TutorCard from "./TutorCards.jsx";
 import styled from "styled-components";
 import image1 from '../assets/images/Polygon1.svg';
 import image2 from '../assets/images/Rectangle46.svg';
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
+import {TutorProfile} from '../models/tutorModel.jsx';
+import TutorList from './TutorList.jsx';
 
-const StyledresultBar = styled.div`
+const StyledResultPage = styled.div`
 .result-page {
   background-color: #ffffff;
   display: flex;
@@ -478,64 +481,20 @@ const StyledresultBar = styled.div`
 
 export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   const [query, setQuery] = useState('');
-  const results = useSelector(state => state.results);
-  const dispatch = useDispatch();
-  const handleSearch = () => {
-    dispatch(searchAsync(query));
-  };
-  handleSearch();
   return (
-    <StyledresultBar>
-    <div className="result-page">
-      <div className="div">
+    console.log("tutors_data: ", tutors_data),
+      <StyledResultPage>
+        <div>
         <Navbar />
-        <div className="overlap">
-          <div className="rectangle" />
-          <div className="text-wrapper-6">Search</div>
-          <div className="rectangle-2" />
-          <div className="text-wrapper-7">Search</div>
+          <SearchBar isHomePage={false} />
         </div>
-        <div className="rectangle-3" />
-        <div className="rectangle-4" />
-        <div className="rectangle-5" />
-        <div className="rectangle-6" />
-        <div className="rectangle-7" />
-        <div className="overlap-group">
-          <div className="text-wrapper-8">Topic</div>
-        </div>
-        <div className="div-wrapper">
-          <div className="text-wrapper-8">Name</div>
-        </div>
-        <div className="rectangle-8" />
-        <div className="rectangle-9" />
-        <div className="rectangle-10" />
-        <div className="rectangle-11" />
-        <div className="rectangle-12" />
-        <div className="rectangle-13" />
-        <div className="rectangle-14" />
-        <div className="rectangle-15" />
-        <div className="rectangle-16" />
-        <div className="rectangle-17" />
-        <div className="rectangle-18" />
-        <div className="rectangle-19" />
-        <div className="overlap-2">
-        <div className="rectangle-20" />
-          <p className="search-by-class-e-g">Search&nbsp;&nbsp;by class (e.g. Math 400), Topic, tutor name</p>
-          <div className="rectangle-21" />
-          <div className="text-wrapper-9">Search</div>
-          <img className="img" alt="Rectangle" src={image2} />
-          <div className="text-wrapper-10">All</div>
-          <img className="polygon" alt="Polygon" src={image1} />
-        </div>
-        <p className="p">What Would You Like To Learn?</p>
-        <div className="overlap-3">
-          <div className="text-wrapper-11">Search Result</div>
-        </div>
-      </div>
-    </div>
-    </StyledresultBar>
+        <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
+
+          {/* ...rest of your components and elements... */}
+      </StyledResultPage>
   );
-};
+}
+
 const mapStateToProps = (state) => ({
   tutors_data: state.tutors.data,
   tutors_loading: state.tutors.loading,
@@ -545,4 +504,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   searchAsync
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(ResultPage);
