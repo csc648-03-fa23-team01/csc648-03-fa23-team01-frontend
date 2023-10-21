@@ -6,6 +6,7 @@ import questTheme from './QuestUiKitLightTheme';
 import TeamPage from './components/TeamPage';
 import Template from './components/template';
 import {names, email,summary, image, role} from './constants/about_page_constants';
+import ResultPage from './components/ResultPage';
 function App() {
   return (
     <HelmetProvider>
@@ -19,6 +20,7 @@ function App() {
             <Route path="/about-Aria Samandi" element={<Template names = {names[0]} summary = {summary[0]} email = {email[0]} role = {role[0]} image={image[0]} />} />
             <Route path="/about-Leo Powers" element={<Template names = {names[3]} summary = {summary[3]} email = {email[3]} role = {role[3]} image={image[3]} />} />
             <Route path="/about-Yuiel A Gebredngl" element={<Template names = {names[5]} summary = {summary[5]} email = {email[5]} role = {role[5]} image={image[5]} />} />
+            <Route path="/resultPage" element={<ResultPage className = "result"/>} />
           </Routes>
         </ThemeProvider>
       </StyledEngineProvider>
