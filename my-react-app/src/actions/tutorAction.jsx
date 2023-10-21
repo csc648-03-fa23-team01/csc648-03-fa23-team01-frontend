@@ -24,9 +24,17 @@ const searchFailure = (error) => ({
 export const searchAsync = (query) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   dispatch(searchRequest());
-
+  console.log("searchAsync");
   try {
-    const response = await fetch('http://127.0.0.1:8000');
+    const response = await fetch('http://127.0.0.1:8000/search',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: query
+      }),
+    });
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
