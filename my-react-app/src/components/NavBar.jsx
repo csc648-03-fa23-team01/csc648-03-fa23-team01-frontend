@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const StyledNavBar = styled.div`
   background-color: #ffffff;
@@ -56,13 +57,15 @@ const StyledNavBar = styled.div`
 `;
 
 export const NavBar = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledNavBar>
         <div className="navbar">
-          <button className="logo">Logo</button>
-          <button>About</button>
-          <button>Become a Tutor</button>
-          <button>Login</button>
+          <button onClick={() => navigate("/Home")}  className="logo">Logo</button>
+          <button >About</button>
+          <button >Become a Tutor</button>
+          <button >Login</button>
           <button>Sign up</button>
         </div>
     </StyledNavBar>

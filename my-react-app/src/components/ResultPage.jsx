@@ -475,7 +475,13 @@ const StyledResultPage = styled.div`
   top: 23px;
   white-space: nowrap;
 }
-
+.tutor-cards-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to next line */
+  justify-content: center; /* Horizontally centers items */
+  align-items: center; /* Vertically centers items */
+  gap: 20px; /* Space between items */
+}
 `;
 
 
@@ -488,9 +494,10 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
         <Navbar />
           <SearchBar isHomePage={false} />
         </div>
-        <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
+        <div className="tutor-cards-wrapper">
+          <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
+        </div>
 
-          {/* ...rest of your components and elements... */}
       </StyledResultPage>
   );
 }
