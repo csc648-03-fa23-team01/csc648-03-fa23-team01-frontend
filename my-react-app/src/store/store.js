@@ -7,4 +7,8 @@ const store = configureStore({
       tutors: tutorReducer,
     },
   });
-export default store;
+
+  export const RootState = store.getState;
+  export const AppDispatch = store.dispatch;
+  
+  export default store;

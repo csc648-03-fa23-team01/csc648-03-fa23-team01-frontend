@@ -5,7 +5,8 @@ import TutorCard from "./TutorCards.jsx";
 import styled from "styled-components";
 import image1 from '../assets/images/Polygon1.svg';
 import image2 from '../assets/images/Rectangle46.svg';
-const StyledresultBar = styled.div`
+
+const StyledResultPage = styled.div`
 .result-page {
   background-color: #ffffff;
   display: flex;
@@ -479,7 +480,7 @@ export const ResultPage = () => {
       <StyledResultPage>
         <div>
         <Navbar />
-          <SearchBar />
+          <SearchBar isHomePage={false} />
         </div>
         <TutorCard
                 registeredUserId="12345"

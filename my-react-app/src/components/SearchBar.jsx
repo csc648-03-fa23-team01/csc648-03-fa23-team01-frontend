@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+
 import styled from 'styled-components';
+import { searchAsync } from '../actions/tutorAction';
+
 
 const StyledSearchBar = styled.div`
   display: flex;
@@ -45,7 +50,21 @@ const StyledSearchBar = styled.div`
 
 
 
-const SearchBar = () => {
+
+const SearchBar = ({ isHomePage }) => {
+    const [searchText, setSearchText] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleSearch =  async () =>{
+        console.log(`Searching for: ${searchText}`);
+        dispatch(searchAsync(searchText));
+        console.log(`Searching complete`);
+        if(isHomePage){
+            navigate("/ResultPage");
+        }
+    };
+
     return (
         <StyledSearchBar className="search-bar">
             <select>
@@ -54,8 +73,12 @@ const SearchBar = () => {
                 <option value="science">Science</option>
                 {/* Add more options if needed */}
             </select>
-            <input type="text" id="queryString" placeholder="Search The Subject You Like" />
-            <button>Search</button>
+            <input 
+            type="text" 
+            value={searchText} 
+            onChange={e => setSearchText(e.target.value)} 
+            placeholder="Search The Subject You Like"/>
+            <button onClick={handleSearch}>Search</button>
         </StyledSearchBar>
     );
 }

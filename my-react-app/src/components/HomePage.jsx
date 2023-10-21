@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import NavBar from './NavBar';
+import SearchBar from './SearchBar';
 import image1 from '../assets/images/Polygon1.svg';
 import image2 from '../assets/images/Rectangle46.svg';
 import { connect } from 'react-redux';
@@ -26,7 +28,7 @@ const StyledHomePage = styled.div`
     border-color: #000000;
     height: 99px;
     left: 0;
-    position: absolute;
+    position: relative;
     top: 0;
     width: 1280px;
   }
@@ -39,7 +41,7 @@ const StyledHomePage = styled.div`
     left: 843px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 38px;
     white-space: nowrap;
   }
@@ -52,7 +54,7 @@ const StyledHomePage = styled.div`
     left: 1147px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 38px;
     white-space: nowrap;
   }
@@ -65,7 +67,7 @@ const StyledHomePage = styled.div`
     left: 744px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 38px;
     white-space: nowrap;
   }
@@ -78,7 +80,7 @@ const StyledHomePage = styled.div`
     left: 30px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 17px;
   }
 
@@ -90,7 +92,7 @@ const StyledHomePage = styled.div`
     left: 1034px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 38px;
     white-space: nowrap;
   }
@@ -98,7 +100,7 @@ const StyledHomePage = styled.div`
   & .overlap-group {
     height: 82px;
     left: 247px;
-    position: absolute;
+    position: relative;
     top: 176px;
     width: 704px;
   }
@@ -110,7 +112,7 @@ const StyledHomePage = styled.div`
     border-radius: 10px;
     height: 81px;
     left: 0;
-    position: absolute;
+    position: relative;
     top: 1px;
     width: 704px;
   }
@@ -123,7 +125,7 @@ const StyledHomePage = styled.div`
     left: 91px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 5px;
     white-space: nowrap;
   }
@@ -135,7 +137,7 @@ const StyledHomePage = styled.div`
     border-radius: 10px;
     height: 82px;
     left: 557px;
-    position: absolute;
+    position: relative;
     top: 0;
     width: 147px;
   }
@@ -148,7 +150,7 @@ const StyledHomePage = styled.div`
     left: 589px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 26px;
     white-space: nowrap;
   }
@@ -156,7 +158,7 @@ const StyledHomePage = styled.div`
   & .img {
     height: 23px;
     left: 41px;
-    position: absolute;
+    position: relative;
     top: 30px;
     width: 33px;
   }
@@ -169,7 +171,7 @@ const StyledHomePage = styled.div`
     left: 9px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 26px;
     white-space: nowrap;
   }
@@ -177,7 +179,7 @@ const StyledHomePage = styled.div`
   & .polygon {
     height: 83px;
     left: -71px;
-    position: absolute;
+    position: relative;
     top: 1px;
     width: 221px;
   }
@@ -190,7 +192,7 @@ const StyledHomePage = styled.div`
     left: 338px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     top: 123px;
     white-space: nowrap;
   }
@@ -198,7 +200,7 @@ const StyledHomePage = styled.div`
   & .overlap {
     height: 168px;
     left: 56px;
-    position: absolute;
+    position: relative;
     top: 622px;
     width: 353px;
   }
@@ -211,7 +213,7 @@ const StyledHomePage = styled.div`
     box-shadow: 0px 4px 4px #00000040;
     height: 167px;
     left: 0;
-    position: absolute;
+    position: relative;
     top: 0;
     width: 353px;
   }
@@ -220,7 +222,7 @@ const StyledHomePage = styled.div`
     height: 165px;
     left: 5px;
     object-fit: cover;
-    position: absolute;
+    position: relative;
     top: 3px;
     width: 344px;
   }
@@ -229,7 +231,7 @@ const StyledHomePage = styled.div`
     height: 159px;
     left: 3px;
     object-fit: cover;
-    position: absolute;
+    position: relative;
     top: 2px;
     width: 346px;
   }
@@ -242,7 +244,6 @@ const StyledHomePage = styled.div`
     left: 142px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
     top: 128px;
     white-space: nowrap;
   }
@@ -250,7 +251,6 @@ const StyledHomePage = styled.div`
   & .overlap-2 {
     height: 169px;
     left: 476px;
-    position: absolute;
     top: 620px;
     width: 353px;
   }
@@ -263,7 +263,6 @@ const StyledHomePage = styled.div`
     box-shadow: 0px 4px 4px #00000040;
     height: 167px;
     left: 0;
-    position: absolute;
     top: 2px;
     width: 353px;
   }
@@ -272,7 +271,6 @@ const StyledHomePage = styled.div`
     height: 164px;
     left: 0;
     object-fit: cover;
-    position: absolute;
     top: 0;
     width: 352px;
   }
@@ -281,7 +279,6 @@ const StyledHomePage = styled.div`
     height: 156px;
     left: 5px;
     object-fit: cover;
-    position: absolute;
     top: 7px;
     width: 347px;
   }
@@ -294,7 +291,6 @@ const StyledHomePage = styled.div`
     left: 140px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
     top: 138px;
     white-space: nowrap;
   }
@@ -307,7 +303,6 @@ const StyledHomePage = styled.div`
     box-shadow: 0px 4px 4px #00000040;
     height: 167px;
     left: 896px;
-    position: absolute;
     top: 622px;
     width: 353px;
   }
@@ -316,7 +311,6 @@ const StyledHomePage = styled.div`
     height: 160px;
     left: -1px;
     object-fit: cover;
-    position: absolute;
     top: 1px;
     width: 348px;
   }
@@ -325,7 +319,6 @@ const StyledHomePage = styled.div`
     height: 162px;
     left: 0;
     object-fit: cover;
-    position: absolute;
     top: 4px;
     width: 347px;
   }
@@ -338,7 +331,6 @@ const StyledHomePage = styled.div`
     left: 162px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
     top: 131px;
     white-space: nowrap;
   }
@@ -349,7 +341,6 @@ const StyledHomePage = styled.div`
     border-radius: 10px;
     height: 209px;
     left: 200px;
-    position: absolute;
     top: 300px;
     width: 845px;
     }
@@ -361,7 +352,6 @@ const StyledHomePage = styled.div`
       left: 21px;
       letter-spacing: 0;
       line-height: normal;
-      position: absolute;
       top: 0;
       width: 850px;
       }
@@ -371,59 +361,39 @@ export const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
   const [query, setQuery] = useState('');
   const results = useSelector(state => state.results);
   const dispatch = useDispatch();
-
-  const handleSearch = () => {
-    dispatch(searchAsync("Physics"));
+  
+  const handleSearch = (query) => {
+    dispatch(searchAsync(query));
   };
 
-  
 
   return (
     <StyledHomePage>
       <div className="div">
-        <div className="navbar">
-          <div className="text-wrapper">Become a Tutor</div>
-          <div className="text-wrapper-2">Sign up</div>
-          <div className="text-wrapper-3">About</div>
-          <div className="text-wrapper-4">Logo</div>
-          <div className="text-wrapper-5">Login</div>
+        <div>
+        <NavBar/>
+        <SearchBar isHomePage={true}/>
         </div>
-        <div className="overlap-group">
-          <div className="rectangle" />
-          <p className="p">Search The Subject You Like</p>
-          <div className="rectangle-2" />
-          <div className="text-wrapper-6">Search</div>
-          <img className="polygon" alt="Polygon" src={image2} />
-          <div className="text-wrapper-7">All</div>
-          <img className="img" alt="Rectangle" src={image1} />
-        </div>
+        
         <p className="text-wrapper-8">What Would You Like To Learn?</p>
-        <div className="overlap">
           <div className="rectangle-3" />
           {/* <img className="line" alt="Line" src="line-1.svg" /> */}
           {/* <img className="line-2" alt="Line" src="line-2.svg" /> */}
           <div className="text-wrapper-9">recently applied</div>
-        </div>
-        <div className="overlap-2">
           <div className="rectangle-4" />
           {/* <img className="line-3" alt="Line" src="line-3.svg" /> */}
           {/* <img className="line-4" alt="Line" src="line-4.svg" /> */}
           <div className="text-wrapper-10">recently applied</div>
-        </div>
-        <div className="overlap-3">
           {/* <img className="line-5" alt="Line" src="line-5.svg" /> */}
           {/* <img className="line-6" alt="Line" src="line-6.svg" /> */}
           <div className="text-wrapper-11">recently applied</div>
         </div>
-        <div className="overlap-4">
         <div className="rectangle-5" />
           <p className="text-wrapper-12">
           Welcome to our platform, where knowledge and opportunity converge. Explore a world of learning, connect with
           top tutors, discover engaging courses, and search any department or subject effortlessly to unlock your full
           potential.
           </p>
-        </div>
-      </div>
     </StyledHomePage>
   );
 };

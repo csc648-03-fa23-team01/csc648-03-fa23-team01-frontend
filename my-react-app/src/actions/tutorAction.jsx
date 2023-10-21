@@ -23,6 +23,7 @@ const searchFailure = (error) => ({
 // Async Action: Fetch search results from an API
 export const searchAsync = (query) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
+  console.log("searchAsync1");
   dispatch(searchRequest());
   console.log("searchAsync");
   try {
