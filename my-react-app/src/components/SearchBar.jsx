@@ -53,12 +53,14 @@ const StyledSearchBar = styled.div`
 
 const SearchBar = ({ isHomePage }) => {
     const [searchText, setSearchText] = useState('');
+    const [searchType, setSearchType] = useState('Subject');
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSearch =  async () =>{
         console.log(`Searching for: ${searchText}`);
-        dispatch(searchAsync(searchText));
+        dispatch(searchAsync(searchText,searchType ));
         console.log(`Searching complete`);
         if(isHomePage){
             navigate("/ResultPage");
@@ -67,11 +69,11 @@ const SearchBar = ({ isHomePage }) => {
 
     return (
         <StyledSearchBar className="search-bar">
-            <select>
-                <option value="all">All</option>
-                <option value="math">Math</option>
-                <option value="science">Science</option>
-                {/* Add more options if needed */}
+            <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
+                <option value="Subject">Subject</option>
+                <option value="Classes">Classes</option>
+                <option value="main_languages">Language</option>
+                <option value="asd">Return all</option>
             </select>
             <input 
             type="text" 
