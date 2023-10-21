@@ -5,6 +5,8 @@ import image3 from '../assets/images/John.png'
 import image4 from '../assets/images/Leo.png'
 import image5 from '../assets/images/Mahdi.png'
 import image6 from '../assets/images/Yuiel.png'
+import BackButton from '../assets/images/BackButton.png'
+
 export const names = ["Aria Samandi", "David Chen", "John Kongtcheu",
 "Leo Powers", "Mahdi Hassanpour","Yuiel A Gebredngl"]
 export const summary = ["I am a  Computer Science student in his senior year currently enrolled at San Francisco State University, with an aspiration to specialize in the realm of Front-End Development. My academic journey has been characterized by a relentless curiosity and a genuine passion for crafting seamless and visually captivating user experiences. I am excited to leverage my academic pursuits and practical skills to contribute meaningfully to the ever-evolving landscape of Front-End Development while continuously refining my expertise in this exciting field.",
@@ -16,4 +18,5 @@ export const summary = ["I am a  Computer Science student in his senior year cur
 export const email = ["asamandi@sfsu.edu","cchen45@sfsu.edu","jkongtcheu@sfsu.edu","lpowers2@sfsu.edu","mhassanpour@sfsu.edu","ygebredngl@sfsu.edu"]
 export const role = ["Front-end Lead","Back-end", "Team Lead", "Back-end Lead", "GitHub Master", "Front-end"]
 export const image = [image1,image2, image3,image4, image5, image6]
+export const backButton = BackButton
  
