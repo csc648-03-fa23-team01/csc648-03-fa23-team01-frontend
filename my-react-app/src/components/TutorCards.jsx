@@ -2,33 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledTutorCard = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  width: 350px;
-  margin: 20px;
-  align-items: center; /* Vertically centers items */
+  border: 0.1vw solid #ccc;
+  border-radius: 0.8vw;
+  padding: 1.6vw;
+  width: 35vw;
+  margin: 2vw;
+  align-items: center;
 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1);
 
   img {
     width: 100%;
-    height: 200px;
+    height: 20vw;
     object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 16px;
+    border-radius: 0.4vw;
+    margin-bottom: 1.6vw;
   }
 
   h3 {
     margin: 0;
-    margin-bottom: 8px;
-    font-size: 20px;
+    margin-bottom: 0.8vw;
+    font-size: 2vw;
   }
 
   .attribute {
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 1.6vw;
+    margin-bottom: 0.8vw;
   }
+
 `;
 
 const TutorCard = ({
