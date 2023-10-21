@@ -21,13 +21,17 @@ const searchFailure = (error) => ({
 });
 
 // Async Action: Fetch search results from an API
-export const searchAsync = (query) => async (dispatch) => {
+export const searchAsync = (query, type) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   console.log("searchAsync1");
+  let typeValue = String(type);  // Convert to string just in case
+  const queryAddress = `http://127.0.0.1:8000/search?type=${encodeURIComponent(typeValue)}`;
+
   dispatch(searchRequest());
   console.log("searchAsync");
+
   try {
-    const response = await fetch('http://127.0.0.1:8000/search',{
+    const response = await fetch(queryAddress, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
