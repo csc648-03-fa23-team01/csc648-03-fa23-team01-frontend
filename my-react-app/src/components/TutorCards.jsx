@@ -7,6 +7,8 @@ const StyledTutorCard = styled.div`
   padding: 16px;
   width: 350px;
   margin: 20px;
+  align-items: center; /* Vertically centers items */
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   img {
@@ -51,6 +53,7 @@ const TutorCard = ({
             <div className="attribute"><strong>Description:</strong> {description || "N/A"}</div>
             <div className="attribute"><strong>Price:</strong> {price ? `$${price}/hr` : "N/A"}</div>
             <div className="attribute"><strong>Primary Languages:</strong> {primaryLanguages || "N/A"}</div>
+            <div className="attribute"><strong>CV:</strong> {cv ? <a href={cv} target="_blank" rel="noreferrer">View CV</a> : "N/A"}</div>
             <div className="attribute"><strong>Secondary Languages:</strong> {secondaryLanguages || "N/A"}</div>
             <div className="attribute"><strong>Expertise in Subject:</strong> {expertiseInSubject || "N/A"}</div>
         </StyledTutorCard>

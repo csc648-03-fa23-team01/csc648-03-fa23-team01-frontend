@@ -9,18 +9,20 @@ import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 
 const StyledHomePage = styled.div`
+background-color: #ffffff;
+display: flex;
+justify-content: center;
+align-items: center; /* Center children vertically */
+height: 100vh; /* Take up the full viewport height */
+
+& .div {
   background-color: #ffffff;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-
-  & .div {
-    background-color: #ffffff;
-    height: 832px;
-    position: relative;
-    width: 1280px;
-  }
+  flex-direction: column;
+  align-items: center; /* Center children horizontally */
+  height: 832px;
+  width: 1280px;
+}
 
   & .navbar {
     background-color: #ffffff;
@@ -184,19 +186,6 @@ const StyledHomePage = styled.div`
     width: 221px;
   }
 
-  & .text-wrapper-8 {
-    color: #000000;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 25px;
-    font-weight: 400;
-    left: 338px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: relative;
-    top: 123px;
-    white-space: nowrap;
-  }
-
   & .overlap {
     height: 168px;
     left: 56px;
@@ -334,27 +323,23 @@ const StyledHomePage = styled.div`
     top: 131px;
     white-space: nowrap;
   }
-  .rectangle-5 {
+  
+  & .rectangle-5 {
     background-color: #ffffff;
     border: 1px solid;
     border-color: #000000;
     border-radius: 10px;
-    height: 209px;
-    left: 200px;
-    top: 300px;
-    width: 845px;
-    }
-    .home-page .text-wrapper-12 {
-      color: #000000;
-      font-family: "Inter-Regular", Helvetica;
-      font-size: 32px;
-      font-weight: 400;
-      left: 21px;
-      letter-spacing: 0;
-      line-height: normal;
-      top: 0;
-      width: 850px;
       }
+
+  & .text-wrapper-12 {
+    color: #000000;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 32px;
+    font-weight: 400;
+    text-align: center; /* Center the text */
+    width: 850px;
+    margin-top: 20px; /* Add some spacing between the rectangle and the text */
+  }
 `;
 
 export const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
@@ -367,34 +352,23 @@ export const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
   };
 
 
-  return (
-    <StyledHomePage>
-      <div className="div">
-        <div>
-        <NavBar/>
-        <SearchBar isHomePage={true}/>
-        </div>
-        
-        <p className="text-wrapper-8">What Would You Like To Learn?</p>
-          <div className="rectangle-3" />
-          {/* <img className="line" alt="Line" src="line-1.svg" /> */}
-          {/* <img className="line-2" alt="Line" src="line-2.svg" /> */}
-          <div className="text-wrapper-9">recently applied</div>
-          <div className="rectangle-4" />
-          {/* <img className="line-3" alt="Line" src="line-3.svg" /> */}
-          {/* <img className="line-4" alt="Line" src="line-4.svg" /> */}
-          <div className="text-wrapper-10">recently applied</div>
-          {/* <img className="line-5" alt="Line" src="line-5.svg" /> */}
-          {/* <img className="line-6" alt="Line" src="line-6.svg" /> */}
-          <div className="text-wrapper-11">recently applied</div>
-        </div>
-        <div className="rectangle-5" />
+  
+    return (
+      <StyledHomePage>
+        <div className="div">
+          <NavBar />
+          <SearchBar isHomePage={true} />
+  
+          <p className="text-wrapper-8">What Would You Like To Learn?</p>
+            
+          <div className="rectangle-5" />
           <p className="text-wrapper-12">
-          Welcome to our platform, where knowledge and opportunity converge. Explore a world of learning, connect with
-          top tutors, discover engaging courses, and search any department or subject effortlessly to unlock your full
-          potential.
+            Welcome to our platform, where knowledge and opportunity converge. Explore a world of learning, connect with
+            top tutors, discover engaging courses, and search any department or subject effortlessly to unlock your full
+            potential.
           </p>
-    </StyledHomePage>
+        </div>
+      </StyledHomePage>
   );
 };
 
