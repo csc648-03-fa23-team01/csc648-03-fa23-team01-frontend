@@ -30,7 +30,7 @@ const StyledTutorCard = styled.div`
 `;
 
 const TutorCard = ({
-    registeredUserId, 
+    profilePicture, 
     ratings, 
     classes, 
     description, 
@@ -39,12 +39,14 @@ const TutorCard = ({
     primaryLanguages, 
     cv, 
     secondaryLanguages, 
-    expertiseInSubject
+    expertiseInSubject,
+    name
 }) => {
     return (
         <StyledTutorCard>
             {/* This is a placeholder image. You can replace it with a dynamic image linked to the registered user */}
-            <img src="path_to_default_image.jpg" alt={`Tutor ${registeredUserId}`} />
+            <img src={profilePicture} alt={`Tutor`} />
+            <h3>{name}</h3>
             <div className="attribute"><strong>Classes:</strong> {classes || "N/A"}</div>
             <div className="attribute"><strong>Description:</strong> {description || "N/A"}</div>
             <div className="attribute"><strong>Price:</strong> {price ? `$${price}/hr` : "N/A"}</div>

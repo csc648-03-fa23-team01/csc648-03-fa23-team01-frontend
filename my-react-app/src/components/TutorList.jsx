@@ -23,7 +23,8 @@ const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
         return (
           <TutorCard
             key={tutor.user_id}
-            registeredUserId={tutor.user_id}
+            name={tutor.name}
+            profilePicture={tutor.profilePicture}
             ratings={tutor.average_ratings}
             classes={tutor.classes}
             description={tutor.description}

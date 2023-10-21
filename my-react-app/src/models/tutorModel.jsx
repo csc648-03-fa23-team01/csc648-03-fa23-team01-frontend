@@ -9,7 +9,8 @@ export class TutorProfile {
     description: string;
     times_available: string;
     cv_link: string;
-
+    profilePicture: string;
+    name: string;
     constructor({
         classes,
         average_ratings,
@@ -20,7 +21,9 @@ export class TutorProfile {
         user_id,
         description,
         times_available,
-        cv_link
+        cv_link,
+        profilePicture,
+        name
     }: {
         classes: string,
         average_ratings: number,
@@ -31,7 +34,9 @@ export class TutorProfile {
         user_id: number,
         description: string,
         times_available: string,
-        cv_link: string
+        cv_link: string,
+        profilePicture: string,
+        name: string
     }) {
         this.classes = classes;
         this.average_ratings = average_ratings;
@@ -43,6 +48,8 @@ export class TutorProfile {
         this.description = description;
         this.times_available = times_available;
         this.cv_link = cv_link;
+        this.name = name;
+        this.profilePicture = profilePicture;
     }
 
     static fromJSON(json: any): TutorProfile {
@@ -56,22 +63,10 @@ export class TutorProfile {
             user_id: json['user_id'],
             description: json['description'],
             times_available: json['times_available'],
-            cv_link: json['cv_link']
+            cv_link: json['cv_link'],
+            name: json['user']['first_name'] + " " + json['user']['last_name'],
+            profilePicture: json['user']['profile_picture_link']
         });
     }
 
-    toJSON() {
-        return {
-            classes: this.classes,
-            average_ratings: this.average_ratings,
-            price: this.price,
-            main_languages: this.main_languages,
-            prefer_in_person: this.prefer_in_person,
-            other_languages: this.other_languages,
-            user_id: this.user_id,
-            description: this.description,
-            times_available: this.times_available,
-            cv_link: this.cv_link,
-        };
-    }
 }
