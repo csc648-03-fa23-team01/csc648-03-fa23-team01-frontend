@@ -427,7 +427,7 @@ const StyledresultBar = styled.div`
   height: 26px;
   left: 47px;
   position: absolute;
-  top: 42px;
+  top: 34px;
   width: 23px;
 }
 

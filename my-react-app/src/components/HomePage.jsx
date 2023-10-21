@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import image1 from '../assets/images/Polygon1.svg';
 import image2 from '../assets/images/Rectangle46.svg';
+import { connect } from 'react-redux';
+import { searchAsync } from '../actions/tutorAction';
 
 const StyledHomePage = styled.div`
   background-color: #ffffff;
@@ -364,7 +367,17 @@ const StyledHomePage = styled.div`
       }
 `;
 
-export const HomePage = () => {
+export const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
+  const [query, setQuery] = useState('');
+  const results = useSelector(state => state.results);
+  const dispatch = useDispatch();
+
+  const handleSearch = () => {
+    dispatch(searchAsync("Physics"));
+  };
+
+  
+
   return (
     <StyledHomePage>
       <div className="div">
@@ -414,4 +427,15 @@ export const HomePage = () => {
     </StyledHomePage>
   );
 };
-export default HomePage;
+
+const mapStateToProps = (state) => ({
+  tutors_data: state.tutors.data,
+  tutors_loading: state.tutors.loading,
+  tutors_error: state.tutors.error,
+});
+
+const mapDispatchToProps = {
+  searchAsync
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
