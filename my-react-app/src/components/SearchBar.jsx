@@ -72,7 +72,7 @@ const SearchBar = ({ isHomePage }) => {
             <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
                 <option value="Subject">Subject</option>
                 <option value="Classes">Classes</option>
-                <option value="main_languages">Language</option>
+                <option value="Language">Language</option>
                 <option value="asd">Return all</option>
             </select>
             <input 
