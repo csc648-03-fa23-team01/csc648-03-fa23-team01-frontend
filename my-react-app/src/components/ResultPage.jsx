@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import  Navbar  from "./NavBar.jsx";
 import styled from "styled-components";
 import image1 from '../assets/images/Polygon1.svg';
 import image2 from '../assets/images/Rectangle46.svg';
+import { connect } from 'react-redux';
+import { searchAsync } from '../actions/tutorAction';
+
 const StyledresultBar = styled.div`
 .result-page {
   background-color: #ffffff;
@@ -472,9 +476,15 @@ const StyledresultBar = styled.div`
 `;
 
 
-export const ResultPage = () => {
+export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
+  const [query, setQuery] = useState('');
+  const results = useSelector(state => state.results);
+  const dispatch = useDispatch();
+  const handleSearch = () => {
+    dispatch(searchAsync(query));
+  };
+  handleSearch();
   return (
-    
     <StyledresultBar>
     <div className="result-page">
       <div className="div">
@@ -509,7 +519,7 @@ export const ResultPage = () => {
         <div className="rectangle-18" />
         <div className="rectangle-19" />
         <div className="overlap-2">
-          <div className="rectangle-20" />
+        <div className="rectangle-20" />
           <p className="search-by-class-e-g">Search&nbsp;&nbsp;by class (e.g. Math 400), Topic, tutor name</p>
           <div className="rectangle-21" />
           <div className="text-wrapper-9">Search</div>
@@ -526,5 +536,13 @@ export const ResultPage = () => {
     </StyledresultBar>
   );
 };
+const mapStateToProps = (state) => ({
+  tutors_data: state.tutors.data,
+  tutors_loading: state.tutors.loading,
+  tutors_error: state.tutors.error,
+});
 
-export default ResultPage;
+const mapDispatchToProps = {
+  searchAsync
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ResultPage);
