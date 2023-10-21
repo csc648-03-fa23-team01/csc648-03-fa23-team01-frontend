@@ -33,7 +33,7 @@ const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
             primaryLanguages={tutor.main_languages}
             cv={tutor.cv_link}
             secondaryLanguages={tutor.other_languages}
-            expertiseInSubject={tutor.description}  // This seems redundant, adjust as needed
+            subjects={tutor.subjects}  // This seems redundant, adjust as needed
           />
         );
       })}

@@ -62,7 +62,7 @@ export const NavBar = () => {
   return (
     <StyledNavBar>
         <div className="navbar">
-          <button onClick={() => navigate("/Home")}  className="logo">Logo</button>
+          <button onClick={() => navigate("/")}  className="logo">Logo</button>
           <button >About</button>
           <button >Become a Tutor</button>
           <button >Login</button>

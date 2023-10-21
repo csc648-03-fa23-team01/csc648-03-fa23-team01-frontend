@@ -11,6 +11,7 @@ export class TutorProfile {
     cv_link: string;
     profilePicture: string;
     name: string;
+    subjects: string[];
     constructor({
         classes,
         average_ratings,
@@ -23,7 +24,8 @@ export class TutorProfile {
         times_available,
         cv_link,
         profilePicture,
-        name
+        name,
+        subjects
     }: {
         classes: string,
         average_ratings: number,
@@ -36,7 +38,8 @@ export class TutorProfile {
         times_available: string,
         cv_link: string,
         profilePicture: string,
-        name: string
+        name: string,
+        subjects: string[]
     }) {
         this.classes = classes;
         this.average_ratings = average_ratings;
@@ -50,6 +53,7 @@ export class TutorProfile {
         this.cv_link = cv_link;
         this.name = name;
         this.profilePicture = profilePicture;
+        this.subjects = subjects;
     }
 
     static fromJSON(json: any): TutorProfile {
@@ -65,7 +69,8 @@ export class TutorProfile {
             times_available: json['times_available'],
             cv_link: json['cv_link'],
             name: json['user']['first_name'] + " " + json['user']['last_name'],
-            profilePicture: json['user']['profile_picture_link']
+            profilePicture: json['user']['profile_picture_link'],
+            subjects: json['topics'].map(topic => topic.name)
         });
     }
 

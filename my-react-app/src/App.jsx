@@ -10,15 +10,20 @@ import {names, email,summary, image, role} from './constants/about_page_constant
 import ResultPage from './components/ResultPage';
 import {Provider} from "react-redux";
 import store from "./store/store.js";
+import { Helmet } from 'react-helmet';
+
 function App() {
   return (
     <HelmetProvider>
+      <Helmet>
+        <title>CSC 648 Fall 2023 Team 01</title>
+      </Helmet>
       <StyledEngineProvider injectFirst>
         <Provider store={store}>
           <ThemeProvider theme={questTheme}>
             <Routes>
-              <Route path="/home" element={<HomePage className = " Home " />} />
-              <Route path="/" element={<TeamPage className = " Team " />} />
+              <Route path="/" element={<HomePage className = " Home " />} />
+              <Route path="/teamPage" element={<TeamPage className = " Team " />} />
               <Route path="/resultPage" element={<ResultPage className = "result"/>} />
               <Route path="/about-Mahdi Hassanpour" element={<Template names = {names[4]} summary = {summary[4]} email = {email[4]} role = {role[4]} image={image[4]} />} />
               <Route path="/about-David Chen" element={<Template names = {names[1]} summary = {summary[1]} email = {email[1]} role = {role[1]} image={image[1]} />} />
