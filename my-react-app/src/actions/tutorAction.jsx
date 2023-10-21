@@ -24,7 +24,7 @@ export const searchAsync = (query, type) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   console.log("searchAsync1");
   let typeValue = String(type);  // Convert to string just in case
-  const queryAddress = `http://18.118.200.191/search?type=${encodeURIComponent(typeValue)}`;
+  const queryAddress = `https://sfsututor.net/search?type=${encodeURIComponent(typeValue)}`;
 
   dispatch(searchRequest());
   console.log("searchAsync");
