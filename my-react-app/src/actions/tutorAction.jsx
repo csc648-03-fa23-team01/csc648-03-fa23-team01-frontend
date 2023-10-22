@@ -22,12 +22,10 @@ const searchFailure = (error) => ({
 // Async Action: Fetch search results from an API
 export const searchAsync = (query, type) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
-  console.log("searchAsync1");
   let typeValue = String(type);  // Convert to string just in case
-  const queryAddress = `https://sfsututor.net/search?type=${encodeURIComponent(typeValue)}`;
+  const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/search?type=${encodeURIComponent(typeValue)}`;
 
   dispatch(searchRequest());
-  console.log("searchAsync");
 
   try {
     const response = await fetch(queryAddress, {
@@ -40,12 +38,11 @@ export const searchAsync = (query, type) => async (dispatch) => {
       }),
     });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
 
-        const data = await response.json();
-        console.log(data);
+    const data = await response.json();
 
     // Dispatch a success action with the fetched data
     dispatch(searchSuccess(data));
