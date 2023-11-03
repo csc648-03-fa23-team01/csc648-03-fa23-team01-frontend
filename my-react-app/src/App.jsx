@@ -12,6 +12,8 @@ import {Provider} from "react-redux";
 import store from "./store/store.js";
 import { Helmet } from 'react-helmet';
 
+import BecomeTutor from './components/BecomeTutor';
+
 function App() {
   return (
     <HelmetProvider>
@@ -25,6 +27,9 @@ function App() {
               <Route path="/" element={<HomePage className = " Home " />} />
               <Route path="/teamPage" element={<TeamPage className = " Team " />} />
               <Route path="/resultPage" element={<ResultPage className = "result"/>} />
+
+              <Route path="/BecomeTutor" element={<BecomeTutor className="become-tutor" />} />
+
               <Route path="/about-Mahdi Hassanpour" element={<Template names = {names[4]} summary = {summary[4]} email = {email[4]} role = {role[4]} image={image[4]} />} />
               <Route path="/about-David Chen" element={<Template names = {names[1]} summary = {summary[1]} email = {email[1]} role = {role[1]} image={image[1]} />} />
               <Route path="/about-John Kongtcheu" element={<Template names = {names[2]} summary = {summary[2]} email = {email[2]} role = {role[2]} image={image[2]} />} />
