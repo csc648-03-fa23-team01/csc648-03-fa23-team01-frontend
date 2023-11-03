@@ -21,6 +21,7 @@ const TextWrapper = styled.p`
   text-align: center;
   margin-top: 2rem;
   font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
 `;
 
 const TextWrapper1 = styled.div`
@@ -29,6 +30,7 @@ const TextWrapper1 = styled.div`
   width: 80%;
   line-height: 1.5;
   font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
 `;
 
 const TutorProfilesWrapper = styled.div`
