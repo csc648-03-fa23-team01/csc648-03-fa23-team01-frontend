@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sfsututor-dev-194050-authRole",
+      "UnauthRoleArn": "arn:aws:iam::404768686496:role/amplify-sfsututor-dev-194050-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::404768686496:role/amplify-sfsututor-dev-194050-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-sfsututor-dev-194050-deployment",
+      "UnauthRoleName": "amplify-sfsututor-dev-194050-unauthRole",
+      "StackName": "amplify-sfsututor-dev-194050",
+      "StackId": "arn:aws:cloudformation:us-east-2:404768686496:stack/amplify-sfsututor-dev-194050/4965bce0-7c56-11ee-bc13-02e38744158d",
+      "AmplifyAppId": "dgy64i1uqubj8"
+    },
+    "categories": {
+      "auth": {
+        "sfsututor4b1afa0e": {}
+      },
+      "storage": {
+        "sfsututor": {}
+      }
+    }
+  }
+}

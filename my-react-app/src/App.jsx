@@ -11,6 +11,12 @@ import ResultPage from './components/ResultPage';
 import {Provider} from "react-redux";
 import store from "./store/store.js";
 import { Helmet } from 'react-helmet';
+import TrashUI from './components/TrashUI';
+import { Amplify, Storage } from 'aws-amplify'; // Import Amplify and Storage
+import awsmobile from './amplify-src/aws-exports';
+
+Amplify.configure(awsmobile);
+
 
 function App() {
   return (
@@ -22,6 +28,7 @@ function App() {
         <Provider store={store}>
           <ThemeProvider theme={questTheme}>
             <Routes>
+              <Route path="/trash" element={<TrashUI className = " Trash " />} />
               <Route path="/" element={<HomePage className = " Home " />} />
               <Route path="/teamPage" element={<TeamPage className = " Team " />} />
               <Route path="/resultPage" element={<ResultPage className = "result"/>} />
