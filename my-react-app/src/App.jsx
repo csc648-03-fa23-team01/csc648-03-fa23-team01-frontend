@@ -14,11 +14,11 @@ import { Helmet } from 'react-helmet';
 import TrashUI from './components/TrashUI';
 import { Amplify, Storage } from 'aws-amplify'; // Import Amplify and Storage
 import awsmobile from './amplify-src/aws-exports';
+import TutorPage from './components/TutorPage';
+import SendMessagePage from './components/SendMessagePage';
 
 Amplify.configure(awsmobile);
 
-import TutorPage from './components/TutorPage';
-import SendMessagePage from './components/SendMessagePage';
 
 function App() {
   return (
