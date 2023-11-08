@@ -33,6 +33,7 @@ const StyledTutorCard = styled.div`
 `;
 
 const TutorCard = ({
+    tutorID,
     profilePicture, 
     ratings, 
     classes, 

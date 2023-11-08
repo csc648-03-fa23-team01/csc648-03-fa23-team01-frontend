@@ -23,7 +23,39 @@ const searchFailure = (error) => ({
 export const searchAsync = (query, type) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   let typeValue = String(type);  // Convert to string just in case
-  const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/search?type=${encodeURIComponent(typeValue)}`;
+  const queryAddress = `http://localhost:8000/search?type=${encodeURIComponent(typeValue)}`;
+
+  dispatch(searchRequest());
+
+  try {
+    const response = await fetch(queryAddress, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: query
+      }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    // Dispatch a success action with the fetched data
+    dispatch(searchSuccess(data));
+  } catch (error) {
+    // Dispatch a failure action if an error occurs during the API request
+    dispatch(searchFailure(error.message));
+  }
+};
+
+export const fetchTutor = (query, type) => async (dispatch) => {
+  // Dispatch a request action to indicate the start of the API call
+  let typeValue = String(type);  // Convert to string just in case
+  const queryAddress = `http://localhost:8000/tutor?id=${encodeURIComponent(typeValue)}`;
 
   dispatch(searchRequest());
 
