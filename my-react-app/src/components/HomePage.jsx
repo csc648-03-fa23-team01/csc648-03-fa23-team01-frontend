@@ -65,12 +65,11 @@ const TextWrapper1 = styled.div`
 `;
 const TutorProfilesWrapper = styled.div`
   display: flex;
-  justify-content: center;
   width:100%;
   flex-wrap: wrap;
-  margin-top: 20vw;
-  position: absolute;
-  margin-right: 10rem;
+  justify-content: center;
+  margin-right: 2rem;
+  margin-left: 2rem;
   top: 10rem;
 `;
 
@@ -88,7 +87,7 @@ const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
       <ContentContainer>
         <NavBar />
         <TextWrapper>"Welcome to the world of learning!"</TextWrapper>
-        <SearchBar isHomePage={true} onSearch={(query) => dispatch(searchAsync(query))} />
+        <SearchBar isHomePage={true} onSearch={(query) => dispatch(searchAsync(query,"Subject"))} />
         <TutorProfilesWrapper  >
           {tutorProfiles.map((profile, index) => (
             <TutorCard

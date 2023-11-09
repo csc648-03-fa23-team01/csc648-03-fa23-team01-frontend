@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
@@ -11,10 +11,18 @@ import ResultPage from './components/ResultPage';
 import {Provider} from "react-redux";
 import store from "./store/store.js";
 import { Helmet } from 'react-helmet';
-
+import WebFont from 'webfontloader';
 import BecomeTutor from './components/BecomeTutor';
 
 function App() {
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Droid Sans', 'Chilanka']
+      }
+    });
+   }, []);
+
   return (
     <HelmetProvider>
       <Helmet>
