@@ -9,8 +9,7 @@ const StyledSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   width: 66%;
-  margin: 20px auto;
-  
+  margin: 20px auto;  
   .search-bar {
     display: flex;
     align-items: center;

@@ -59,6 +59,8 @@ function BecomeTutor() {
     display: 'flex',       // Enable flexbox
     justifyContent: 'center', // Center children horizontally
     marginBottom: '10px',
+    display: 'flex',
+    'flex-direction' : 'column'
   };
 
    // Add a new state for the dropdown selection
@@ -122,7 +124,7 @@ function BecomeTutor() {
       {/* Classes taken at SFSU field */}
       <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
         <label htmlFor="classesInput">*Classes you took at SFSU:</label>
-        <textarea
+        <input
           id="classesInput"
           value={classes}
           onChange={(e) => setClasses(e.target.value)}
@@ -134,7 +136,7 @@ function BecomeTutor() {
       {/* Tell us about yourself */}
         <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
           <label htmlFor="classesInput">*Tell us about yourself:</label>
-          <textarea
+          <input
             id="classesInput"
             value={classes}
             onChange={(e) => setClasses(e.target.value)}

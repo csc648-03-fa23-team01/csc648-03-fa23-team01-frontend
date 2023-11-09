@@ -50,8 +50,9 @@ const TextWrapper = styled.p`
   color: #fff; /* This sets the text color to white */
   text-align: center;
   margin-top: 2rem;
-  font-size: 2.5em; /* Example size, adjust as needed */
-  font-weight: bold;
+  x
+  font-size: 40px;
+  font-weight: 400;
   font-family: 'Open Sans', sans-serif;
 `;
 
@@ -65,50 +66,21 @@ const TextWrapper1 = styled.div`
 `;
 const TutorProfilesWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  width:100%;
   flex-wrap: wrap;
-  margin: 2vw 0;
+  margin-top: 20vw;
+  position: absolute;
+  margin-right: 10rem;
+  top: 10rem;
 `;
-
-// Styled components for TutorCard
-const StyledTutorCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2vw;
-  width: 35vw;
-  margin: 2vw;
-  border: 0.1vw solid #ccc;
-  border-radius: 0.8vw;
-  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1);
-  background: #fff;
-
-  img {
-    width: 10vw;
-    height: 10vw;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1vw;
-  }
-
-  h3 {
-    margin: 0.5vw 0;
-    font-size: 2vw;
-  }
-
-  .attribute {
-    font-size: 1.2vw;
-    margin: 0.5vw 0;
-    text-align: center;
-    line-height: 1.4;
-  }
-`;
-
 
 
 // HomePage component definition
 const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
   const dispatch = useDispatch();
+
+  
   
   return (
     <StyledHomePage>
@@ -118,14 +90,16 @@ const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
         <NavBar />
         <TextWrapper>"Welcome to the world of learning!"</TextWrapper>
         <SearchBar isHomePage={true} onSearch={(query) => dispatch(searchAsync(query))} />
-        <TutorProfilesWrapper>
+        <TutorProfilesWrapper  >
           {tutorProfiles.map((profile, index) => (
             <TutorCard
               key={index}
               profilePicture={profile.image}
               name={profile.name}
-              description="Experienced Physics tutor dedicated to demystifying the laws of the universe, making science engaging and accessible for all"
+              description={profile.description}
               subjects={profile.topic} // Make sure this is the correct prop to pass based on your data structure
+              rating={profile.rating}
+              subject={profile.subject}
             />
           ))}
         </TutorProfilesWrapper>
