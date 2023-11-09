@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'; // Import from React Router if you're using it
 import { Rating } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 // import RatingStars from './RatingStars'; // Import your star rating component
@@ -64,13 +63,17 @@ const ViewProfileButton = styled.button`
     background-color: #F6A833; // Darker shade when hovered for visual feedback
   }
 `;
-const RatingContainer = styled.div`
-  position: absolute;
-  bottom: 3vw; // Adjust this value so it appears above the button
-  right: 1.5vw; // Align to the right, same as the button
-  display: flex;
-  align-items: center; // Center align the items for better aesthetics
-`;
+const messageStyle = {
+    position: 'absolute',
+    top: '0', // Adjust as needed for your layout
+    right: '0', // Adjust as needed for your layout
+    left: '0', // Adjust as needed for your layout
+    textAlign: 'center', // Centers the text in the div
+    backgroundColor: '#FFF', // Change this to match your design
+    padding: '0.5rem 1rem', // Add some padding around the text
+    // Add other styling as needed for your design
+  };
+  
 const profileGroupStyle1 = {
   marginBottom: "10px",
   display: 'flex',       // Enable flexbox
@@ -79,8 +82,27 @@ const profileGroupStyle1 = {
   'flex-direction' : 'row'
 };
 
+const DescriptionStyle = {
+    maxWidth: '500px', // Adjust the pixel width as needed
+    whiteSpace: 'pre-wrap', // This will ensure that text respects newline characters and wraps
+    wordWrap: 'break-word', // This ensures that long words do not overflow
+  };
+  
+  const priceStyle = {
+  position: 'absolute', // This positions the price absolutely within the StyledTutorCard
+  top: '4rem', // Adjust as needed for your layout
+  right: '6rem', // Adjust as needed for your layout
+  fontSize: '1rem', // Adjust as needed for your layout
+};
 
-
+const ratingContainerStyle = {
+    position: 'absolute', // This positions the rating container absolutely within the StyledTutorCard
+    top: '2rem', // Adjust as needed for your layout
+    right: '4.4rem', // Adjust as needed for your layout
+    display: 'flex', // This will align the Rating component and the text next to each other
+    alignItems: 'center', // This will vertically center align the items in the container
+  };
+  
 const imageStyle = {
   width: '3.375rem',
   height: '3.375rem',
@@ -94,6 +116,9 @@ const fullStyle = {
   display: 'flex',
   'flex-direction' : 'column'
 }
+
+const ratingValue = 4.5; // Your dynamic rating value
+const reviewCount = 100; // Your dynamic review count value
 
 // TutorCards_BecomeTutor component
 
@@ -112,34 +137,43 @@ const TutorCards_BecomeTutor = ({
       return text.length > length ? text.substring(0, length) + '...' : text;
     };
 
-  return (
-    // <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}> {/* Use Link for navigation */}
-      <StyledTutorCard>
-        <div style={fullStyle}>
-          <div style={profileGroupStyle1}>
-            <img style={imageStyle} src={profilePicture} alt={`Tutor ${name}`} />
-            <div>
-              <h3 style={tutorCardNameStyle}>{name}</h3>
-              <Rating
-                name="text-feedback"
-                value={ratings}
-                readOnly
-                precision={0.5}
-                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-              />
-            </div>
+    return (
+        // <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <StyledTutorCard>
+            <div style={fullStyle}>
+              <div style={profileGroupStyle1}>
+                <img style={imageStyle} src={profilePicture} alt={`Tutor ${name}`} />
+                <div>
+                  <h3 style={tutorCardNameStyle}>{name}</h3>
+                  {/* Absolute positioned rating div */}
+          <div style={ratingContainerStyle}>
+            <Rating
+              name="text-feedback"
+              value={ratings}
+              readOnly
+              precision={0.5}
+              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+            />
+            {/* Span for rating value and review count */}
+            <span><strong>{ratingValue}</strong> ({reviewCount})</span>
           </div>
-          <div className="attribute">{truncateText(description, 200)}</div> {/* Limit the bio to 80 characters */}
-          {/* Add a div or span to display the ratings here */}
-        <div style={{ alignSelf: 'flex-end', marginRight: '1.5vw', marginBottom: '1.5vw' }}>
-          {price && <span>price: ${price}/hr</span>}
-        </div>
-          <h4>{subjects[0]} tutor</h4>
-        </div>
-        <ViewProfileButton>View Tutor Profile</ViewProfileButton>
-      </StyledTutorCard>
-    // </Link>
-  );
+                </div>
+              </div>
+              <div style={DescriptionStyle}>{description}</div>
+              <h4>{subjects[0]} tutor</h4>
+              {/* Absolute positioned price div */}
+          {price && (
+            <div style={priceStyle}>
+              price: ${price}/hr
+            </div>
+          )}
+              <ViewProfileButton>View Tutor Profile</ViewProfileButton>
+            </div>
+          </StyledTutorCard>
+        // </Link>
+      );
+      
+      
 };
 
 export default TutorCards_BecomeTutor;
