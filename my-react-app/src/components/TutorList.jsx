@@ -17,6 +17,7 @@ const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
 
   return (
     <div>
+      <h4>{tutors_data.length} tutors fit your choices</h4>
       {tutors_data.map((tutorData) => {
         const tutor = TutorProfile.fromJSON(tutorData);
 

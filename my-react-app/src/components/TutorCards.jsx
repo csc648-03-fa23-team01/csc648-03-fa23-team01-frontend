@@ -100,7 +100,7 @@ const TutorCard = ({
           />
           </div>
         </div>
-        <div className="attribute">{truncateText(description, 200)}</div> {/* Limit the bio to 80 characters */}
+        <div className="attribute">{truncateText(description, 200)}</div>
         </div>
         <h4>{subject} tutor</h4>
         

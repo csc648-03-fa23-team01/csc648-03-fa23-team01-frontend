@@ -29,6 +29,10 @@ const StyledResultPage = styled.div`
     align-items: flex-start; /* Align items to the top */
     gap: 20px; // Keep some space between the cards
   }
+  .result-wrapper{
+    justify-content: start;
+
+  }
 
   .availability-checkbox {
     margin-right: 8px; /* Space between checkbox and label */
