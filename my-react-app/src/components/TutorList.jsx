@@ -1,5 +1,5 @@
 import React from 'react';
-import TutorCard from './TutorCards';  // Assuming TutorCard and the parent component are in the same directory
+import TutorCards_BecomeTutor from './TutorCards_BecomeTutor';  // Assuming TutorCard and the parent component are in the same directory
 import { TutorProfile } from '../models/tutorModel';  // Adjust the path as needed
 
 const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
@@ -21,7 +21,7 @@ const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
         const tutor = TutorProfile.fromJSON(tutorData);
 
         return (
-          <TutorCard
+          <TutorCards_BecomeTutor
             key={tutor.user_id}
             name={tutor.name}
             profilePicture={tutor.profilePicture}
@@ -34,6 +34,8 @@ const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
             cv={tutor.cv_link}
             secondaryLanguages={tutor.other_languages}
             subjects={tutor.subjects}  // This seems redundant, adjust as needed
+            rate={tutor.rate}
+
           />
         );
       })}

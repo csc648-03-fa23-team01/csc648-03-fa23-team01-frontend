@@ -110,7 +110,3 @@ const TutorCard = ({
 };
 
 export default TutorCard;
-       {/* 
-        {/* <RatingStars rating={5} /> Replace with your star rating component */}
-        // <div className="attribute">{truncateText(description, 80)}</div> {/* Limit the bio to 80 characters */}
-        // <h4>{subject} tutor</h4> */}
