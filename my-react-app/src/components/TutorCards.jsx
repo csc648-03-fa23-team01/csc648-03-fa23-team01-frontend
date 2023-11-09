@@ -38,6 +38,12 @@ const StyledTutorCard = styled.div`
     font-size: 1.5vw; // Adjust for smaller text size
   }
 
+  h4 {
+    color: #7133F6;
+    fontSize : 0.94rem;
+    font-weight: 400;
+  }
+
   .attribute {
     font-size: 1vw; // Adjust for smaller text size
     margin: 0.5vw 0;
@@ -102,7 +108,7 @@ const TutorCard = ({
         </div>
         <div className="attribute">{truncateText(description, 200)}</div>
         </div>
-        <h4>{subject} tutor</h4>
+        <h4 >{subject} tutor</h4>
         
       </StyledTutorCard>
     </Link>

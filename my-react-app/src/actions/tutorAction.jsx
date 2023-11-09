@@ -23,6 +23,7 @@ const searchFailure = (error) => ({
 export const searchAsync = (query, type) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   let typeValue = String(type);  // Convert to string just in case
+  console.log("typeValue: " + typeValue);
   const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/search?type=${encodeURIComponent(typeValue)}`;
 
   dispatch(searchRequest());

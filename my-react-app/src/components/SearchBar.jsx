@@ -48,7 +48,7 @@ const SearchBar = ({ isHomePage }) => {
 
     const handleSearch = async () => {
         console.log(`Searching for: ${searchText}`);
-        dispatch(searchAsync(searchText));
+        dispatch(searchAsync(searchText,"Subject"));
         console.log(`Searching complete`);
         if (isHomePage) {
             navigate("/ResultPage");
