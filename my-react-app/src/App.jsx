@@ -32,10 +32,9 @@ function App() {
             <Routes>
               <Route path="/trash" element={<TrashUI className = " Trash " />} />
               <Route path="/" element={<HomePage className = " Home " />} />
-              <Route path="/tutor/:tutorId" component={TutorPage} />
+              <Route path="/tutor/:user_id" element={<TutorPage />} />
               <Route path="/teamPage" element={<TeamPage className = " Team " />} />
               <Route path="/message" element={<SendMessagePage className = " Messenger " />} />
-
               <Route path="/resultPage" element={<ResultPage className = "result"/>} />
               <Route path="/about-Mahdi Hassanpour" element={<Template names = {names[4]} summary = {summary[4]} email = {email[4]} role = {role[4]} image={image[4]} />} />
               <Route path="/about-David Chen" element={<Template names = {names[1]} summary = {summary[1]} email = {email[1]} role = {role[1]} image={image[1]} />} />

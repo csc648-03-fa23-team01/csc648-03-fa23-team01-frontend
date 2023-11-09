@@ -48,23 +48,30 @@ const StyledSearchBar = styled.div`
   }
 `;
 
+function isAlphanumeric(str) {
+  return /^[a-zA-Z0-9 ]+$/.test(str);
+}
 
 
 
-const SearchBar = ({ isHomePage }) => {
+const SearchBar = ({ isResultPage = false}) => {
     const [searchText, setSearchText] = useState('');
     const [searchType, setSearchType] = useState('Subject');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const handleSearch =  async () =>{
         console.log(`Searching for: ${searchText}`);
-        dispatch(searchAsync(searchText,searchType ));
-        console.log(`Searching complete`);
-        if(isHomePage){
-            navigate("/ResultPage");
+        if(isAlphanumeric(searchText) || searchText ==""){
+          dispatch(searchAsync(searchText,searchType ));
+          console.log(`Searching complete`);
+          if(!isResultPage){
+              navigate("/ResultPage");
+          }
+        }else{
+          alert("Only alphanumeric characters allowed")
         }
+        
     };
 
     return (

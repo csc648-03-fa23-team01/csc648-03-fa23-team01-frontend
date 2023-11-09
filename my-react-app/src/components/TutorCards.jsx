@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 
 const StyledTutorCard = styled.div`
   border: 0.1vw solid #ccc;
@@ -33,8 +35,8 @@ const StyledTutorCard = styled.div`
 `;
 
 const TutorCard = ({
-    tutorID,
-    profilePicture, 
+    id,
+    profilePictureLink, 
     ratings, 
     classes, 
     description, 
@@ -47,9 +49,9 @@ const TutorCard = ({
     name
 }) => {
     return (
+      <Link to={`/tutor/${id || '404'}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <StyledTutorCard>
-            {/* This is a placeholder image. You can replace it with a dynamic image linked to the registered user */}
-            <img src={profilePicture} alt={`Tutor`} />
+            <img src={profilePictureLink} alt={`Tutor`} />
             <h3>{name}</h3>
             <div className="attribute"><strong>Classes:</strong> {classes || "N/A"}</div>
             <div className="attribute"><strong>Description:</strong> {description || "N/A"}</div>
@@ -59,6 +61,7 @@ const TutorCard = ({
             <div className="attribute"><strong>Secondary Languages:</strong> {secondaryLanguages || "N/A"}</div>
             <div className="attribute"><strong>Expertise in Subject:</strong> {subjects.slice(0, -1).join(', ') + ' and ' + subjects.slice(-1) || "N/A"}</div>
         </StyledTutorCard>
+        </Link>
     );
 }
 

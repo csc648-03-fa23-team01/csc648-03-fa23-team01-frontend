@@ -1,20 +1,20 @@
 // src/actions/searchActions.js
-import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE } from "./actionType";
+import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE, FETCH_TUTOR_FAILURE,FETCH_TUTOR_SUCCESS,FETCH_TUTOR_REQUEST } from "./actionType";
 
 // Action Types
 
 
 // Action Creators
-const searchRequest = () => ({
+const SearchRequest = () => ({
   type: SEARCH_REQUEST,
 });
 
-const searchSuccess = (data) => ({
+const SearchSuccess = (data) => ({
   type: SEARCH_SUCCESS,
   payload: data,
 });
 
-const searchFailure = (error) => ({
+const SearchFailure = (error) => ({
   type: SEARCH_FAILURE,
   payload: error,
 });
@@ -25,7 +25,7 @@ export const searchAsync = (query, type) => async (dispatch) => {
   let typeValue = String(type);  // Convert to string just in case
   const queryAddress = `http://localhost:8000/search?type=${encodeURIComponent(typeValue)}`;
 
-  dispatch(searchRequest());
+  dispatch(SearchRequest());
 
   try {
     const response = await fetch(queryAddress, {
@@ -45,41 +45,61 @@ export const searchAsync = (query, type) => async (dispatch) => {
     const data = await response.json();
 
     // Dispatch a success action with the fetched data
-    dispatch(searchSuccess(data));
+    dispatch(SearchSuccess(data));
   } catch (error) {
     // Dispatch a failure action if an error occurs during the API request
-    dispatch(searchFailure(error.message));
+    dispatch(SearchFailure(error.message));
   }
 };
 
-export const fetchTutor = (query, type) => async (dispatch) => {
-  // Dispatch a request action to indicate the start of the API call
-  let typeValue = String(type);  // Convert to string just in case
-  const queryAddress = `http://localhost:8000/tutor?id=${encodeURIComponent(typeValue)}`;
+const TutorRequest = () => ({
+  type: FETCH_TUTOR_REQUEST,
+});
 
-  dispatch(searchRequest());
+const TutorSuccess = (data) => ({
+  type: FETCH_TUTOR_SUCCESS,
+  payload: data,
+});
+
+const TutorFailure = (error) => ({
+  type: FETCH_TUTOR_FAILURE,
+  payload: error,
+});
+
+
+export const fetchTutor = (user_id) => async (dispatch) => {
+  // Convert user_id to string and log it for debugging
+  user_id = String(user_id);
+
+  const queryAddress = `http://localhost:8000/tutor?id=${encodeURIComponent(user_id)}`;
+
+  // Dispatch the request action
+
+  dispatch(TutorRequest());
 
   try {
+    // Execute the API request
     const response = await fetch(queryAddress, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        text: query
-      }),
+      }
     });
 
+    // Check if response is ok
     if (!response.ok) {
-        throw new Error('Network response was not ok');
+      throw new Error('Network response was not ok');
     }
 
+    // Parse the JSON response
     const data = await response.json();
 
     // Dispatch a success action with the fetched data
-    dispatch(searchSuccess(data));
+    console.log("Data received:", data); // Debugging log
+
+    dispatch(TutorSuccess (data ));
   } catch (error) {
     // Dispatch a failure action if an error occurs during the API request
-    dispatch(searchFailure(error.message));
+    dispatch(TutorFailure());
   }
 };

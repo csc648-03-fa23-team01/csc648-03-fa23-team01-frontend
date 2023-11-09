@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
-import image1 from '../assets/images/Polygon1.svg';
-import image2 from '../assets/images/Rectangle46.svg';
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 
@@ -69,7 +67,7 @@ export const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
       <StyledHomePage>
         <div className="div">
           <NavBar />
-          <SearchBar isHomePage={true} />
+          <SearchBar />
   
           <p className="text-wrapper-8">What Would You Like To Learn?</p>
             

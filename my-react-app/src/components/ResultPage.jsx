@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from "./NavBar.jsx";
 import SearchBar from "./SearchBar.jsx";
-import TutorCard from "./TutorCards.jsx";
 import styled from "styled-components";
-import image1 from '../assets/images/Polygon1.svg';
-import image2 from '../assets/images/Rectangle46.svg';
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
-import {TutorProfile} from '../models/tutorModel.jsx';
 import TutorList from './TutorList.jsx';
 
 const StyledResultPage = styled.div`
@@ -492,7 +488,7 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
       <StyledResultPage>
         <div>
         <Navbar />
-          <SearchBar isHomePage={false} />
+          <SearchBar isHomePage={true} />
         </div>
         <div className="tutor-cards-wrapper">
           <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
@@ -503,9 +499,9 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 }
 
 const mapStateToProps = (state) => ({
-  tutors_data: state.tutors.data,
-  tutors_loading: state.tutors.loading,
-  tutors_error: state.tutors.error,
+  tutors_data: state.search.data,
+  tutors_loading: state.search.loading,
+  tutors_error: state.search.error,
 });
 
 const mapDispatchToProps = {

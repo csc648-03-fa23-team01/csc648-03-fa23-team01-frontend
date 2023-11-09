@@ -1,10 +1,10 @@
 import React from 'react';
-import TutorCard from './TutorCards';  // Assuming TutorCard and the parent component are in the same directory
-import { TutorProfile } from '../models/tutorModel';  // Adjust the path as needed
+import TutorCard from './TutorCards';  
+import {TutorModel } from '../models/tutorModel'; 
 
 const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
   if (tutors_loading) {
-    return <p>Loading...</p>; // Or any other loading indicator you might want to use
+    return <p>Loading...</p>;
   }
 
   if (tutors_error) {
@@ -18,13 +18,13 @@ const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
   return (
     <div>
       {tutors_data.map((tutorData) => {
-        const tutor = TutorProfile.fromJSON(tutorData);
+        const tutor = TutorModel.fromJSON(tutorData);
 
         return (
           <TutorCard
-            key={tutor.user_id}
-            name={tutor.name}
-            profilePicture={tutor.profilePicture}
+            id={tutor.id}
+            name={tutor.firstName + " "+tutor.lastName}
+            profilePictureLink={tutor.profilePictureLink}
             ratings={tutor.average_ratings}
             classes={tutor.classes}
             description={tutor.description}
