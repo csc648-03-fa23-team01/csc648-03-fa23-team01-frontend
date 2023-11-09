@@ -8,12 +8,13 @@ const StyledSearchBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 66%;
+  width: ${props => props.large ? '47.87rem' : '66%'};
   margin: 20px auto;  
   .search-bar {
     display: flex;
     align-items: center;
     width: 100%;
+    height: ${props => props.large ? '5.06rem' : 'auto'};
   }
   
   input {
@@ -23,6 +24,9 @@ const StyledSearchBar = styled.div`
     border-right: none; // Remove the right border to connect with the button
     border-radius: 4px 0 0 4px; // Adjusted border-radius
     box-sizing: border-box; // Include padding and border in the height calculation
+    height: ${props => props.large ? '5.06rem' : 'auto'};
+    font-family: 'Inter';
+    font-size: ${props => props.large ? '1.56rem' : 'auto'};
   }
   
   button {
@@ -34,14 +38,16 @@ const StyledSearchBar = styled.div`
     cursor: pointer;
     border-radius: 0 4px 4px 0; // Adjusted border-radius
     box-sizing: border-box; // Include padding and border in the height calculation
-    
+    height: ${props => props.large ? '5.06rem' : 'auto'};
+    font-family: 'Inter';
+    font-size: ${props => props.large ? '1.56rem' : 'auto'};   
     &:hover {
       background-color: #555;
     }
   }
 `;
 
-const SearchBar = ({ isHomePage }) => {
+const SearchBar = ({ isHomePage, large}) => {
     const [searchText, setSearchText] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -56,7 +62,7 @@ const SearchBar = ({ isHomePage }) => {
     };
 
     return (
-        <StyledSearchBar className="search-bar">
+        <StyledSearchBar className="search-bar" large ={large}>
             <input
                 type="text"
                 value={searchText}

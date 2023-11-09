@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ['Droid Sans', 'Chilanka']
+        families: ['Inter']
       }
     });
    }, []);
