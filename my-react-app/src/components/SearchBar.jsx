@@ -28,7 +28,7 @@ const StyledSearchBar = styled.div`
   button {
     padding: 10px; // Match the vertical padding of the input field
     background-color: #F6A833; // Orange color
-    color: white;
+    color: black;
     border: 1px solid #F6A833; // Match input field border for consistent height
     border-left: none; // Remove the left border to make it seamless with input
     cursor: pointer;

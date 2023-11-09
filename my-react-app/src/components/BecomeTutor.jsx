@@ -51,6 +51,7 @@ function BecomeTutor() {
     maxWidth: "400px",
     margin: "0 auto",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", 
+    marginBottom: "20px", // This will add space at the bottom of the form
 
   };
 
@@ -74,7 +75,11 @@ function BecomeTutor() {
      "Biology",
      "English Literature",
      "Computer Science",
-     // ... more topics
+   ];
+
+   const SessionType =[
+    "In Person",
+    "Virtual"
    ];
 
    
@@ -101,7 +106,6 @@ function BecomeTutor() {
               {/* Handle picture error if any */}
             </div>
 
-            {/* ... other input fields ... */}
 
             {/* Topic dropdown */}
       <div style={formGroupStyle}>
@@ -110,7 +114,7 @@ function BecomeTutor() {
           id="topicSelect"
           value={selectedTopic}
           onChange={(e) => setSelectedTopic(e.target.value)}
-          style={{ display: 'block', width: '100%', padding: '10px', marginBottom: '10px' }} // Make sure the width and padding match other inputs
+          style={{ display: 'block', width: '55%', padding: '8px', marginBottom: '10px' }} // Make sure the width and padding match other inputs
         >
           <option value="">Select a topic</option>
           {topics.map((topic, index) => (
@@ -133,6 +137,46 @@ function BecomeTutor() {
         {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
       </div>
 
+          {/* Language field */}
+        <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
+          <label htmlFor="classesInput">Language</label>
+          <input
+            id="classesInput"
+            value={classes}
+            onChange={(e) => setClasses(e.target.value)}
+            style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
+          />
+          {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
+        </div>
+
+          {/* Available Time field*/}
+          <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
+          <label htmlFor="classesInput">Available times</label>
+          <input
+            id="classesInput"
+            value={classes}
+            onChange={(e) => setClasses(e.target.value)}
+            style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
+          />
+          {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
+
+        </div>
+        {/* Session type dropdown */}
+            <div style={formGroupStyle}>
+                      <label htmlFor="topicSelect">*In Person or Virtual:</label>
+                      <select 
+                      id="topicSelect"
+                      value={selectedTopic}
+                      onChange={(e) => setSelectedTopic(e.target.value)}
+                      style={{ display: 'block', width: '55%', padding: '10px', marginBottom: '10px' }} // Make sure the width and padding match other inputs
+                      >
+                    <option value="">Select your Sesssion Type</option>
+                {SessionType.map((topic, index) => (
+                  <option key={index} value={topic}>{topic}</option>
+                ))}
+              </select>
+              {errors.topic && <span style={errorTextStyle}>This field is required.</span>}
+            </div>
       {/* Tell us about yourself */}
         <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
           <label htmlFor="classesInput">*Tell us about yourself:</label>
@@ -157,7 +201,6 @@ function BecomeTutor() {
                 style={hiddenFileInputStyle}
                 onChange={(e) => setPicture(e.target.files[0])}
               />
-              {/* Handle picture error if any */}
             </div>
 
             {/* Label and custom file input for video */}

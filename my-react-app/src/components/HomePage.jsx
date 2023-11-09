@@ -50,7 +50,6 @@ const TextWrapper = styled.p`
   color: #fff; /* This sets the text color to white */
   text-align: center;
   margin-top: 2rem;
-  x
   font-size: 40px;
   font-weight: 400;
   font-family: 'Open Sans', sans-serif;

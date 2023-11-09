@@ -20,6 +20,7 @@ export const buttonStyle = {
       cursor: 'pointer',
       fontSize: '16px',
       marginRight: '10px',
+      width: '50%'
     };
     
     export const hiddenFileInputStyle = {

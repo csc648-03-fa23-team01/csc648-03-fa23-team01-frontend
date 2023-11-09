@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from "./NavBar.jsx";
 import SearchBar from "./SearchBar.jsx";
-import TutorCard from "./TutorCards.jsx";
 import styled from "styled-components";
-import image1 from '../assets/images/Polygon1.svg';
-import image2 from '../assets/images/Rectangle46.svg';
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
-import {TutorProfile} from '../models/tutorModel.jsx';
 import TutorList from './TutorList.jsx';
 
 const StyledResultPage = styled.div`
