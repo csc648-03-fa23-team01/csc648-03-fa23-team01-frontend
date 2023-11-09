@@ -2,55 +2,143 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-
-
+const ProfileWrapper = styled.div`
+  display: flex;
+  justify-content: space-between; // Adjusted to 'space-between' for consistent spacing
+  flex-wrap: wrap; // This will allow items to wrap onto the next line if the viewport is not wide enough
+  margin: 30px auto; // Center the wrapper with a top margin
+  width: 100%; // Ensure the wrapper spans the full width
+  max-width: 1200px; // Adjust this value as needed to be 2/3 of your max page width
+`;
+const ProfileAboutContainer = styled.div`
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  padding: 30px;
+  display: flex;
+  flex: 1 1 45%; // Adjusted for closer spacing, represents the maximum width
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+`;
 const ProfileContainer = styled.div`
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   padding: 30px;
-  width: 66vw; // 2/3 of the viewport width
-  max-width: 800px; // Max width can be adjusted or removed as necessary
+  flex: 1 1 300px; // Flex-grow, flex-shrink and flex-basis
+  max-width: calc(50% - 15px); // Subtract half the gap to account for flex spacing
+  max-width: 540px; // Half of the ProfileWrapper's max-width minus the gap
   display: flex;
   flex-direction: column;
-  align-items: center; // Center children horizontally
-  margin: auto; // Center the container in the available space
-  margin-top: 30px; // Adjust as needed for spacing from the top
+  align-items: center;
+  margin: auto;
+`;
+const Header = styled.header`
+  text-align: center;
   img {
-    width: 10vw ;
-    align: center
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eaeaea;
+  }
+  h1 {
+    margin: 10px 0;
+  }
+  div {
+    font-size: 1em;
+    color: #ffcc00;
+  }
+`;
+
+const Button = styled.button`
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 30px;
+  margin-top: 20px;
+  font-size: 1em;
+  cursor: pointer;
+  &:hover {
+    background-color: #ec971f;
   }
 `;
 
 const InfoSection = styled.div`
-`;
-
-const InfoItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #eaeaea;
-  padding: 10px 0;
-  font-size: 1.5em;
-`;
-
-
-
-const Skills= styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
   width: 100%;
 `;
 
+
+const Skills = styled.div`
+  gap: 10px;
+  margin-top: 20px;
+  text-align: center;
+
+`;
 
 const SkillItem = styled.div`
   background-color: #f3f3f3;
   color: #333;
   border-radius: 15px;
-  font-size: 0.8em;
-  margin-right: 10px;
+  padding: 10px;
+  font-size: 1em;
+  text-align: center;
+`;
+
+const AboutSection = styled.section`
+  text-align: left;
+  margin-top: 20px;
+`;
+
+const Title = styled.h2`
+  font-size: 1.5em;
+  color: #000;
   margin-bottom: 10px;
+  text-align:center;
+`;
+
+const DescriptionText = styled.p`
+  font-size: 1em;
+  margin-bottom: 10px;
+`;
+
+const CoursesSection = styled.div`
+  margin-top: 20px;
+`;
+
+const CourseList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const CourseItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  font-size: 1em;
+  margin-bottom: 5px;
+`;
+
+const LanguagesSection = styled.div`
+  margin-top: 20px;
+`;
+
+const LanguageList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
+
+const LanguageItem = styled.span`
+  background-color: #f3f3f3;
+  color: #333;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  text-align: center;
 `;
 
 const TutorProfile = ({
@@ -70,56 +158,76 @@ const TutorProfile = ({
     cvLink,
     otherLanguages,
     subjects
-}) => {
-  return (
-    <ProfileContainer>
-    <header>
-      <img src={profilePictureLink} alt={`${firstName} ${lastName}`} />
-      <h1>{`${firstName} ${lastName}`}</h1>
-      <div>Rankings: {averageRatings}/10</div>
-    </header>
-    <Link to={`/message`} style={{ textDecoration: 'none', color: 'inherit' }}>
-    <button>Send Message</button>
-    </Link>
-    <InfoSection>
-      <InfoItem>
-        <span>Email</span>
-        <span>{email}</span>
-      </InfoItem>
-      <InfoItem>
-        <span>Classes</span>
-        <span>{classes}</span>
-      </InfoItem>
-      <InfoItem>
-        <span>Description</span>
-        <span>{description}</span>
-      </InfoItem>
-      <InfoItem>
-        <span>Price</span>
-        <span>${price}</span>
-      </InfoItem>
-      <InfoItem>
-        <span>Times Available </span>
-        <span>{timesAvailable}</span>
-      </InfoItem>
-      <InfoItem>
-        <span>Main Languages</span>
-        <span>{mainLanguages}</span>
-      </InfoItem>
-      <InfoItem>
-        <span>Other Languages</span>
-        <span>{otherLanguages}</span>
-      </InfoItem>
-      <InfoItem>
-        <span>Prefer In-Person</span>
-        <span>{preferInPerson ? "Yes" : "No"}</span>
-      </InfoItem>
-    </InfoSection>
-    <Skills>
-      {subjects && subjects.map(subject => <SkillItem key={subject}>{subject}</SkillItem>)}
-    </Skills>
-  </ProfileContainer>
-);
-};
+}
+
+) => {
+    const courseList = classes.split(',').map((course) => course.trim());
+    const languageList = mainLanguages
+      ? [mainLanguages, ...(otherLanguages ? otherLanguages.split(',') : [])]
+      : [];
+
+
+    return (
+        <ProfileWrapper>
+        <ProfileContainer>
+      <Header>
+        <img src={profilePictureLink} alt={`${firstName} ${lastName}`} />
+        <h1>{`${firstName} ${lastName}`}</h1>
+        <div>
+          {Array.from({ length: 5 }, (_, index) => (
+            <span key={index}>★</span>
+          ))}
+          {averageRatings}
+        </div>
+        <span>Computer Science</span>
+        <div>Hourly Rate: ${price}</div>
+      </Header>
+      <Link to={`/message/${id}`} style={{ textDecoration: 'none' }}>
+        <Button>Message</Button>
+      </Link>
+      <InfoSection>
+        {/* ...InfoItems */}
+      </InfoSection>
+      <Skills>
+        {timesAvailable}
+      </Skills>
+    </ProfileContainer>
+
+        <ProfileAboutContainer>
+            <AboutSection>
+                <Title>About</Title>
+                <DescriptionText>{description}</DescriptionText>
+            </AboutSection>
+            <CoursesSection>
+                <Title>SFSU Courses</Title>
+                <CourseList>
+                    {courseList.map((course, index) => (
+                        // Assuming each even index is a course code and each odd index is the course name
+                        index % 2 === 0 ? (
+                            <CourseItem key={course}>
+                                <span>{course}</span> 
+                                <span>{courseList[index + 1]}</span>
+                            </CourseItem>
+                        ) : null
+                    ))}
+                </CourseList>
+            </CoursesSection>
+            {languageList.length > 0 && (
+                <LanguagesSection>
+                    <Title>Languages</Title>
+                    <LanguageList>
+                        {languageList.map((language, index) => (
+                            <LanguageItem key={index}>{language.trim()}</LanguageItem>
+                        ))}
+                    </LanguageList>
+                </LanguagesSection>
+            )}
+        </ProfileAboutContainer>
+
+      </ProfileWrapper>
+
+      );
+    };
+    
 
 export default TutorProfile;

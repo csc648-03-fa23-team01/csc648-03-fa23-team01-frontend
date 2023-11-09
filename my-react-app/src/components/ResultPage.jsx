@@ -488,7 +488,7 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
       <StyledResultPage>
         <div>
         <Navbar />
-          <SearchBar isHomePage={true} />
+          <SearchBar />
         </div>
         <div className="tutor-cards-wrapper">
           <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
