@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
-import image1 from '../assets/images/Polygon1.svg';
-import image2 from '../assets/images/Rectangle46.svg';
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 import background_image from '../assets/images/Background_Image.png';
 import { tutorProfiles } from '../constants/tutorProfiles';
 
-import TutorCard from './TutorCards'; // Adjust the path to your TutorCard component
+import TutorCard from './TutorCards'; 
 
 
 const StyledHomePage = styled.div`
   position: relative;
   width: 100%;
   min-height: 100vh; // Changed to ensure full vertical coverage
+  overflow-x: hidden;
 `;
 
 const BackgroundImage = styled.div`
@@ -26,7 +25,7 @@ const BackgroundImage = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 27.5rem;
   z-index: -1;
 `;
 
@@ -35,7 +34,7 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 27.5rem;
   background-color: rgba(0, 0, 0, 0.4); // Dark overlay with 40% opacity
   z-index: 1; // Ensure the overlay is above the background image
 `;
@@ -50,36 +49,25 @@ const TextWrapper = styled.p`
   color: #fff; /* This sets the text color to white */
   text-align: center;
   margin-top: 2rem;
-  font-size: 40px;
+  font-size: 2.5rem;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Inter';
 `;
 
-const TextWrapper1 = styled.div`
-  text-align: center;
-  margin: 2rem auto;
-  width: 80%;
-  line-height: 1.5;
-  font-weight: bold;
-  font-family: 'Open Sans', sans-serif;
-`;
 const TutorProfilesWrapper = styled.div`
   display: flex;
-  width:100%;
-  flex-wrap: wrap;
+  width: 100%;
   justify-content: center;
+  margin-top: 12rem; // Adjust this value to position the wrapper as desired
   margin-right: 2rem;
   margin-left: 2rem;
-  top: 10rem;
+  margin-bottom: 2rem;
 `;
 
-
 // HomePage component definition
-const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
+const HomePage = () => {
   const dispatch = useDispatch();
 
-  
-  
   return (
     <StyledHomePage>
       <BackgroundImage />
@@ -87,7 +75,7 @@ const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
       <ContentContainer>
         <NavBar />
         <TextWrapper>"Welcome to the world of learning!"</TextWrapper>
-        <SearchBar isHomePage={true} onSearch={(query) => dispatch(searchAsync(query,"Subject"))} />
+        <SearchBar isHomePage={true} large ={true} onSearch={(query) => dispatch(searchAsync(query,"Subject"))} />
         <TutorProfilesWrapper  >
           {tutorProfiles.map((profile, index) => (
             <TutorCard

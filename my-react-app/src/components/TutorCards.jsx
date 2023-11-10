@@ -5,13 +5,12 @@ import { Rating } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 // import RatingStars from './RatingStars'; // Import your star rating component
 
-// Adjusted StyledTutorCard for smaller size
 const StyledTutorCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
   padding: 1.5vw;
-  width: 24rem;
+  width: 20rem;
   height: 13.94rem;
   margin: 0; // Add 'auto' to keep it centered horizontally and '2vw' for top and bottom margin
   margin-right: 2rem;
@@ -20,6 +19,7 @@ const StyledTutorCard = styled.div`
   box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1);
   background: #fff;
   transition: transform 0.3s ease;
+  font-family: 'Inter';
 
   &:hover {
     transform: translateY(-0.5vw);
@@ -35,25 +35,25 @@ const StyledTutorCard = styled.div`
 
   h3 {
     margin: 0.5vw 0;
-    font-size: 1.5vw; // Adjust for smaller text size
+    font-size: 1.25rem; // Adjust for smaller text size
+    font-weight: 400;
   }
 
-  h4 {
+  .subject {
     color: #7133F6;
     fontSize : 0.94rem;
     font-weight: 400;
   }
 
-  .attribute {
-    font-size: 1vw; // Adjust for smaller text size
-    margin: 0.5vw 0;
+  .description {
+    fontSize : 0.94rem;
+    margin: 0.5rem 0;
     line-height: 1.4;
   }
 `;
 
 const profileGroupStyle1 = {
-  marginBottom: "10px",
-  display: 'flex',       // Enable flexbox
+  marginBottom: 0,
   justifyContent: 'start', // Center children horizontally
   display: 'flex',
   'flex-direction' : 'row'
@@ -66,12 +66,14 @@ const imageStyle = {
 }
 
 const tutorCardNameStyle = {
-  'font-size': '1.25rem'
+  'font-size': '1.25rem',
+  'margin-bottom' : 0
 }
 const fullStyle = {
   display: 'flex',
   'flex-direction' : 'column'
 }
+
 
 // TutorCard component
 
@@ -98,17 +100,18 @@ const TutorCard = ({
           <div>
           <h3 style={tutorCardNameStyle}>{name}</h3>
           <Rating
-            name="text-feedback"
+            name="customized-rating"
             value={rating}
             readOnly
             precision={0.5}
-            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+            icon={<StarIcon style={{ width: '0.7rem', height: '0.7rem' }} fontSize="inherit" />}
+            emptyIcon = {<StarIcon style={{ width: '0.7rem', height: '0.7rem' }} fontSize="inherit" />}
           />
           </div>
         </div>
-        <div className="attribute">{truncateText(description, 200)}</div>
+        <div className="description">{truncateText(description, 200)}</div> {/* Limit the bio to 80 characters */}
         </div>
-        <h4 >{subject} tutor</h4>
+        <div className="subject" >{subject} tutor</div>
         
       </StyledTutorCard>
     </Link>
