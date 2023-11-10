@@ -13,6 +13,14 @@ import store from "./store/store.js";
 import { Helmet } from 'react-helmet';
 import WebFont from 'webfontloader';
 import BecomeTutor from './components/BecomeTutor';
+import TrashUI from './components/TrashUI';
+import { Amplify, Storage } from 'aws-amplify'; // Import Amplify and Storage
+import awsmobile from './amplify-src/aws-exports';
+import TutorPage from './components/TutorPage';
+import SendMessagePage from './components/SendMessagePage';
+
+Amplify.configure(awsmobile);
+
 
 function App() {
   useEffect(() => {
@@ -32,8 +40,11 @@ function App() {
         <Provider store={store}>
           <ThemeProvider theme={questTheme}>
             <Routes>
+              <Route path="/trash" element={<TrashUI className = " Trash " />} />
               <Route path="/" element={<HomePage className = " Home " />} />
+              <Route path="/tutor/:user_id" element={<TutorPage />} />
               <Route path="/teamPage" element={<TeamPage className = " Team " />} />
+              <Route path="/message/:user_id" element={<SendMessagePage className = " Messenger " />} />
               <Route path="/resultPage" element={<ResultPage className = "result"/>} />
 
               <Route path="/BecomeTutor" element={<BecomeTutor className="become-tutor" />} />

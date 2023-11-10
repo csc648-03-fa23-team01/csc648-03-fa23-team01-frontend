@@ -52,6 +52,8 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
     friday: false,
     saturday: false,
   });
+  const [query, setQuery] = useState('');
+
 
   // Handler for changing the hourly rate
   const handleHourlyRateChange = (event) => {
@@ -130,9 +132,9 @@ return (
 }
 
 const mapStateToProps = (state) => ({
-  tutors_data: state.tutors.data,
-  tutors_loading: state.tutors.loading,
-  tutors_error: state.tutors.error,
+  tutors_data: state.search.data,
+  tutors_loading: state.search.loading,
+  tutors_error: state.search.error,
 });
 
 const mapDispatchToProps = {
