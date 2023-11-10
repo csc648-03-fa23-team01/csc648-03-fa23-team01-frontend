@@ -123,10 +123,10 @@ const reviewCount = 100; // Your dynamic review count value
 // TutorCards_BecomeTutor component
 
 const TutorCards_BecomeTutor = ({
-  profilePictureLink,
     name,
     description,
     subjects,
+    profilePictureLink,
     // link,
     ratings, // Use 'ratings' here if that's what's being passed
     price,
