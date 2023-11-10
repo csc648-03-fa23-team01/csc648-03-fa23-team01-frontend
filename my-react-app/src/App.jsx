@@ -13,6 +13,7 @@ import store from "./store/store.js";
 import { Helmet } from 'react-helmet';
 import WebFont from 'webfontloader';
 import BecomeTutor from './components/BecomeTutor';
+import { Dashboard } from './components/Dashboard.jsx';
 
 function App() {
   useEffect(() => {
@@ -35,7 +36,7 @@ function App() {
               <Route path="/" element={<HomePage className = " Home " />} />
               <Route path="/teamPage" element={<TeamPage className = " Team " />} />
               <Route path="/resultPage" element={<ResultPage className = "result"/>} />
-
+              <Route path="/dashboard" element={<Dashboard className="dashboard" />} />
               <Route path="/BecomeTutor" element={<BecomeTutor className="become-tutor" />} />
 
               <Route path="/about-Mahdi Hassanpour" element={<Template names = {names[4]} summary = {summary[4]} email = {email[4]} role = {role[4]} image={image[4]} />} />

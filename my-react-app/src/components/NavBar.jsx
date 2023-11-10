@@ -66,6 +66,7 @@ export const NavBar = () => {
         <button onClick={() => navigate("/")} className="logo"><img className="img" alt="Rectangle" src={image1} /></button>
         <button >About</button>
         <button onClick={()=>navigate("/BecomeTutor")}>Become a Tutor</button>
+        <button onClick={()=>navigate("/dashboard")}>Your Dashboard</button>
         <button >Login</button>
         <button>Sign up</button>
       </div>

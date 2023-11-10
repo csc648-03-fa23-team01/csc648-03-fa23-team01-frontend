@@ -38,7 +38,7 @@ import { TutorProfile } from '../models/tutorModel';
       {/* Conditional rendering for loading or error messages */}
       {tutors_loading && <p>Loading...</p>}
       {tutors_error && <p>Error: {tutors_error}</p>}
-      {(!tutors_data || tutors_data.length === 0) && <p>No tutors available.</p>}
+      {(!tutors_data || tutors_data.length === 0) && <p style={{ marginTop: '1rem' }}>No tutors available.</p>}
   
       {/* Check that tutors_data is loaded and has data */}
       {tutors_data && tutors_data.length > 0 && (
