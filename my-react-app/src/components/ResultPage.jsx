@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 import TutorList from './TutorList.jsx';
+import { TutorModel } from '../models/tutorModel.jsx';
 
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
@@ -55,6 +56,23 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   const [query, setQuery] = useState('');
 
 
+  const applyFilters = () => {
+    let filteredTutors = tutors_data;
+    console.log("filtering: ", tutors_data)
+    // Filter by hourly rate
+    if (hourlyRate && filteredTutors) {
+      filteredTutors = filteredTutors.filter(tutor => tutor.price >= hourlyRate);
+      console.log("filtered: ", filteredTutors)
+
+    }
+    // Filter by selected topic
+    if (selectedTopic && filteredTutors) {
+      filteredTutors = filteredTutors.filter(tutor => tutor.topics.includes(selectedTopic));
+    }
+    return filteredTutors;
+  };
+
+
   // Handler for changing the hourly rate
   const handleHourlyRateChange = (event) => {
     setHourlyRate(event.target.value);
@@ -103,6 +121,7 @@ const renderSubjectDropdown = () => {
   );
 };
 
+console.log(applyFilters())
 return (
   <StyledResultPage>
     <Navbar />
@@ -124,8 +143,11 @@ return (
       </div>
       <div className="tutor-cards-wrapper">
         <SearchBar isHomePage={false} />
-        <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
-      </div>
+        <TutorList
+          tutors_data={applyFilters()} // Apply filters here
+          tutors_loading={tutors_loading}
+          tutors_error={tutors_error}
+        />      </div>
     </div>
   </StyledResultPage>
 );
