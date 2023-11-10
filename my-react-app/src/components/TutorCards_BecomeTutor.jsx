@@ -123,7 +123,7 @@ const reviewCount = 100; // Your dynamic review count value
 // TutorCards_BecomeTutor component
 
 const TutorCards_BecomeTutor = ({
-    profilePicture,
+  profilePictureLink,
     name,
     description,
     subjects,
@@ -142,7 +142,7 @@ const TutorCards_BecomeTutor = ({
           <StyledTutorCard>
             <div style={fullStyle}>
               <div style={profileGroupStyle1}>
-                <img style={imageStyle} src={profilePicture} alt={`Tutor ${name}`} />
+                <img style={imageStyle} src={profilePictureLink} alt={`Tutor ${name}`} />
                 <div>
                   <h3 style={tutorCardNameStyle}>{name}</h3>
                   {/* Absolute positioned rating div */}

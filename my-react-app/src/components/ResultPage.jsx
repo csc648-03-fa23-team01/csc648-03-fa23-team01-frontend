@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 import TutorList from './TutorList.jsx';
+import { TutorModel } from '../models/tutorModel.jsx';
 
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
@@ -68,7 +69,6 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
     if (selectedTopic && filteredTutors) {
       filteredTutors = filteredTutors.filter(tutor => tutor.topics.includes(selectedTopic));
     }
-
     return filteredTutors;
   };
 

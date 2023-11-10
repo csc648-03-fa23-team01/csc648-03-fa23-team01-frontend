@@ -47,7 +47,7 @@ const StyledSearchBar = styled.div`
   }
 `;
 
-const SearchBar = ({ isResultPage = false, large}) => {
+const SearchBar = ({ isResultPage = false, large= false}) => {
 const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();

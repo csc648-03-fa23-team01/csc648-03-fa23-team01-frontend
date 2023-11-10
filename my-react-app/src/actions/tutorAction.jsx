@@ -72,7 +72,7 @@ export const fetchTutor = (user_id) => async (dispatch) => {
   // Convert user_id to string and log it for debugging
   user_id = String(user_id);
 
-  const queryAddress = `http://localhost:8000/tutor?id=${encodeURIComponent(user_id)}`;
+  const queryAddress = `(${process.env.REACT_APP_BACKEND_URL}/tutor?id=${encodeURIComponent(user_id)}`;
 
   // Dispatch the request action
 
