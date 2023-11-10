@@ -58,18 +58,24 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 
   const applyFilters = () => {
     let filteredTutors = tutors_data;
+    let tutorInstances;
+
     console.log("filtering: ", tutors_data)
     // Filter by hourly rate
     if (hourlyRate && filteredTutors) {
       filteredTutors = filteredTutors.filter(tutor => tutor.price >= hourlyRate);
-      console.log("filtered: ", filteredTutors)
+      console.log("filtering2: ", filteredTutors)
+      tutorInstances = filteredTutors.map(json => TutorModel.fromJSON(json));
 
     }
     // Filter by selected topic
     if (selectedTopic && filteredTutors) {
       filteredTutors = filteredTutors.filter(tutor => tutor.topics.includes(selectedTopic));
+      console.log("filtering: ", filteredTutors)
+      tutorInstances = filteredTutors.map(json => TutorModel.fromJSON(json));
+      console.log(tutorInstances)
     }
-    return filteredTutors;
+    return tutorInstances;
   };
 
 

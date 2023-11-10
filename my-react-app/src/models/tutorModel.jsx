@@ -1,3 +1,4 @@
+
 export class TutorModel {
     id: number;
     firstName: string;
@@ -77,7 +78,9 @@ export class TutorModel {
         this.subjects = subjects;
     }
 
-    static fromJSON(json: any): TutorModel {
+    static fromJSON(json): TutorModel {
+        console.log("json:",json)
+
         return new TutorModel({
             id: json['user_id'],
             firstName: json['user']['first_name'],
@@ -97,6 +100,7 @@ export class TutorModel {
             cvLink: json['cv_link'],
             otherLanguages: json['other_languages'],
             subjects: json['topics'].map(topic => topic.name)
+            
         });
     }
 }

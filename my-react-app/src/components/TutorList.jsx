@@ -76,22 +76,22 @@ import {TutorModel } from '../models/tutorModel';
   
           {/* Render the list of TutorCards */}
           {sortedArray.map((tutorData) => {
-            const tutor = TutorModel.fromJSON(tutorData);
+            console.log(tutorData.profilePictureLink)
             return (
               <TutorCards_BecomeTutor
-            key={tutor.user_id}
-            name={tutor.name}
-            profilePicture={tutor.profilePicture}
-            ratings={tutor.average_ratings}
-            classes={tutor.classes}
-            description={tutor.description}
-            price={tutor.price}
-            availability={tutor.times_available}
-            primaryLanguages={tutor.main_languages}
-            cv={tutor.cv_link}
-            secondaryLanguages={tutor.other_languages}
-            subjects={tutor.subjects}  // This seems redundant, adjust as needed
-            rate={tutor.rate}
+            key={tutorData.user_id}
+            name={tutorData.firstName +" " + tutorData.lastName}
+            profilePictureLink={tutorData.profilePictureLink}
+            ratings={tutorData.averageRatings}
+            classes={tutorData.classes}
+            description={tutorData.description}
+            price={tutorData.price}
+            availability={tutorData.timesAvailable}
+            primaryLanguages={tutorData.mainLanguages}
+            cv={tutorData.cvLink}
+            secondaryLanguages={tutorData.otherLanguages}
+            subjects={tutorData.subjects}  // This seems redundant, adjust as needed
+            rate={tutorData.price}
 
             />
           );
