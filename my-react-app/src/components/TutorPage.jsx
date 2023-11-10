@@ -46,6 +46,7 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
   }, [tutors_data]);
 
   if (loading || tutors_loading) {
+    console.log("test",tutors_data)
     return <div>Loading...</div>;
   }
 
