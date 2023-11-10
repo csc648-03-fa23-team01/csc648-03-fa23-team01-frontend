@@ -1,6 +1,9 @@
-import React, { useState }  from "react";
+import React, { useState, useEffect }  from "react";
 import styled from "styled-components";
 import {NavBar} from '../components/NavBar';
+import { Auth, Hub } from 'aws-amplify'
+import { useNavigate } from "react-router-dom";
+
 const LoginPageWrapper = styled.div`
   background-color: #ffffff;
   display: flex;
@@ -11,9 +14,9 @@ const LoginPageWrapper = styled.div`
 
 const DivWrapper = styled.div`
   background-color: #ffffff;
-  height: 832px;
+  height: 52rem;
   position: relative;
-  width: 1280px;
+  width: 100%;
 `;
 
 const OverlapGroupWrapper = styled.div`
@@ -243,37 +246,55 @@ const TextWrapper10 = styled.div`
   white-space: nowrap;
 `;
 function LoginPage() {
-  const [sfsuIdOrEmail, setSfsuIdOrEmail] = useState('');
+  const navigate = useNavigate();
+  const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    const listener = (data) => {
+      const { payload } = data;
+      if (payload.event === 'signIn') {
+        navigate('/'); // Redirect to a dashboard after sign in
+      }
+    };
+
+    Hub.listen('auth', listener);
+    return () => Hub.remove('auth', listener); // Cleanup listener
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Perform validation here if needed
 
-    // Prepare data to be sent to backend
-    const userData = { sfsuIdOrEmail, password };
-
-    // Send data to backend
-    // This is a placeholder, replace with actual backend call
-    console.log('Sending data to backend:', userData);
+    try {
+      const signInResponse = await Auth.signIn(Email, password);
+      console.log('Sign in successful', signInResponse);
+      // navigate('/dashboard'); // Optionally navigate here if immediate redirect is desired
+    } catch (error) {
+      console.error('Error during sign in:', error);
+      const errorMessage = error.toString();
+      const specificErrorMessage = errorMessage.split(': ')[1] || "An error occurred";
+      alert(specificErrorMessage);
+    }
   };
 
 
 
   return (
     <LoginPageWrapper>
+      
       <DivWrapper>
+      <NavBar/>
         <OverlapGroupWrapper>
         <form onSubmit={handleSubmit}>
           <RectangleWrapper />
         
-          <TextWrapper1>SFSU ID or Email</TextWrapper1>
+          <TextWrapper1>Email</TextWrapper1>
           
           <TextWrapper2>Password</TextWrapper2>
           <StyledInput1
                         type="text"
-                        value={sfsuIdOrEmail}
-                        onChange={e => setSfsuIdOrEmail(e.target.value)}
+                        value={Email}
+                        onChange={e => setEmail(e.target.value)}
                     />
           <StyledInput2
                         type="password"
@@ -292,7 +313,7 @@ function LoginPage() {
           </SubmitButton>
           </form>
         </OverlapGroupWrapper>
-        <NavBar/>
+        
       </DivWrapper>
     </LoginPageWrapper>
   );

@@ -1,95 +1,108 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
+import background_image from '../assets/images/Background_Image.png';
+import { tutorProfiles } from '../constants/tutorProfiles';
+
+import TutorCard from './TutorCards'; 
+
 
 const StyledHomePage = styled.div`
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  position: relative;
+  width: 100%;
+  min-height: 100vh; // Changed to ensure full vertical coverage
+  overflow-x: hidden;
+`;
 
-  & .div {
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;   /* Adjusted from a fixed height */
-    width: 100vw;    /* Adjusted from a fixed width */
-    max-width: 1280px;  /* If you still want to limit it to 1280px at larger screens */
-  }
+const BackgroundImage = styled.div`
+  background: url(${background_image}) no-repeat center center fixed;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 27.5rem;
+  z-index: -1;
+`;
 
-  & .text-wrapper-8 {
-    color: #000000;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 1.25rem;   /* Adjusted font size */
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: normal;
-    white-space: nowrap;
-  }
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 27.5rem;
+  background-color: rgba(0, 0, 0, 0.4); // Dark overlay with 40% opacity
+  z-index: 1; // Ensure the overlay is above the background image
+`;
 
-  & .rectangle-5 {
-    background-color: #ffffff;
-    border: 1px solid #000000;
-    border-radius: 1rem;  /* Adjusted border radius */
-  }
-
-  & .text-wrapper-12 {
-    color: #000000;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 2rem;  /* Adjusted font size */
-    font-weight: 400;
-    text-align: center;
-    width: 80%;  /* Adjusted width */
-    margin-top: 2rem;  /* Adjusted margin */
-  }
+const ContentContainer = styled.div`
+  position: relative;
+  z-index: 2; // Ensure the content is above the overlay
 `;
 
 
+const TextWrapper = styled.p`
+  color: #fff; /* This sets the text color to white */
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 2.5rem;
+  font-weight: 400;
+  font-family: 'Inter';
+`;
 
-export const HomePage = ({ tutors_data, tutors_loading, tutors_error }) => {
-  const [query, setQuery] = useState('');
-  const results = useSelector(state => state.results);
+const TutorProfilesWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 12rem; // Adjust this value to position the wrapper as desired
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+`;
+
+// HomePage component definition
+const HomePage = () => {
   const dispatch = useDispatch();
-  
-  const handleSearch = (query) => {
-    dispatch(searchAsync(query));
-  };
 
-
-  
-    return (
-      <StyledHomePage>
-        <div className="div">
-          <NavBar />
-          <SearchBar />
-  
-          <p className="text-wrapper-8">What Would You Like To Learn?</p>
-            
-          <div className="rectangle-5" />
-          <p className="text-wrapper-12">
-            Welcome to our platform, where knowledge and opportunity converge. Explore a world of learning, connect with
-            top tutors, discover engaging courses, and search any department or subject effortlessly to unlock your full
-            potential.
-          </p>
-        </div>
-      </StyledHomePage>
+  return (
+    <StyledHomePage>
+      <BackgroundImage />
+      <Overlay />
+      <ContentContainer>
+        <NavBar />
+        <TextWrapper>"Welcome to the world of learning!"</TextWrapper>
+        <SearchBar isHomePage={true} large ={true} onSearch={(query) => dispatch(searchAsync(query,"Subject"))} />
+        <TutorProfilesWrapper  >
+          {tutorProfiles.map((profile, index) => (
+            <TutorCard
+              key={index}
+              profilePicture={profile.image}
+              name={profile.name}
+              description={profile.description}
+              subjects={profile.topic} // Make sure this is the correct prop to pass based on your data structure
+              rating={profile.rating}
+              subject={profile.subject}
+            />
+          ))}
+        </TutorProfilesWrapper>
+      </ContentContainer>
+    </StyledHomePage>
   );
 };
 
-const mapStateToProps = (state) => ({
+// Redux connect for the HomePage
+const mapStateToProps = state => ({
   tutors_data: state.tutors.data,
   tutors_loading: state.tutors.loading,
   tutors_error: state.tutors.error,
 });
 
 const mapDispatchToProps = {
-  searchAsync
+  searchAsync,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "sfsututor4b1afa0e": {}
+        "sfsututor4b1afa0e": {},
+        "userPoolGroups": {}
       },
       "storage": {
         "sfsututor": {}

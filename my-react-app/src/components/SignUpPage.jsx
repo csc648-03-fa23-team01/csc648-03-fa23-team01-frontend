@@ -2,6 +2,8 @@ import React, { useState }  from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from '../components/NavBar';
+import { Auth } from 'aws-amplify'
+import { useNavigate } from "react-router-dom";
 
 const SignUpPageContainer = styled.div`
   background-color: #ffffff;
@@ -13,9 +15,9 @@ const SignUpPageContainer = styled.div`
 
 const SignUpPageWrapper = styled.div`
   background-color: #ffffff;
-  height: 832px;
+  height: 52rem;
   position: relative;
-  width: 1280px;
+  width: 100%;
 `;
 
 const Navbar = styled.div`
@@ -56,15 +58,17 @@ const Rectangle = styled.div`
 const OverlapGroup = styled.div`
   background-color: #ffffff;
   border: 1px solid;
-  border-color: #000000;
+  border-color: #0000004c;
   border-radius: 10px;
+  box-shadow: 0px 4px 4px #00000040;
   height: 685px;
   left: 210px;
   position: absolute;
   top: 109px;
   width: 860px;
 `;
-
+    
+    
 const CreateAFree = styled.p`
   color: #000000;
   font-family: "Inter-Regular", Helvetica;
@@ -335,23 +339,55 @@ width: 539px;
 `;
 
 function SignUpPage() {
+  const navigate = useNavigate();
   const [sfsuId, setSfsuId] = useState('');
   const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [termsAndConditions, setTermsAndConditions] = useState('');
+  const [termsAndConditions, setTermsAndConditions] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Perform validation here if needed
+    //validations for sign up
+    if (!termsAndConditions) {
+      alert("Please agree to the terms and conditions.");
+      return;
+    }
+    if (password.length < 8) {
+      alert("Password is too short");
+      return;
+    }
+    if (!validateEmail(Email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
-    // Prepare data to be sent to backend
-    const userData = {sfsuId, Email, password, firstName, lastName, termsAndConditions};
-
-    // Send data to backend
-    // This is a placeholder, replace with actual backend call
+    const userData = { sfsuId, Email, password, firstName, lastName, termsAndConditions };
     console.log('Sending data to backend:', userData);
+
+    try {
+      const signUpResponse = await Auth.signUp({
+        username: Email,
+        password,
+        attributes: {
+          // Add other necessary attributes
+        }
+      });
+      console.log('Sign up successful', signUpResponse);
+      navigate("/");
+    } catch (error) {
+      // IF there are errors our validations missed we display them
+      console.error('Error during sign up:', error);
+      const errorMessage = error.toString();
+      const specificErrorMessage = errorMessage.split(': ')[1] || "An error occurred";
+      alert(specificErrorMessage);
+    }
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
   };
 
   return (
@@ -371,10 +407,7 @@ function SignUpPage() {
             <TextWrapper13><a href="/">privacy policy</a></TextWrapper13>
             <TextWrapper12>.</TextWrapper12>
           </IAgreeToWebsite>
-          <Rectangle2 
-                        type="checkbox" 
-                        value={termsAndConditions}
-                        onChange={e => setTermsAndConditions(e.target.value)} />
+          
           <TextWrapper14>Email address</TextWrapper14>
           
           <TextWrapper15>SFSU ID</TextWrapper15>
@@ -397,6 +430,10 @@ function SignUpPage() {
           <Rectangle7 type="text"
                         value={lastName}
                         onChange={e => setLastName(e.target.value)} />
+          <Rectangle2 
+          type="checkbox" 
+          value={termsAndConditions}
+          onChange={e => setTermsAndConditions(e.target.checked)} />
           <Overlap>
           <SubmitButton type="submit">
             Sign Up
