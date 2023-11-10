@@ -1,12 +1,28 @@
-import React, { useState } from 'react'; // Ensure useState is imported
+import React, { useState, useEffect } from 'react'; // Ensure useState is imported
 import TutorCards_BecomeTutor from './TutorCards_BecomeTutor';
 import { TutorProfile } from '../models/tutorModel';
 
+
   const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
     const [sortKey, setSortKey] = useState('bestMatch'); // Default sort key
+    const [sortedArray, setsortedArray] = useState([]); // Default sort key
+    useEffect(() => {
+      if (tutors_data) {
+        const sorted = [...tutors_data].sort((a, b) => {
+          console.log(a.times_available);
+          if (sortKey === 'bestMatch') {
+            return b.average_ratings - a.average_ratings;
+          } else if (sortKey === 'lowestPrice') {
+            return a.price - b.price;
+          }
+          return 0;
+        });
+            setsortedArray(sorted);
+      }
+    }, [tutors_data, sortKey]);
+    
     const handleSortChange = (event) => {
       setSortKey(event.target.value);
-      // Implement sorting logic or update the state that triggers a re-render with the sorted data
     };
     // Style for the sort dropdown
     const dropdownStyle = {
@@ -58,11 +74,11 @@ import { TutorProfile } from '../models/tutorModel';
             </div>
   
           {/* Render the list of TutorCards */}
-          {tutors_data.map((tutorData) => {
+          {sortedArray.map((tutorData) => {
             const tutor = TutorProfile.fromJSON(tutorData);
             return (
               <TutorCards_BecomeTutor
-                key={tutor.user_id}
+            key={tutor.user_id}
             name={tutor.name}
             profilePicture={tutor.profilePicture}
             ratings={tutor.average_ratings}
