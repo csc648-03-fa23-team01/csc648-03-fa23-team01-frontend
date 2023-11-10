@@ -85,18 +85,18 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 // Render the dropdown for selecting a subject
 const renderSubjectDropdown = () => {
   return (
-    <div style={{ padding: '0 20px' }}> {/* Adjusted padding to match filter-section */}
-      <select 
-        id="Subject"
+    <div style={{ padding: '0 20px' }}>
+      <input 
+        list="subjects"
         value={selectedTopic}
         onChange={(e) => setSelectedTopic(e.target.value)}
-        style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '10px' }} // Adjusted width to 100%
-      >
-        <option value="">Subject</option>
+        style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '10px' }}
+      />
+      <datalist id="subjects">
         {topics.map((topic, index) => (
           <option key={index} value={topic}>{topic}</option>
         ))}
-      </select>
+      </datalist>
     </div>
   );
 };
