@@ -7,6 +7,7 @@ import { TutorProfile } from '../models/tutorModel';
     const [sortKey, setSortKey] = useState('bestMatch'); // Default sort key
     const [sortedArray, setsortedArray] = useState([]); // Default sort key
     useEffect(() => {
+      console.log(tutors_data)
       if (tutors_data) {
         const sorted = [...tutors_data].sort((a, b) => {
           console.log(a.times_available);
