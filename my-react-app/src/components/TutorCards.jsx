@@ -97,7 +97,6 @@ const TutorCard = ({
             <div className="attribute"><strong>Primary Languages:</strong> {primaryLanguages || "N/A"}</div>
             <div className="attribute"><strong>CV:</strong> {cv ? <a href={cv} target="_blank" rel="noreferrer">View CV</a> : "N/A"}</div>
             <div className="attribute"><strong>Secondary Languages:</strong> {secondaryLanguages || "N/A"}</div>
-            <div className="attribute"><strong>Expertise in Subject:</strong> {subjects.slice(0, -1).join(', ') + ' and ' + subjects.slice(-1) || "N/A"}</div>
         </StyledTutorCard>
     );
 }
