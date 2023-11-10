@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'; // Ensure useState is imported
 import TutorCards_BecomeTutor from './TutorCards_BecomeTutor';
-import { TutorProfile } from '../models/tutorModel';
+import {TutorModel } from '../models/tutorModel'; 
 
 
   const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
@@ -39,7 +39,7 @@ import { TutorProfile } from '../models/tutorModel';
     };
     
   if (tutors_loading) {
-    return <p>Loading...</p>; // Or any other loading indicator you might want to use
+    return <p>Loading...</p>;
   }
 
   if (tutors_error) {
@@ -76,7 +76,7 @@ import { TutorProfile } from '../models/tutorModel';
   
           {/* Render the list of TutorCards */}
           {sortedArray.map((tutorData) => {
-            const tutor = TutorProfile.fromJSON(tutorData);
+            const tutor = TutorModel.fromJSON(tutorData);
             return (
               <TutorCards_BecomeTutor
             key={tutor.user_id}

@@ -1,9 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'; // Import from React Router if you're using it
-import { Rating } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-// import RatingStars from './RatingStars'; // Import your star rating component
 
 const StyledTutorCard = styled.div`
   display: flex;
@@ -78,44 +74,32 @@ const fullStyle = {
 // TutorCard component
 
 const TutorCard = ({
-  profilePicture,
-  name,
-  description,
-  rating,
-  subject,
-  link, // Assuming you have a link prop for the tutor's profile page
-  // ... other props
+    profilePicture, 
+    ratings, 
+    classes, 
+    description, 
+    price, 
+    availability, 
+    primaryLanguages, 
+    cv, 
+    secondaryLanguages, 
+    subjects,
+    name
 }) => {
-  // Truncate the description to fit within the card
-  const truncateText = (text, length) => {
-    return text.length > length ? text.substring(0, length) + '...' : text;
-  };
-
-  return (
-    <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}> {/* Use Link for navigation */}
-      <StyledTutorCard>
-        <div style = {fullStyle}>
-        <div style ={profileGroupStyle1}>
-        <img style={imageStyle} src={profilePicture} alt={`Tutor ${name}`} />
-          <div>
-          <h3 style={tutorCardNameStyle}>{name}</h3>
-          <Rating
-            name="customized-rating"
-            value={rating}
-            readOnly
-            precision={0.5}
-            icon={<StarIcon style={{ width: '0.7rem', height: '0.7rem' }} fontSize="inherit" />}
-            emptyIcon = {<StarIcon style={{ width: '0.7rem', height: '0.7rem' }} fontSize="inherit" />}
-          />
-          </div>
-        </div>
-        <div className="description">{truncateText(description, 200)}</div> {/* Limit the bio to 80 characters */}
-        </div>
-        <div className="subject" >{subject} tutor</div>
-        
-      </StyledTutorCard>
-    </Link>
-  );
-};
+    return (
+        <StyledTutorCard>
+            {/* This is a placeholder image. You can replace it with a dynamic image linked to the registered user */}
+            <img src={profilePicture} alt={`Tutor`} />
+            <h3>{name}</h3>
+            <div className="attribute"><strong>Classes:</strong> {classes || "N/A"}</div>
+            <div className="attribute"><strong>Description:</strong> {description || "N/A"}</div>
+            <div className="attribute"><strong>Price:</strong> {price ? `$${price}/hr` : "N/A"}</div>
+            <div className="attribute"><strong>Primary Languages:</strong> {primaryLanguages || "N/A"}</div>
+            <div className="attribute"><strong>CV:</strong> {cv ? <a href={cv} target="_blank" rel="noreferrer">View CV</a> : "N/A"}</div>
+            <div className="attribute"><strong>Secondary Languages:</strong> {secondaryLanguages || "N/A"}</div>
+            <div className="attribute"><strong>Expertise in Subject:</strong> {subjects.slice(0, -1).join(', ') + ' and ' + subjects.slice(-1) || "N/A"}</div>
+        </StyledTutorCard>
+    );
+}
 
 export default TutorCard;
