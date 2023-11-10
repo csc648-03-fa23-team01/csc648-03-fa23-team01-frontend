@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const StyledNavBar = styled.div`
-  background-color: #ffffff;
+  background-color: #c4bb8b;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -63,10 +63,10 @@ export const NavBar = () => {
     <StyledNavBar>
         <div className="navbar">
           <button onClick={() => navigate("/")}  className="logo">Logo</button>
-          <button >About</button>
-          <button >Become a Tutor</button>
-          <button >Login</button>
-          <button>Sign up</button>
+          <button onClick={() => navigate("/teampage")}  className="logo" >About </button>
+          <button onClick={() => navigate("/tutorapply")}  className="logo" >Become a Tutor</button>
+          <button onClick={() => navigate("/login")}  className="logo" >Login</button>
+          <button onClick={() => navigate("/signup")}  className="logo">Sign up</button>
         </div>
     </StyledNavBar>
   );
