@@ -7,6 +7,7 @@ import { searchAsync } from '../actions/tutorAction';
 import TutorList from './TutorList.jsx';
 import { TutorModel } from '../models/tutorModel.jsx';
 
+
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
   flex-direction: column; /* Stack children vertically */
@@ -44,6 +45,7 @@ const StyledResultPage = styled.div`
 export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   // State hooks for filters
   const [hourlyRate, setHourlyRate] = useState(10);
+  const [FilterTutorData, setFilterTutorData] = useState(tutors_data);
   const [availability, setAvailability] = useState({
     sunday: false,
     monday: false,
@@ -90,6 +92,8 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   };
 
   // Render the checkboxes for availability
+  
+  
   const renderAvailabilityCheckboxes = () => {
     return Object.keys(availability).map((day) => (
       <div key={day}>
@@ -106,26 +110,7 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   };
 
   const [selectedTopic, setSelectedTopic] = useState('');
-  const topics = ['Math', 'Science', 'English', 'History']; // Add  topics here
 
-// Render the dropdown for selecting a subject
-const renderSubjectDropdown = () => {
-  return (
-    <div style={{ padding: '0 20px' }}>
-      <input 
-        list="subjects"
-        value={selectedTopic}
-        onChange={(e) => setSelectedTopic(e.target.value)}
-        style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '10px' }}
-      />
-      <datalist id="subjects">
-        {topics.map((topic, index) => (
-          <option key={index} value={topic}>{topic}</option>
-        ))}
-      </datalist>
-    </div>
-  );
-};
 
 console.log(applyFilters())
 return (
@@ -145,7 +130,6 @@ return (
         />
         <h3>Availability</h3>
         {renderAvailabilityCheckboxes()}
-        {renderSubjectDropdown()} {/* Add this line to render the subject dropdown */}
       </div>
       <div className="tutor-cards-wrapper">
         <SearchBar isHomePage={false} />
