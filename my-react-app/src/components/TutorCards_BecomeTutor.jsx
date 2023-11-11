@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Rating } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
+import { Link } from 'react-router-dom';
+
 // import RatingStars from './RatingStars'; // Import your star rating component
 
 // Adjusted StyledTutorCard for smaller size
@@ -123,6 +125,7 @@ const reviewCount = 100; // Your dynamic review count value
 // TutorCards_BecomeTutor component
 
 const TutorCards_BecomeTutor = ({
+  id,
     name,
     description,
     subjects,
@@ -167,7 +170,9 @@ const TutorCards_BecomeTutor = ({
               price: ${price}/hr
             </div>
           )}
+      <Link to={`/tutor/${id || '404'}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <ViewProfileButton>View Tutor Profile</ViewProfileButton>
+              </Link>
             </div>
           </StyledTutorCard>
         // </Link>

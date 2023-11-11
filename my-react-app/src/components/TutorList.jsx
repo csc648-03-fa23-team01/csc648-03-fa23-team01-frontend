@@ -76,10 +76,9 @@ import {TutorModel } from '../models/tutorModel';
   
           {/* Render the list of TutorCards */}
           {sortedArray.map((tutorData) => {
-            console.log(tutorData.profilePictureLink)
             return (
               <TutorCards_BecomeTutor
-            key={tutorData.user_id}
+            id={tutorData.id}
             name={tutorData.firstName +" " + tutorData.lastName}
             profilePictureLink={tutorData.profilePictureLink}
             ratings={tutorData.averageRatings}
