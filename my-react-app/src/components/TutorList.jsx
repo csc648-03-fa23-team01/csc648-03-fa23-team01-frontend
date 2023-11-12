@@ -10,7 +10,6 @@ import {TutorModel } from '../models/tutorModel';
       console.log(tutors_data)
       if (tutors_data) {
         const sorted = [...tutors_data].sort((a, b) => {
-          console.log(a.times_available);
           if (sortKey === 'bestMatch') {
             return b.average_ratings - a.average_ratings;
           } else if (sortKey === 'lowestPrice') {
@@ -76,6 +75,7 @@ import {TutorModel } from '../models/tutorModel';
   
           {/* Render the list of TutorCards */}
           {sortedArray.map((tutorData) => {
+            console.log(tutorData)
             return (
               <TutorCards_BecomeTutor
             id={tutorData.id}

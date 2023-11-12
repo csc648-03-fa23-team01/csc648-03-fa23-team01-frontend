@@ -72,14 +72,16 @@ export const fetchTutor = (user_id) => async (dispatch) => {
   // Convert user_id to string and log it for debugging
   user_id = String(user_id);
 
-  const queryAddress = `(${process.env.REACT_APP_BACKEND_URL}/tutor?id=${encodeURIComponent(user_id)}`;
-
+  const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/tutor?id=${encodeURIComponent(user_id)}`;
+  console.log(queryAddress);
   // Dispatch the request action
 
   dispatch(TutorRequest());
 
   try {
     // Execute the API request
+    console.log("Sending request"); // Debugging log
+
     const response = await fetch(queryAddress, {
       method: 'GET',
       headers: {

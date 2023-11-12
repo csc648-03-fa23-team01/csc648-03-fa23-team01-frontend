@@ -32,14 +32,18 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
 
   useEffect(() => {
     const user_id = params.user_id;
+    console.log(user_id)
+
     if (user_id) {
       setLoading(true);
+      console.log("loading")
       fetchTutor(user_id);
     }
   }, [fetchTutor, params.user_id]);
 
   useEffect(() => {
     if (tutors_data) {
+      console.log("loading found", tutors_data)
       setLoading(false);
       setTutor(TutorModel.fromJSON(tutors_data)); // Update tutor state
     }

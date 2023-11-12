@@ -82,13 +82,13 @@ export class TutorModel {
         console.log("json:",json)
 
         return new TutorModel({
-            id: json['user_id'],
+            id: json['user']['id'],
             firstName: json['user']['first_name'],
             lastName: json['user']['last_name'],
             email: json['user']['email'],
             password: json['user']['password'],
             adminStatus: json['user']['admin_status'],
-            profilePictureLink: json['user']['profile_picture_link'],
+            profilePictureLink: json['profile_picture_link'],
             verifiedStatus: json['user']['verified_status'],
             averageRatings: json['average_ratings'],
             classes: json['classes'],
