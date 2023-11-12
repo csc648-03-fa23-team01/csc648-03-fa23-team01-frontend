@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import NavBar from './NavBar';
-import SearchBar from './SearchBar';
+import SearchBar from './HomePageSearchBar';
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 import background_image from '../assets/images/Background_Image.png';

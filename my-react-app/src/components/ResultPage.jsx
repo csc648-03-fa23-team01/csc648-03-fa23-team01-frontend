@@ -17,9 +17,10 @@ const StyledResultPage = styled.div`
   }
 
   .filter-section {
-    flex-basis: 250px; /* Width of the sidebar */
-    padding: 20px; /* Padding around the filter content */
-    border-right: 1px solid #ccc; /* Line separating sidebar from content */
+    flex-basis: 250px;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    margin-top: 7rem; /* Adjust this value to move the filter section down */
   }
 
   .tutor-cards-wrapper {
