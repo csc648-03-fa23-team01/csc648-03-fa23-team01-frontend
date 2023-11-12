@@ -15,7 +15,7 @@ const StyledSearchBar = styled.div`
   margin: 10px auto;  
   position: relative;
   top: 0.625rem;
-  left: -23.5rem;
+  left: -17.5rem;
 
   select,
   button {

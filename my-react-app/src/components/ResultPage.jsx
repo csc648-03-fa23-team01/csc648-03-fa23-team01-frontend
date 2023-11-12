@@ -61,25 +61,28 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 
   const applyFilters = () => {
     let filteredTutors = tutors_data;
-    let tutorInstances;
-
-    console.log("filtering: ", tutors_data)
+  
     // Filter by hourly rate
-    if (hourlyRate && filteredTutors) {
+    if (hourlyRate) {
       filteredTutors = filteredTutors.filter(tutor => tutor.price >= hourlyRate);
-      console.log("filtering2: ", filteredTutors)
-      tutorInstances = filteredTutors.map(json => TutorModel.fromJSON(json));
-
     }
+  
     // Filter by selected topic
-    if (selectedTopic && filteredTutors) {
+    if (selectedTopic) {
       filteredTutors = filteredTutors.filter(tutor => tutor.topics.includes(selectedTopic));
-      console.log("filtering: ", filteredTutors)
-      tutorInstances = filteredTutors.map(json => TutorModel.fromJSON(json));
-      console.log(tutorInstances)
     }
-    return tutorInstances;
+  
+    // Filter by availability
+    const selectedDays = Object.entries(availability).filter(([day, isSelected]) => isSelected).map(([day]) => day);
+    if (selectedDays.length > 0) {
+      filteredTutors = filteredTutors.filter(tutor =>
+        tutor.times.some(time => selectedDays.map(day => day.toLowerCase()).includes(time.day.toLowerCase()))
+      );
+    }
+  
+    return filteredTutors.map(json => TutorModel.fromJSON(json));
   };
+  
 
 
   // Handler for changing the hourly rate
