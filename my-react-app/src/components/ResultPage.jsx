@@ -60,6 +60,11 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 
 
   const applyFilters = () => {
+    // Check if tutors_data is null or empty
+    if (!tutors_data || tutors_data.length === 0) {
+      return [];
+    }
+  
     let filteredTutors = tutors_data;
   
     // Filter by hourly rate
@@ -69,19 +74,25 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   
     // Filter by selected topic
     if (selectedTopic) {
-      filteredTutors = filteredTutors.filter(tutor => tutor.topics.includes(selectedTopic));
+      filteredTutors = filteredTutors.filter(tutor => 
+        tutor.topics && tutor.topics.includes(selectedTopic)
+      );
     }
   
     // Filter by availability
     const selectedDays = Object.entries(availability).filter(([day, isSelected]) => isSelected).map(([day]) => day);
     if (selectedDays.length > 0) {
       filteredTutors = filteredTutors.filter(tutor =>
-        tutor.times.some(time => selectedDays.map(day => day.toLowerCase()).includes(time.day.toLowerCase()))
+        tutor.times && tutor.times.some(time => 
+          selectedDays.map(day => day.toLowerCase()).includes(time.day.toLowerCase())
+        )
       );
     }
   
+    // Map the filtered data to TutorModel instances
     return filteredTutors.map(json => TutorModel.fromJSON(json));
   };
+  
   
 
 
