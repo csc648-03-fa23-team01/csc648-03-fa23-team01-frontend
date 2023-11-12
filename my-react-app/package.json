@@ -5,6 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/icons-material": "^5.11.9",
     "@mui/lab": "^5.0.0-alpha.102",
     "@mui/material": "^5.14.17",
@@ -14,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "aws-amplify": "^5.3.12",
     "aws-sdk": "^2.1487.0",
+    "buffer": "^6.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
