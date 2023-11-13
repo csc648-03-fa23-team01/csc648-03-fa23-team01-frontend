@@ -5,6 +5,7 @@ import InputField from './InputField'; // Import the InputField component
 import image from '../assets/images/Upload_File_Icon.png';
 
 
+
 function BecomeTutor() {
   const [resume, setResume] = useState(null);
   const [topic, setTopic] = useState("");
@@ -82,7 +83,20 @@ function BecomeTutor() {
     "Virtual"
    ];
 
-   
+   const [selectedDays, setSelectedDays] = useState([]);
+
+   const handleDayChange = (event) => {
+    const day = event.target.value;
+    if (selectedDays.includes(day)) {
+        // Remove the day from the array if it's already selected
+        setSelectedDays(selectedDays.filter(d => d !== day));
+    } else {
+        // Add the day to the array if it's not already selected
+        setSelectedDays([...selectedDays, day]);
+    }
+};
+
+
   return (
     <div>
       <NavBar />
@@ -151,16 +165,20 @@ function BecomeTutor() {
 
           {/* Available Time field*/}
           <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
-          <label htmlFor="classesInput">Available times</label>
-          <input
-            id="classesInput"
-            value={classes}
-            onChange={(e) => setClasses(e.target.value)}
-            style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
-          />
-          {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
+              <label htmlFor="availableDays">Available Days</label>
+              <div id="availableDays" style={{ display: 'block', width: '50%', padding: '8px' }}>
+                  <div><label><input type="checkbox" value="Saturday" onChange={handleDayChange} /> Saturday</label></div>
+                  <div><label><input type="checkbox" value="Sunday" onChange={handleDayChange} /> Sunday</label></div>
+                  <div><label><input type="checkbox" value="Monday" onChange={handleDayChange} /> Monday</label></div>
+                  <div><label><input type="checkbox" value="Tuesday" onChange={handleDayChange} /> Tuesday</label></div>
+                  <div><label><input type="checkbox" value="Wednesday" onChange={handleDayChange} /> Wednesday</label></div>
+                  <div><label><input type="checkbox" value="Thursday" onChange={handleDayChange} /> Thursday</label></div>
+                  <div><label><input type="checkbox" value="Friday" onChange={handleDayChange} /> Friday</label></div>
+              </div>
+              {errors.classes && <span style={errorTextStyle}>Please select at least one day.</span>}
+          </div>
 
-        </div>
+
         {/* Session type dropdown */}
             <div style={formGroupStyle}>
                       <label htmlFor="topicSelect">*In Person or Virtual:</label>

@@ -6,7 +6,6 @@ import NavBar from './NavBar';
 import TutorProfile from './TutorProfile';
 import { TutorModel } from '../models/tutorModel';  // Adjust the path as needed
 import { connect } from 'react-redux';
-import SearchBar from './SearchBar';
 
 const StyledHomePage = styled.div`
   background-color: #ffffff;
@@ -58,7 +57,6 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
       <StyledHomePage>
         <div className="div">
           <NavBar />
-          <SearchBar/>
           <TutorProfile {...tutor} />
         </div>
         <div>

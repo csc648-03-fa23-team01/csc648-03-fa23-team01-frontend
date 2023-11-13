@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Navbar from "./NavBar.jsx";
-import SearchBar from "./SearchBar.jsx";
 import styled from "styled-components";
 import Messenger from "./Messenger.jsx"
 import { connect } from 'react-redux';
@@ -22,7 +21,6 @@ export const SendMessagePage = ({ tutors_data, tutors_loading, tutors_error }) =
       <StyledResultPage>
         <div>
         <Navbar />
-          <SearchBar isHomePage={false} />
         </div>
         <div >
         <Messenger recipient={recipient} />
