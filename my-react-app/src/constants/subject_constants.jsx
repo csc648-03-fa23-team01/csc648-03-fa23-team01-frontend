@@ -1,6 +1,5 @@
 export const topics = [
-    'Mathematics',
-    'English Literature',
+    'English ',
     'Physics',
     'Chemistry',
     'Biology',
@@ -53,7 +52,7 @@ export const topics = [
     'Linguistics',
     'Management',
     'Marketing',
-    'Mathematical Sciences',
+    'Math',
     'Meteorology',
     'Microbiology',
     'Middle Eastern Studies',

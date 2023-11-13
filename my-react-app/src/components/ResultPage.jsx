@@ -108,7 +108,6 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 
   // Render the checkboxes for availability
   
-  
   const renderAvailabilityCheckboxes = () => {
     return Object.keys(availability).map((day) => (
       <div key={day}>

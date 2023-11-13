@@ -61,9 +61,11 @@ import {TutorModel } from '../models/tutorModel';
         <>
         {/* Header container */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0' }}>
-              {/* Centered message */}
-              <h4 style={{ flexGrow: 1, textAlign: 'center' }}>{tutors_data.length} tutors fit your choices</h4>
-              {/* Sort dropdown aligned to the right */}
+          {/* Message with adjusted style and partially bold text */}
+          <h4 style={{ flexGrow: 1, textAlign: 'left', fontSize: '1.5rem', marginLeft: '1rem' }}>
+            <strong>{tutors_data.length} tutors</strong> fit your choices
+          </h4>
+          {/* Sort dropdown aligned to the right */}
               <div>
                 <label htmlFor="sort-select">Sort:</label>
                 <select id="sort-select" value={sortKey} onChange={handleSortChange} style={dropdownStyle}>
