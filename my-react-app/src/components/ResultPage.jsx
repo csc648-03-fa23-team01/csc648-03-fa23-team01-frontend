@@ -8,6 +8,10 @@ import TutorList from './TutorList.jsx';
 import { TutorModel } from '../models/tutorModel.jsx';
 
 
+const ContentContainer = styled.div`
+  position: relative;
+  z-index: 2; // Ensure the content is above the overlay
+`;
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
   flex-direction: column; /* Stack children vertically */
@@ -128,6 +132,8 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 
 console.log(applyFilters())
 return (
+  <ContentContainer>
+
   <StyledResultPage>
     <Navbar />
     <div className="content-wrapper">
@@ -154,6 +160,8 @@ return (
         />      </div>
     </div>
   </StyledResultPage>
+  </ContentContainer>
+
 );
 }
 

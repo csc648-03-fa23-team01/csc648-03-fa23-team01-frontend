@@ -21,7 +21,6 @@ const StyledHomePage = styled.div`
     align-items: center;
     height: 100vh;
     width: 100vw;
-    max-width: 1280px;
   }
 `;
 
