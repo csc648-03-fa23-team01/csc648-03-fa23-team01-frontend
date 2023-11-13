@@ -1,5 +1,5 @@
 export const topics = [
-    'English ',
+    'English',
     'Physics',
     'Chemistry',
     'Biology',

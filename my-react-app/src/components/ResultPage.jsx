@@ -21,31 +21,31 @@ const StyledResultPage = styled.div`
   }
 
   .filter-section {
-    flex-basis: 250px;
-    padding: 20px;
-    border-right: 1px solid #ccc;
-    margin-top: 7rem; /* Adjust this value to move the filter section down */
+    flex-basis: 15.625rem;
+    padding: 1.25rem; 
+    border-right: 0.0625rem solid #ccc; 
+    margin-top: 7rem; /* No change as it's already in rem */
   }
 
   .tutor-cards-wrapper {
     flex-grow: 1; /* Takes up the remaining space */
-    padding: 20px; /* Padding around the tutor cards */
+    padding: 1.25rem; 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start; /* Align items to the top */
-    gap: 20px; // Keep some space between the cards
+    gap: 1.25rem; 
   }
-  .result-wrapper{
-    justify-content: start;
 
+  .result-wrapper {
+    justify-content: start;
   }
 
   .availability-checkbox {
-    margin-right: 8px; /* Space between checkbox and label */
+    margin-right: 0.5rem; 
   }
-  
 `;
+
 
 export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   // State hooks for filters
