@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { searchAsync } from '../actions/tutorAction';
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
-import TextField from '@mui/material/TextField';
 import { topics } from '../constants/subject_constants';
 
 const StyledSearchBar = styled.div`

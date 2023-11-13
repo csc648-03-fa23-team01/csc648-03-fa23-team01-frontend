@@ -75,7 +75,7 @@ const HomePage = () => {
       <ContentContainer>
         <NavBar />
         <TextWrapper>"Welcome to the world of learning!"</TextWrapper>
-        <SearchBar isHomePage={true} large ={true} onSearch={(query) => dispatch(searchAsync(query,"Subject"))} />
+        <SearchBar isResultPage={false} large ={true} onSearch={(query) => dispatch(searchAsync(query,"Subject"))} />
         <TutorProfilesWrapper  >
           {tutorProfiles.map((profile, index) => (
             <TutorCard

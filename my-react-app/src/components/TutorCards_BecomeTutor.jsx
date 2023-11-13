@@ -163,7 +163,7 @@ const TutorCards_BecomeTutor = ({
                 </div>
               </div>
               <div style={DescriptionStyle}>{description}</div>
-              <h4>{subjects[0]} tutor</h4>
+              <h4>{subjects.join(', ')} tutor</h4>
               {/* Absolute positioned price div */}
           {price && (
             <div style={priceStyle}>
