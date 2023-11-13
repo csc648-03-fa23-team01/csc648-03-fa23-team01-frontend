@@ -17,20 +17,20 @@ const StyledResultPage = styled.div`
   }
 
   .filter-section {
-    flex-basis: 15.625rem; /* 250px / 16px */
-    padding: 1.25rem; /* 20px / 16px */
-    border-right: 0.0625rem solid #ccc; /* 1px / 16px */
+    flex-basis: 15.625rem;
+    padding: 1.25rem; 
+    border-right: 0.0625rem solid #ccc; 
     margin-top: 7rem; /* No change as it's already in rem */
   }
 
   .tutor-cards-wrapper {
     flex-grow: 1; /* Takes up the remaining space */
-    padding: 1.25rem; /* 20px / 16px */
+    padding: 1.25rem; 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start; /* Align items to the top */
-    gap: 1.25rem; /* 20px / 16px */
+    gap: 1.25rem; 
   }
 
   .result-wrapper {
@@ -38,7 +38,7 @@ const StyledResultPage = styled.div`
   }
 
   .availability-checkbox {
-    margin-right: 0.5rem; /* 8px / 16px */
+    margin-right: 0.5rem; 
   }
 `;
 
