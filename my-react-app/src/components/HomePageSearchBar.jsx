@@ -14,7 +14,7 @@ const StyledSearchBar = styled.div`
   margin: 10px auto;  
   position: relative;
   top: 0.625rem;
-  left: -17.5rem;
+  left: 10.5rem;
 
   select,
   button {
@@ -25,7 +25,7 @@ const StyledSearchBar = styled.div`
   }
   
   input {
-    width: 70rem;
+    width: 30rem;
     padding: 10px;
     margin-right: 0; /* Remove right margin */
     border: 1px solid #ccc;
