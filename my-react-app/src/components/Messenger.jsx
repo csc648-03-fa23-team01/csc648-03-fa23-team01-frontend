@@ -71,6 +71,7 @@ const StyledMessenger = styled.div`
 
 const Messenger = ({ recipient }) => {
     const [message, setMessage] = useState('');
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
    
 
@@ -96,7 +97,10 @@ const Messenger = ({ recipient }) => {
 
             const data = await response.json();
             console.log('Response:', data);
-            // Handle response here
+            
+            setShowSuccessMessage(true);
+            setTimeout(() => setShowSuccessMessage(false), 3000); // Hide the message after 3 seconds
+
             setMessage(''); // Clear the message input after sending
         } catch (error) {
             console.error('Error sending message:', error);
@@ -106,6 +110,11 @@ const Messenger = ({ recipient }) => {
     console.log("recipient", recipient)
     return (
         <StyledMessenger>
+            {showSuccessMessage && (
+            <div style={{ color: 'green', marginTop: '10px', textAlign:"center"}}>
+                Message sent successfully!
+            </div>
+        )}
             <div className="message-writer">
             <div className="recipient-card">
                 <img src={recipient.profilePictureLink} alt={recipient.name} className="recipient-photo" />
@@ -121,7 +130,7 @@ const Messenger = ({ recipient }) => {
                 />
                 <button onClick={handleSendMessage}>Send Message</button>
             </div>
-         
+            
         </StyledMessenger>
     );
 };
