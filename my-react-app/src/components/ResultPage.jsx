@@ -15,19 +15,20 @@ const StyledResultPage = styled.div`
   }
 
   .filter-section {
-    flex-basis: 250px; /* Width of the sidebar */
-    padding: 20px; /* Padding around the filter content */
-    border-right: 1px solid #ccc; /* Line separating sidebar from content */
+    flex-basis: 15.625rem; 
+    padding: 1.25rem;
+    border-right: 0.0625rem solid #ccc;
+    
   }
 
   .tutor-cards-wrapper {
     flex-grow: 1; /* Takes up the remaining space */
-    padding: 20px; /* Padding around the tutor cards */
+    padding: 1.25rem; 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start; /* Align items to the top */
-    gap: 20px; // Keep some space between the cards
+    gap: 1.25rem; 
   }
   .result-wrapper{
     justify-content: start;
@@ -35,7 +36,7 @@ const StyledResultPage = styled.div`
   }
 
   .availability-checkbox {
-    margin-right: 8px; /* Space between checkbox and label */
+    margin-right: 0.5rem;
   }
   
 `;
@@ -86,13 +87,13 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 // Render the dropdown for selecting a subject
 const renderSubjectDropdown = () => {
   return (
-    <div style={{ padding: '0 20px' }}> {/* Adjusted padding to match filter-section */}
+<div style={{ padding: '0 1.25rem' }}> {/* Adjusted padding to match filter-section */}
       <select 
         id="Subject"
         value={selectedTopic}
         onChange={(e) => setSelectedTopic(e.target.value)}
-        style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '10px' }} // Adjusted width to 100%
-      >
+        style={{ display: 'block', width: '100%', padding: '0.5rem', marginBottom: '0.625rem' }} // Adjusted width to 100%
+        >
         <option value="">Subject</option>
         {topics.map((topic, index) => (
           <option key={index} value={topic}>{topic}</option>

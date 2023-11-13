@@ -44,22 +44,22 @@ function BecomeTutor() {
 
   const formBoxStyle = {
     backgroundColor: "#fFfFfF",
-    padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
+    padding: "1.25rem", 
+    border: "0.0625rem solid #ccc", 
+    borderRadius: "0.3125rem", 
     textAlign: "left",
-    maxWidth: "400px",
+    maxWidth: "25rem", 
     margin: "0 auto",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", 
-    marginBottom: "20px", // This will add space at the bottom of the form
-
+    boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.2)", 
+    marginBottom: "1.25rem", 
   };
+  
 
   const formGroupStyle = {
-    marginBottom: "10px",
+    marginBottom: "0.625rem", 
     display: 'flex',       // Enable flexbox
     justifyContent: 'center', // Center children horizontally
-    marginBottom: '10px',
+    marginBottom: '0.625rem', 
     display: 'flex',
     'flex-direction' : 'column'
   };
@@ -86,7 +86,7 @@ function BecomeTutor() {
   return (
     <div>
       <NavBar />
-      <div className="content" style={{ marginTop: '20px' }}> 
+      <div className="content" style={{ marginTop: '1.25rem' }}> 
         <div style={formBoxStyle}>
           <h1>Apply to be a Tutor</h1>
           <form onSubmit={handleSubmit}>
@@ -95,7 +95,7 @@ function BecomeTutor() {
             <div style={formGroupStyle}>
               <label>*Resume</label>
               <label htmlFor="pictureInput" style={chooseFileButtonStyle}>
-              <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
+              <img src={image} alt="Upload" style={{ width: '1.25rem', height: '1.25rem', verticalAlign: 'middle' }} /> CHOOSE A FILE
               </label>
               <input
                 id="pictureInput"
@@ -114,8 +114,8 @@ function BecomeTutor() {
           id="topicSelect"
           value={selectedTopic}
           onChange={(e) => setSelectedTopic(e.target.value)}
-          style={{ display: 'block', width: '55%', padding: '8px', marginBottom: '10px' }} // Make sure the width and padding match other inputs
-        >
+          style={{ display: 'block', width: '55%', padding: '0.5rem', marginBottom: '0.625rem' }} // Make sure the width and padding match other inputs
+          >
           <option value="">Select a topic</option>
           {topics.map((topic, index) => (
             <option key={index} value={topic}>{topic}</option>
@@ -132,8 +132,8 @@ function BecomeTutor() {
           id="classesInput"
           value={classes}
           onChange={(e) => setClasses(e.target.value)}
-          style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
-        />
+          style={{ display: 'block', width: '50%', padding: '0.5rem', height: '0.625rem' }} // Adjust height as needed
+          />
         {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
       </div>
 
@@ -144,8 +144,8 @@ function BecomeTutor() {
             id="classesInput"
             value={classes}
             onChange={(e) => setClasses(e.target.value)}
-            style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
-          />
+            style={{ display: 'block', width: '50%', padding: '0.5rem', height: '0.625rem' }} // Adjust height as needed
+            />
           {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
         </div>
 
@@ -156,8 +156,8 @@ function BecomeTutor() {
             id="classesInput"
             value={classes}
             onChange={(e) => setClasses(e.target.value)}
-            style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
-          />
+            style={{ display: 'block', width: '50%', padding: '0.5rem', height: '0.625rem' }} // Adjust height as needed
+            />
           {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
 
         </div>
@@ -168,7 +168,7 @@ function BecomeTutor() {
                       id="topicSelect"
                       value={selectedTopic}
                       onChange={(e) => setSelectedTopic(e.target.value)}
-                      style={{ display: 'block', width: '55%', padding: '10px', marginBottom: '10px' }} // Make sure the width and padding match other inputs
+                      style={{ display: 'block', width: '55%', padding: '0.625rem', marginBottom: '0.625rem' }} // Make sure the width and padding match other inputs
                       >
                     <option value="">Select your Sesssion Type</option>
                 {SessionType.map((topic, index) => (
@@ -184,8 +184,8 @@ function BecomeTutor() {
             id="classesInput"
             value={classes}
             onChange={(e) => setClasses(e.target.value)}
-            style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
-          />
+            style={{ display: 'block', width: '50%', padding: '0.5rem', height: '0.625rem' }} // Adjust height as needed
+            />
           {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
         </div>
 
@@ -193,7 +193,7 @@ function BecomeTutor() {
             <div style={formGroupStyle}>
               <label>*Click on the "Choose File" button to upload your picture:</label>
               <label htmlFor="pictureInput" style={chooseFileButtonStyle}>
-              <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
+              <img src={image} alt="Upload" style={{ width: '1.25rem', height: '1.25rem', verticalAlign: 'middle' }} /> CHOOSE A FILE
               </label>
               <input
                 id="pictureInput"
@@ -207,7 +207,7 @@ function BecomeTutor() {
             <div style={formGroupStyle}>
               <label>Click on the "Choose File" button to upload your video:</label>
               <label htmlFor="videoInput" style={chooseFileButtonStyle}>
-              <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
+              <img src={image} alt="Upload" style={{ width: '1.25rem', height: '1.25rem', verticalAlign: 'middle' }} /> CHOOSE A FILE
               </label>
               <input
                 id="videoInput"

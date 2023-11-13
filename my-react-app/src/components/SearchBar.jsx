@@ -9,7 +9,7 @@ const StyledSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   width: ${props => props.large ? '47.87rem' : '66%'};
-  margin: 20px auto;  
+  margin: 1.25rem auto;
   .search-bar {
     display: flex;
     align-items: center;
@@ -19,10 +19,10 @@ const StyledSearchBar = styled.div`
   
   input {
     flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 0.625rem; 
+    border: 0.0625rem solid #ccc; 
     border-right: none; // Remove the right border to connect with the button
-    border-radius: 4px 0 0 4px; // Adjusted border-radius
+    border-radius: 0.25rem 0 0 0.25rem; 
     box-sizing: border-box; // Include padding and border in the height calculation
     height: ${props => props.large ? '5.06rem' : 'auto'};
     font-family: 'Inter';
@@ -30,13 +30,13 @@ const StyledSearchBar = styled.div`
   }
   
   button {
-    padding: 10px; // Match the vertical padding of the input field
+    padding: 0.625rem; 
     background-color: #F6A833; // Orange color
     color: black;
-    border: 1px solid #F6A833; // Match input field border for consistent height
+    border: 0.0625rem solid #F6A833;
     border-left: none; // Remove the left border to make it seamless with input
     cursor: pointer;
-    border-radius: 0 4px 4px 0; // Adjusted border-radius
+    border-radius: 0 0.25rem 0.25rem 0; 
     box-sizing: border-box; // Include padding and border in the height calculation
     height: ${props => props.large ? '5.06rem' : 'auto'};
     font-family: 'Inter';

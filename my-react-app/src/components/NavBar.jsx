@@ -12,14 +12,14 @@ const StyledNavBar = styled.div`
 
   .div {
     background-color: #C4BB8C;
-    height: 99px; /* Adjust the height as needed */
+    height: 6.1875rem; /* Adjust the height as needed */
     position: relative;
     width: 100%; /* Make it 100% */
   }
 
   .navbar {
     background-color: #C4BB8C;
-    border: 1px solid #000000;
+    border: 0.0625rem solid #000000;
     height: 6.2rem;
     left: 0;
     position: relative;
@@ -28,7 +28,7 @@ const StyledNavBar = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
+    padding: 0 1.875rem;
   }
 
   button {
@@ -63,7 +63,7 @@ export const NavBar = () => {
   return (
     <StyledNavBar>
         <div className="navbar">
-          <button onClick={() => navigate("/")}  className="logo">Logo</button>
+          <button onClick={() => navigate("/")} className="logo"><img className="img" alt="Rectangle" src={image1} /></button>
           <button onClick={() => navigate("/teampage")}  className="logo" >About </button>
           <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>
           <button onClick={() => navigate("/login")}  className="logo" >Login</button>
