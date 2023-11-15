@@ -70,33 +70,67 @@ const StyledMessenger = styled.div`
 
 
 const Messenger = ({ recipient }) => {
-    // const [message, setMessage] = useState('');
+    const [message, setMessage] = useState('');
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
    
-    // const handleSendMessage = () => {
-    //     console.log('Message sent:', message);
-    //     // Here you might want to send the message to a server
-    //     // or handle it in some other way
-    //     setMessage(''); // Clear the message input after sending
-    // };
 
+    const handleSendMessage = async () => {
+        console.log('Message sent:', message);
+        // Define the payload
+        const queryParams = new URLSearchParams({
+            sender_id: 9,
+            receiver_id: recipient.id,
+            text: message
+        });
+    
+        const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/message?${queryParams.toString()}`;
+
+        try {
+            // Send POST request to your endpoint
+            const response = await fetch(queryAddress, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            const data = await response.json();
+            console.log('Response:', data);
+            
+            setShowSuccessMessage(true);
+            setTimeout(() => setShowSuccessMessage(false), 3000); // Hide the message after 3 seconds
+
+            setMessage(''); // Clear the message input after sending
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
+
+    console.log("recipient", recipient)
     return (
         <StyledMessenger>
-
+            {showSuccessMessage && (
+            <div style={{ color: 'green', marginTop: '10px', textAlign:"center"}}>
+                Message sent successfully!
+            </div>
+        )}
             <div className="message-writer">
             <div className="recipient-card">
-                <img src={recipient.photo} alt={recipient.name} className="recipient-photo" />
+                <img src={recipient.profilePictureLink} alt={recipient.name} className="recipient-photo" />
                 <div className="recipient-info">
-                    <h3>{recipient.name}</h3>
+                    <h3>{recipient.firstName} {recipient.lastName}</h3>
                 </div>
             </div>
             <textarea
-                placeholder="Body"
-                rows="4"
-            />
-            <button >Send Message</button>
+                    placeholder="Body"
+                    rows="4"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                />
+                <button onClick={handleSendMessage}>Send Message</button>
             </div>
-         
+            
         </StyledMessenger>
     );
 };

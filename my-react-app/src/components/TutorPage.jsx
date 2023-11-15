@@ -21,6 +21,23 @@ const StyledHomePage = styled.div`
     height: 100vh;
     width: 100vw;
   }
+  .tutor-cards-wrapper {
+    flex-grow: 1; /* Takes up the remaining space */
+    padding: 20px; /* Padding around the tutor cards */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; // Keep some space between the cards
+  }
+  
+  .search-bar-container {
+    display: flex;
+    justify-content: center;
+    width: 1280px; // Ensure it spans the full width of the container
+    margin: 20px 0; // Add some vertical margin
+  }
+
 `;
 
 const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) => {
@@ -57,7 +74,10 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
       <StyledHomePage>
         <div className="div">
           <NavBar />
-          <TutorProfile {...tutor} />
+          <div className="search-bar-container">
+      </div>          
+      <TutorProfile {...tutor} isLoggedin={true} />
+       
         </div>
         <div>
 
