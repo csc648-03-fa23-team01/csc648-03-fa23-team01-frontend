@@ -47,18 +47,28 @@ const StyledSearchBar = styled.div`
   }
 `;
 
-const SearchBar = ({ isHomePage, large}) => {
-    const [searchText, setSearchText] = useState('');
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+const SearchBar = ({ isResultPage = false, large= false}) => {
+const [searchText, setSearchText] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+function isAlphanumeric(str) {
+  return /^[a-zA-Z0-9 ]+$/.test(str);
+}
 
-    const handleSearch = async () => {
+
+
+    const handleSearch =  async () =>{
         console.log(`Searching for: ${searchText}`);
-        dispatch(searchAsync(searchText,"Subject"));
-        console.log(`Searching complete`);
-        if (isHomePage) {
-            navigate("/ResultPage");
+        if(isAlphanumeric(searchText) || searchText ==""){
+          dispatch(searchAsync(searchText,"Subjects" ));
+          console.log(`Searching complete`);
+          if(!isResultPage){
+              navigate("/ResultPage");
+          }
+        }else{
+          alert("Only alphanumeric characters allowed")
         }
+        
     };
 
     return (

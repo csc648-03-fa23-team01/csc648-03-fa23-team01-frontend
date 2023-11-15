@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 import TutorList from './TutorList.jsx';
+import { TutorModel } from '../models/tutorModel.jsx';
 
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
@@ -52,6 +53,31 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
     friday: false,
     saturday: false,
   });
+  const [query, setQuery] = useState('');
+
+
+  const applyFilters = () => {
+    let filteredTutors = tutors_data;
+    let tutorInstances;
+
+    console.log("filtering: ", tutors_data)
+    // Filter by hourly rate
+    if (hourlyRate && filteredTutors) {
+      filteredTutors = filteredTutors.filter(tutor => tutor.price >= hourlyRate);
+      console.log("filtering2: ", filteredTutors)
+      tutorInstances = filteredTutors.map(json => TutorModel.fromJSON(json));
+
+    }
+    // Filter by selected topic
+    if (selectedTopic && filteredTutors) {
+      filteredTutors = filteredTutors.filter(tutor => tutor.topics.includes(selectedTopic));
+      console.log("filtering: ", filteredTutors)
+      tutorInstances = filteredTutors.map(json => TutorModel.fromJSON(json));
+      console.log(tutorInstances)
+    }
+    return tutorInstances;
+  };
+
 
   // Handler for changing the hourly rate
   const handleHourlyRateChange = (event) => {
@@ -85,22 +111,23 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
 // Render the dropdown for selecting a subject
 const renderSubjectDropdown = () => {
   return (
-    <div style={{ padding: '0 20px' }}> {/* Adjusted padding to match filter-section */}
-      <select 
-        id="Subject"
+    <div style={{ padding: '0 20px' }}>
+      <input 
+        list="subjects"
         value={selectedTopic}
         onChange={(e) => setSelectedTopic(e.target.value)}
-        style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '10px' }} // Adjusted width to 100%
-      >
-        <option value="">Subject</option>
+        style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '10px' }}
+      />
+      <datalist id="subjects">
         {topics.map((topic, index) => (
           <option key={index} value={topic}>{topic}</option>
         ))}
-      </select>
+      </datalist>
     </div>
   );
 };
 
+console.log(applyFilters())
 return (
   <StyledResultPage>
     <Navbar />
@@ -122,17 +149,20 @@ return (
       </div>
       <div className="tutor-cards-wrapper">
         <SearchBar isHomePage={false} />
-        <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
-      </div>
+        <TutorList
+          tutors_data={applyFilters()} // Apply filters here
+          tutors_loading={tutors_loading}
+          tutors_error={tutors_error}
+        />      </div>
     </div>
   </StyledResultPage>
 );
 }
 
 const mapStateToProps = (state) => ({
-  tutors_data: state.tutors.data,
-  tutors_loading: state.tutors.loading,
-  tutors_error: state.tutors.error,
+  tutors_data: state.search.data,
+  tutors_loading: state.search.loading,
+  tutors_error: state.search.error,
 });
 
 const mapDispatchToProps = {

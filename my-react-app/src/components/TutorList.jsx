@@ -1,12 +1,29 @@
-import React, { useState } from 'react'; // Ensure useState is imported
+import React, { useState, useEffect } from 'react'; // Ensure useState is imported
 import TutorCards_BecomeTutor from './TutorCards_BecomeTutor';
-import { TutorProfile } from '../models/tutorModel';
+import {TutorModel } from '../models/tutorModel'; 
+
 
   const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
     const [sortKey, setSortKey] = useState('bestMatch'); // Default sort key
+    const [sortedArray, setsortedArray] = useState([]); // Default sort key
+    useEffect(() => {
+      console.log(tutors_data)
+      if (tutors_data) {
+        const sorted = [...tutors_data].sort((a, b) => {
+          console.log(a.times_available);
+          if (sortKey === 'bestMatch') {
+            return b.average_ratings - a.average_ratings;
+          } else if (sortKey === 'lowestPrice') {
+            return a.price - b.price;
+          }
+          return 0;
+        });
+            setsortedArray(sorted);
+      }
+    }, [tutors_data, sortKey]);
+    
     const handleSortChange = (event) => {
       setSortKey(event.target.value);
-      // Implement sorting logic or update the state that triggers a re-render with the sorted data
     };
     // Style for the sort dropdown
     const dropdownStyle = {
@@ -22,7 +39,7 @@ import { TutorProfile } from '../models/tutorModel';
     };
     
   if (tutors_loading) {
-    return <p>Loading...</p>; // Or any other loading indicator you might want to use
+    return <p>Loading...</p>;
   }
 
   if (tutors_error) {
@@ -58,23 +75,22 @@ import { TutorProfile } from '../models/tutorModel';
             </div>
   
           {/* Render the list of TutorCards */}
-          {tutors_data.map((tutorData) => {
-            const tutor = TutorProfile.fromJSON(tutorData);
+          {sortedArray.map((tutorData) => {
             return (
               <TutorCards_BecomeTutor
-                key={tutor.user_id}
-            name={tutor.name}
-            profilePicture={tutor.profilePicture}
-            ratings={tutor.average_ratings}
-            classes={tutor.classes}
-            description={tutor.description}
-            price={tutor.price}
-            availability={tutor.times_available}
-            primaryLanguages={tutor.main_languages}
-            cv={tutor.cv_link}
-            secondaryLanguages={tutor.other_languages}
-            subjects={tutor.subjects}  // This seems redundant, adjust as needed
-            rate={tutor.rate}
+            id={tutorData.id}
+            name={tutorData.firstName +" " + tutorData.lastName}
+            profilePictureLink={tutorData.profilePictureLink}
+            ratings={tutorData.averageRatings}
+            classes={tutorData.classes}
+            description={tutorData.description}
+            price={tutorData.price}
+            availability={tutorData.timesAvailable}
+            primaryLanguages={tutorData.mainLanguages}
+            cv={tutorData.cvLink}
+            secondaryLanguages={tutorData.otherLanguages}
+            subjects={tutorData.subjects}  // This seems redundant, adjust as needed
+            rate={tutorData.price}
 
             />
           );
