@@ -3,6 +3,10 @@ import styled from "styled-components";
 import {NavBar} from '../components/NavBar';
 import { Auth, Hub } from 'aws-amplify'
 import { useNavigate } from "react-router-dom";
+import {login} from '../actions/userAction'; 
+import { connect } from 'react-redux';
+
+
 
 const LoginPageWrapper = styled.div`
   background-color: #ffffff;
@@ -245,36 +249,28 @@ const TextWrapper10 = styled.div`
   top: 38px;
   white-space: nowrap;
 `;
-function LoginPage() {
+const LoginPage = ({users_data, users_loading, users_error, login}) => {
   const navigate = useNavigate();
   const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    const listener = (data) => {
-      const { payload } = data;
-      if (payload.event === 'signIn') {
-        navigate('/'); // Redirect to a dashboard after sign in
-      }
-    };
+    console.log("Users DAta: ", users_data);
+    if(users_data){
+      navigate("/");
+    }
+    else if(users_error){
+      // Handle sign-up failure locally
+      console.error('Login failed:', users_error);
+      alert('Login failed: ' + users_error.message);
+    }
+  }, [users_data, users_loading, users_error]);
 
-    Hub.listen('auth', listener);
-    return () => Hub.remove('auth', listener); // Cleanup listener
-  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const signInResponse = await Auth.signIn(Email, password);
-      console.log('Sign in successful', signInResponse);
-      // navigate('/dashboard'); // Optionally navigate here if immediate redirect is desired
-    } catch (error) {
-      console.error('Error during sign in:', error);
-      const errorMessage = error.toString();
-      const specificErrorMessage = errorMessage.split(': ')[1] || "An error occurred";
-      alert(specificErrorMessage);
-    }
+  login(Email, password);
   };
 
 
@@ -318,5 +314,15 @@ function LoginPage() {
     </LoginPageWrapper>
   );
 }
-  export default LoginPage;
+  const mapStateToProps = state => ({
+    users_data: state.users.userData,
+    users_loading: state.users.isLoading,
+    users_error: state.users.error,
+  });
   
+  const mapDispatchToProps = {
+    login,
+    
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

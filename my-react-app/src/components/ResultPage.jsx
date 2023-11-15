@@ -5,7 +5,13 @@ import styled from "styled-components";
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
 import TutorList from './TutorList.jsx';
+import { TutorModel } from '../models/tutorModel.jsx';
 
+
+const ContentContainer = styled.div`
+  position: relative;
+  z-index: 2; // Ensure the content is above the overlay
+`;
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
   flex-direction: column; /* Stack children vertically */
@@ -15,34 +21,34 @@ const StyledResultPage = styled.div`
   }
 
   .filter-section {
-    flex-basis: 250px; /* Width of the sidebar */
-    padding: 20px; /* Padding around the filter content */
-    border-right: 1px solid #ccc; /* Line separating sidebar from content */
+    flex-basis: 15.625rem;
+    padding: 1.25rem; 
+    border-right: 0.0625rem solid #ccc; 
+    margin-top: 7rem; /* No change as it's already in rem */
   }
 
   .tutor-cards-wrapper {
     flex-grow: 1; /* Takes up the remaining space */
-    padding: 20px; /* Padding around the tutor cards */
+    padding: 1.25rem; 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start; /* Align items to the top */
-    gap: 20px; // Keep some space between the cards
+    gap: 1.25rem; 
   }
-  .result-wrapper{
-    justify-content: start;
 
+  .result-wrapper {
+    justify-content: start;
   }
 
   .availability-checkbox {
-    margin-right: 8px; /* Space between checkbox and label */
+    margin-right: 0.5rem; 
   }
-  
 `;
+
 
 export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   // State hooks for filters
-  const [query, setQuery] = useState('');
   const [hourlyRate, setHourlyRate] = useState(10);
   const [availability, setAvailability] = useState({
     sunday: false,
@@ -53,6 +59,44 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
     friday: false,
     saturday: false,
   });
+
+
+  const applyFilters = () => {
+    // Check if tutors_data is null or empty
+    if (!tutors_data || tutors_data.length === 0) {
+      return [];
+    }
+  
+    let filteredTutors = tutors_data;
+  
+    // Filter by hourly rate
+    if (hourlyRate) {
+      filteredTutors = filteredTutors.filter(tutor => tutor.price >= hourlyRate);
+    }
+  
+    // Filter by selected topic
+    if (selectedTopic) {
+      filteredTutors = filteredTutors.filter(tutor => 
+        tutor.topics && tutor.topics.includes(selectedTopic)
+      );
+    }
+  
+    // Filter by availability
+    const selectedDays = Object.entries(availability).filter(([day, isSelected]) => isSelected).map(([day]) => day);
+    if (selectedDays.length > 0) {
+      filteredTutors = filteredTutors.filter(tutor =>
+        tutor.times && tutor.times.some(time => 
+          selectedDays.map(day => day.toLowerCase()).includes(time.day.toLowerCase())
+        )
+      );
+    }
+  
+    // Map the filtered data to TutorModel instances
+    return filteredTutors.map(json => TutorModel.fromJSON(json));
+  };
+  
+  
+
 
   // Handler for changing the hourly rate
   const handleHourlyRateChange = (event) => {
@@ -65,6 +109,7 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   };
 
   // Render the checkboxes for availability
+  
   const renderAvailabilityCheckboxes = () => {
     return Object.keys(availability).map((day) => (
       <div key={day}>
@@ -81,28 +126,12 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   };
 
   const [selectedTopic, setSelectedTopic] = useState('');
-  const topics = ['Math', 'Science', 'English', 'History']; // Add  topics here
 
-// Render the dropdown for selecting a subject
-const renderSubjectDropdown = () => {
-  return (
-    <div style={{ padding: '0 20px' }}> {/* Adjusted padding to match filter-section */}
-      <select 
-        id="Subject"
-        value={selectedTopic}
-        onChange={(e) => setSelectedTopic(e.target.value)}
-        style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '10px' }} // Adjusted width to 100%
-      >
-        <option value="">Subject</option>
-        {topics.map((topic, index) => (
-          <option key={index} value={topic}>{topic}</option>
-        ))}
-      </select>
-    </div>
-  );
-};
 
+console.log(applyFilters())
 return (
+  <ContentContainer>
+
   <StyledResultPage>
     <Navbar />
     <div className="content-wrapper">
@@ -119,14 +148,18 @@ return (
         />
         <h3>Availability</h3>
         {renderAvailabilityCheckboxes()}
-        {renderSubjectDropdown()} {/* Add this line to render the subject dropdown */}
       </div>
       <div className="tutor-cards-wrapper">
         <SearchBar isHomePage={false} />
-        <TutorList tutors_data={tutors_data} tutors_loading={tutors_loading} tutors_error={tutors_error} />
-      </div>
+        <TutorList
+          tutors_data={applyFilters()} // Apply filters here
+          tutors_loading={tutors_loading}
+          tutors_error={tutors_error}
+        />      </div>
     </div>
   </StyledResultPage>
+  </ContentContainer>
+
 );
 }
 

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
+
 // import RatingStars from './RatingStars'; // Import your star rating component
 
 // Adjusted StyledTutorCard for smaller size
@@ -129,6 +130,7 @@ const TutorCards_BecomeTutor = ({
     name,
     description,
     subjects,
+    profilePictureLink,
     // link,
     ratings, // Use 'ratings' here if that's what's being passed
     price,
@@ -144,7 +146,7 @@ const TutorCards_BecomeTutor = ({
           <StyledTutorCard>
             <div style={fullStyle}>
               <div style={profileGroupStyle1}>
-                <img style={imageStyle} src={profilePicture} alt={`Tutor ${name}`} />
+                <img style={imageStyle} src={profilePictureLink} alt={`Tutor ${name}`} />
                 <div>
                   <h3 style={tutorCardNameStyle}>{name}</h3>
                   {/* Absolute positioned rating div */}
@@ -162,17 +164,19 @@ const TutorCards_BecomeTutor = ({
                 </div>
               </div>
               <div style={DescriptionStyle}>{description}</div>
-              <h4>{subjects[0]} tutor</h4>
+              <h4>{subjects.join(', ')} tutor</h4>
               {/* Absolute positioned price div */}
           {price && (
             <div style={priceStyle}>
               price: ${price}/hr
             </div>
           )}
+      <Link to={`/tutor/${id || '404'}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <ViewProfileButton>View Tutor Profile</ViewProfileButton>
+              </Link>
             </div>
           </StyledTutorCard>
-        // </Link>
+         </Link>
       );
       
       

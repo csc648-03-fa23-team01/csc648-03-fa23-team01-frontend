@@ -1,8 +1,9 @@
-import React, { useState }  from "react";
+import React, { useState, useEffect }  from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from '../components/NavBar';
-import { Auth } from 'aws-amplify'
+import { connect } from 'react-redux';
+import {signUp} from '../actions/userAction'; 
 import { useNavigate } from "react-router-dom";
 
 const SignUpPageContainer = styled.div`
@@ -338,7 +339,8 @@ top: 212px;
 width: 539px;
 `;
 
-function SignUpPage() {
+const SignUpPage = ({users_data, users_loading, users_error, signUp}) => {
+  
   const navigate = useNavigate();
   const [sfsuId, setSfsuId] = useState('');
   const [Email, setEmail] = useState('');
@@ -346,6 +348,17 @@ function SignUpPage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [termsAndConditions, setTermsAndConditions] = useState(false);
+  useEffect(() => {
+    console.log("Users DAta: ", users_data);
+    if(users_data){
+      navigate("/");
+    }
+    else if(users_error){
+      // Handle sign-up failure locally
+      console.error('Sign-up failed:', users_error);
+      alert('Sign-up failed: ' + users_error.message);
+    }
+  }, [users_data, users_loading, users_error]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -364,25 +377,10 @@ function SignUpPage() {
     }
 
     const userData = { sfsuId, Email, password, firstName, lastName, termsAndConditions };
-    console.log('Sending data to backend:', userData);
+    console.log("Data being passed to userAction: ", userData);
 
-    try {
-      const signUpResponse = await Auth.signUp({
-        username: Email,
-        password,
-        attributes: {
-          // Add other necessary attributes
-        }
-      });
-      console.log('Sign up successful', signUpResponse);
-      navigate("/");
-    } catch (error) {
-      // IF there are errors our validations missed we display them
-      console.error('Error during sign up:', error);
-      const errorMessage = error.toString();
-      const specificErrorMessage = errorMessage.split(': ')[1] || "An error occurred";
-      alert(specificErrorMessage);
-    }
+  // In your component
+    signUp(firstName, lastName, Email, password, sfsuId); 
   };
 
   const validateEmail = (email) => {
@@ -445,4 +443,14 @@ function SignUpPage() {
     </SignUpPageContainer>
   );
 };
-export default SignUpPage;
+const mapStateToProps = state => ({
+  users_data: state.users.userData,
+  users_loading: state.users.isLoading,
+  users_error: state.users.error,
+});
+
+const mapDispatchToProps = {
+  signUp,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

@@ -1,45 +1,108 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from './NavBar';
 import  { buttonStyle, errorTextStyle, chooseFileButtonStyle, hiddenFileInputStyle } from '../styles/styles'; // Adjust the import path
 import InputField from './InputField'; // Import the InputField component
 import image from '../assets/images/Upload_File_Icon.png';
+import {becomeTutor} from '../actions/tutorAction'; 
+import { connect } from 'react-redux';
 
 
-function BecomeTutor() {
+const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor}) => {
+
   const [resume, setResume] = useState(null);
-  const [topic, setTopic] = useState("");
+
+
   const [classes, setClasses] = useState("");
+  const [language, setLanguage] = useState('');
+  const [days, setDays] = useState([]);
+  const [sessionType, setSessionType] = useState(null);
   const [about, setAbout] = useState(""); // Added state for the 'about' field
   const [picture, setPicture] = useState(null);
   const [video, setVideo] = useState(null);
   const [agree, setAgree] = useState(false);
+  const SessionType =[
+    "In Person",
+    "Virtual"
+   ];
 
-  const [errors, setErrors] = useState({
-    resume: false,
-    topic: false,
-    classes: false,
-    about: false, // Added error state for the 'about' field
-    agree: false,
-  });
+   const [selectedDays, setSelectedDays] = useState([]);
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+   const handleResumeChange = (e) => {
+    // Get the selected file from the input
+    const selectedFile = e.target.files[0];
+    setResume(selectedFile); // Store the selected file in state
+  };
+   const handlePictureChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setPicture(selectedFile);
 
-    const newErrors = {
-      resume: !resume,
-      topic: topic.trim() === "",
-      classes: classes.trim() === "",
-      agree: !agree,
+    // If you want to display the selected picture, you can use FileReader
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const pictureDataUrl = event.target.result;
+      // You can use pictureDataUrl to display the picture if needed
     };
+    reader.readAsDataURL(selectedFile);
+  };
 
-    setErrors(newErrors);
+  const handleVideoChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setVideo(selectedFile);
 
-    if (Object.values(newErrors).some((error) => error)) {
-      return;
+    // If you want to display the selected video, you can use FileReader
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const videoDataUrl = event.target.result;
+      // You can use videoDataUrl to display the video if needed
+    };
+    reader.readAsDataURL(selectedFile);
+  };
+
+  // const [errors, setErrors] = useState({
+  //   resume: false,
+  //   topic: false,
+  //   classes: false,
+  //   about: false, // Added error state for the 'about' field
+  //   agree: false,
+  // });
+  useEffect(() => {
+    console.log("Tutor DAta: ", tutors_data);
+    if(tutors_data){
+      // navigate("/");
     }
+    else if(tutors_error){
+      // Handle sign-up failure locally
+      console.error('Become Tutor failed:', tutors_error);
+      console.error('Become Tutor failed:', JSON.stringify(tutors_error, null, 2));
+
+      alert('Tutors failed: ' + tutors_error.message);
+    }
+  }, [tutors_data, tutors_loading, tutors_error]);
+  
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // const newErrors = {
+    //   resume: !resume,
+    //   topic: topic.trim() === "",
+    //   classes: classes.trim() === "",
+    //   agree: !agree,
+    // };
+    
+    // setErrors(newErrors);
+
+    // if (Object.values(newErrors).some((error) => error)) {
+    //   return;
+    // }
 
     // Handle form submission here
+    const tutorData = { resume, selectedTopic, classes, language, days, sessionType, about, picture, video, agree };
+    console.log("Data being passed to tutorAction: ", tutorData);
+    // In your component
+    becomeTutor(resume, selectedTopic, classes, language, days, sessionType, about, picture, video, agree ); 
   };
 
   const formBoxStyle = {
@@ -77,12 +140,19 @@ function BecomeTutor() {
      "Computer Science",
    ];
 
-   const SessionType =[
-    "In Person",
-    "Virtual"
-   ];
-
    
+   const handleDayChange = (event) => {
+    const day = event.target.value;
+    if (days.includes(day)) {
+        // Remove the day from the array if it's already selected
+        setDays(days.filter(d => d !== day));
+    } else {
+        // Add the day to the array if it's not already selected
+        setDays([...days, day]);
+    }
+};
+
+
   return (
     <div>
       <NavBar />
@@ -91,19 +161,19 @@ function BecomeTutor() {
           <h1>Apply to be a Tutor</h1>
           <form onSubmit={handleSubmit}>
             
-            {/* Label and custom file input for picture */}
-            <div style={formGroupStyle}>
-              <label>*Resume</label>
-              <label htmlFor="pictureInput" style={chooseFileButtonStyle}>
+           {/* Resume */}
+          <div style={formGroupStyle}>
+            <label>*Resume</label>
+            <label htmlFor="resumeInput" style={chooseFileButtonStyle}>
               <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
-              </label>
-              <input
-                id="pictureInput"
-                type="file"
-                style={hiddenFileInputStyle}
-                onChange={(e) => setPicture(e.target.files[0])}
-              />
-              {/* Handle picture error if any */}
+            </label>
+            <input
+              id="resumeInput"
+              type="file"
+              style={hiddenFileInputStyle}
+              onChange={handleResumeChange}
+            />
+            {/* Handle picture error if any */}
             </div>
 
 
@@ -121,7 +191,7 @@ function BecomeTutor() {
             <option key={index} value={topic}>{topic}</option>
           ))}
         </select>
-        {errors.topic && <span style={errorTextStyle}>This field is required.</span>}
+        {/* {errors.topic && <span style={errorTextStyle}>This field is required.</span>} */}
       </div>
 
 
@@ -134,7 +204,7 @@ function BecomeTutor() {
           onChange={(e) => setClasses(e.target.value)}
           style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
         />
-        {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
+        {/* {errors.classes && <span style={errorTextStyle}>This field is required.</span>} */}
       </div>
 
           {/* Language field */}
@@ -142,32 +212,36 @@ function BecomeTutor() {
           <label htmlFor="classesInput">Language</label>
           <input
             id="classesInput"
-            value={classes}
-            onChange={(e) => setClasses(e.target.value)}
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
             style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
           />
-          {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
+          {/* {errors.classes && <span style={errorTextStyle}>This field is required.</span>} */}
         </div>
 
           {/* Available Time field*/}
           <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
-          <label htmlFor="classesInput">Available times</label>
-          <input
-            id="classesInput"
-            value={classes}
-            onChange={(e) => setClasses(e.target.value)}
-            style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
-          />
-          {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
+              <label htmlFor="availableDays">Available Days</label>
+              <div id="availableDays" style={{ display: 'block', width: '50%', padding: '8px' }}>
+                  <div><label><input type="checkbox" value="Saturday" onChange={handleDayChange} /> Saturday</label></div>
+                  <div><label><input type="checkbox" value="Sunday" onChange={handleDayChange} /> Sunday</label></div>
+                  <div><label><input type="checkbox" value="Monday" onChange={handleDayChange} /> Monday</label></div>
+                  <div><label><input type="checkbox" value="Tuesday" onChange={handleDayChange} /> Tuesday</label></div>
+                  <div><label><input type="checkbox" value="Wednesday" onChange={handleDayChange} /> Wednesday</label></div>
+                  <div><label><input type="checkbox" value="Thursday" onChange={handleDayChange} /> Thursday</label></div>
+                  <div><label><input type="checkbox" value="Friday" onChange={handleDayChange} /> Friday</label></div>
+              </div>
+              {/* {errors.classes && <span style={errorTextStyle}>Please select at least one day.</span>} */}
+          </div>
 
-        </div>
+
         {/* Session type dropdown */}
             <div style={formGroupStyle}>
                       <label htmlFor="topicSelect">*In Person or Virtual:</label>
                       <select 
                       id="topicSelect"
-                      value={selectedTopic}
-                      onChange={(e) => setSelectedTopic(e.target.value)}
+                      value={sessionType}
+                      onChange={(e) => setSessionType(e.target.value)}
                       style={{ display: 'block', width: '55%', padding: '10px', marginBottom: '10px' }} // Make sure the width and padding match other inputs
                       >
                     <option value="">Select your Sesssion Type</option>
@@ -175,47 +249,43 @@ function BecomeTutor() {
                   <option key={index} value={topic}>{topic}</option>
                 ))}
               </select>
-              {errors.topic && <span style={errorTextStyle}>This field is required.</span>}
+              {/* {errors.topic && <span style={errorTextStyle}>This field is required.</span>} */}
             </div>
       {/* Tell us about yourself */}
         <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
           <label htmlFor="classesInput">*Tell us about yourself:</label>
           <input
             id="classesInput"
-            value={classes}
-            onChange={(e) => setClasses(e.target.value)}
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
             style={{ display: 'block', width: '50%', padding: '8px', height: '10px' }} // Adjust height as needed
           />
-          {errors.classes && <span style={errorTextStyle}>This field is required.</span>}
+          {/* {errors.classes && <span style={errorTextStyle}>This field is required.</span>} */}
         </div>
 
             {/* Label and custom file input for picture */}
-            <div style={formGroupStyle}>
-              <label>*Click on the "Choose File" button to upload your picture:</label>
-              <label htmlFor="pictureInput" style={chooseFileButtonStyle}>
-              <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
-              </label>
-              <input
-                id="pictureInput"
-                type="file"
-                style={hiddenFileInputStyle}
-                onChange={(e) => setPicture(e.target.files[0])}
-              />
-            </div>
+        <div style={formGroupStyle}>
+              {/* Picture input */}
+          <input
+            type="file"
+            accept="image/*" // Restrict to image files
+            onChange={handlePictureChange}
+          />
+        {picture && <img src={URL.createObjectURL(picture)} alt="Selected Picture" />}
 
-            {/* Label and custom file input for video */}
-            <div style={formGroupStyle}>
-              <label>Click on the "Choose File" button to upload your video:</label>
-              <label htmlFor="videoInput" style={chooseFileButtonStyle}>
-              <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
-              </label>
-              <input
-                id="videoInput"
-                type="file"
-                style={hiddenFileInputStyle}
-                onChange={(e) => setVideo(e.target.files[0])}
-              />
-            </div>
+        {/* Video input */}
+        <input
+          type="file"
+          accept="video/*" // Restrict to video files
+          onChange={handleVideoChange}
+        />
+        {video && (
+          <video controls>
+            <source src={URL.createObjectURL(video)} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
+        </div>
 
             {/* Submit button*/}
             <div style={formGroupStyle}>
@@ -227,7 +297,7 @@ function BecomeTutor() {
                 />{" "}
                 I agree to Website Name terms of use and privacy policy.
               </label>
-              {errors.agree && <span style={errorTextStyle}>This field is required.</span>}
+              {/* {errors.agree && <span style={errorTextStyle}>This field is required.</span>} */}
             </div>
 
             <div style={formGroupStyle}>
@@ -240,4 +310,14 @@ function BecomeTutor() {
   );
 }
 
-export default BecomeTutor;
+const mapStateToProps = state => ({
+  tutors_data: state.tutors.tutorData,
+  tutors_loading: state.tutors.isLoading,
+  tutors_error: state.tutors.error,
+});
+
+const mapDispatchToProps = {
+  becomeTutor,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BecomeTutorPage);

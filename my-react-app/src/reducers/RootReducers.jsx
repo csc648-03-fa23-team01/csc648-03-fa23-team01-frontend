@@ -1,6 +1,6 @@
 // Import action types for both reducers
-import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE } from "../actions/actionType";
-import { FETCH_TUTOR_REQUEST, FETCH_TUTOR_SUCCESS, FETCH_TUTOR_FAILURE } from "../actions/actionType";
+import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE, FETCH_TUTOR_REQUEST, FETCH_TUTOR_SUCCESS, FETCH_TUTOR_FAILURE, 
+    CREATE_TUTOR_REQUEST, CREATE_TUTOR_SUCCESS, CREATE_TUTOR_FAILURE } from "../actions/actionType";
 import { combineReducers } from 'redux';
 
 // Search Reducer
@@ -66,14 +66,27 @@ export const tutorReducer = (state = tutorInitialState, action) => {
               data: null,
               error: action.payload,
           };
+          case CREATE_TUTOR_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case CREATE_TUTOR_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                data: action.payload,
+                error: null,
+            };
+        case CREATE_TUTOR_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                data: null,
+                error: action.payload,
+            };
       default:
           return state;
   }
 };
-
-const rootReducer = combineReducers({
-  search: searchReducer,
-  tutor: tutorReducer
-});
-
-export default rootReducer;
