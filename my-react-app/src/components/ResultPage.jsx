@@ -15,7 +15,7 @@ const ContentContainer = styled.div`
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
   flex-direction: column; /* Stack children vertically */
-
+  overflow-x: hidden;
   .content-wrapper {
     display: flex; /* New flex container for the filter section and tutor cards */
   }

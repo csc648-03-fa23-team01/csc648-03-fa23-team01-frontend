@@ -14,7 +14,7 @@ const StyledNavBar = styled.div`
 
   .div {
     background-color: #C4BB8C;
-    height: 99px; /* Adjust the height as needed */
+    height: 6.2rem; /* Adjust the height as needed */
     position: relative;
     width: 100%; /* Make it 100% */
   }
@@ -30,7 +30,7 @@ const StyledNavBar = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
+    padding: 0 1.9rem;
   }
 
   button {
@@ -74,16 +74,15 @@ export const NavBar = ({users_data, signOut}) => {
       window.location.reload();
     }
   };
-  console.log("Nav Bar users Data: ", users_data);
   return (
     <StyledNavBar>
         <div className="navbar">
-          <button onClick={() => navigate("/")} className="logo"><img className="img" alt="Rectangle" src={image1} /></button>
+          <button onClick={() => navigate("/")} className="logo"><img  alt="Rectangle" src={image1} /></button>
           <button onClick={() => navigate("/teampage")}  className="logo" >About </button>
           {users_data && <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>}
           {!users_data && <button onClick={() => navigate("/login")}  className="logo" >Login</button>}
           {!users_data && <button onClick={() => navigate("/signup")}  className="logo">Sign up</button>}
-          { users_data &&  <button onClick={()=>navigate("/dashboard")}>Your Dashboard</button> }
+          { users_data &&  <button onClick={()=>navigate("/dashboard")} className="logo">Your Dashboard</button> }
           {users_data && (
           <button onClick={handleSignOut} className="logo">
             Sign out

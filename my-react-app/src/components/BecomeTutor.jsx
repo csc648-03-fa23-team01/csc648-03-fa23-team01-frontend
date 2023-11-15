@@ -266,19 +266,25 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
             {/* Label and custom file input for picture */}
         <div style={formGroupStyle}>
               {/* Picture input */}
+          <label htmlFor="classesInput">*Upload your Profile Picture:</label>
           <input
             type="file"
             accept="image/*" // Restrict to image files
             onChange={handlePictureChange}
           />
         {picture && <img src={URL.createObjectURL(picture)} alt="Selected Picture" />}
-
+        </div>
         {/* Video input */}
+        <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
+
+        <label htmlFor="classesInput">*Upload a short video about why your a good tutor:</label>
         <input
           type="file"
           accept="video/*" // Restrict to video files
           onChange={handleVideoChange}
         />
+        </div>
+        <div style={{...formGroupStyle, display: 'block'}}> 
         {video && (
           <video controls>
             <source src={URL.createObjectURL(video)} type="video/mp4" />

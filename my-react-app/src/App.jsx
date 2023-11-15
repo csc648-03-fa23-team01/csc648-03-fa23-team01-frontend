@@ -14,16 +14,13 @@ import store from "./store/store.js";
 import { Helmet } from 'react-helmet';
 import WebFont from 'webfontloader';
 import BecomeTutor from './components/BecomeTutor';
-import { Dashboard } from './components/Dashboard.jsx';
+import Dashboard from './components/Dashboard.jsx';
 import TrashUI from './components/TrashUI';
 import { Amplify, Storage, Auth } from 'aws-amplify'; // Import Amplify and Storage
 import awsmobile from './amplify-src/aws-exports';
 import TutorPage from './components/TutorPage';
 import SendMessagePage from './components/SendMessagePage';
 import SignUpPage from './components/SignUpPage';
-// import { withAuthenticator } from '@aws-amplify/ui-react';
-// import '@aws-amplify/ui-react/styles.css';
-import BecomeTutor from './components/BecomeTutor';
 
 Amplify.configure(awsmobile);
 
