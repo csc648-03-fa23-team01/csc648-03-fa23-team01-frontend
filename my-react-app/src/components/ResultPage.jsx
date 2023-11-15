@@ -15,7 +15,7 @@ const ContentContainer = styled.div`
 const StyledResultPage = styled.div`
   display: flex; /* Use flexbox to layout the main content and the sidebar */
   flex-direction: column; /* Stack children vertically */
-
+  overflow-x: hidden;
   .content-wrapper {
     display: flex; /* New flex container for the filter section and tutor cards */
   }
@@ -50,7 +50,6 @@ const StyledResultPage = styled.div`
 export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
   // State hooks for filters
   const [hourlyRate, setHourlyRate] = useState(10);
-  const [FilterTutorData, setFilterTutorData] = useState(tutors_data);
   const [availability, setAvailability] = useState({
     sunday: false,
     monday: false,
@@ -60,7 +59,6 @@ export const ResultPage = ({ tutors_data, tutors_loading, tutors_error }) => {
     friday: false,
     saturday: false,
   });
-  const [query, setQuery] = useState('');
 
 
   const applyFilters = () => {

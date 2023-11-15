@@ -1,6 +1,7 @@
 // src/actions/searchActions.js
-import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE, FETCH_TUTOR_FAILURE,FETCH_TUTOR_SUCCESS,FETCH_TUTOR_REQUEST } from "./actionType";
-
+import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE, FETCH_TUTOR_FAILURE,FETCH_TUTOR_SUCCESS,
+  FETCH_TUTOR_REQUEST, CREATE_TUTOR_REQUEST, CREATE_TUTOR_SUCCESS, CREATE_TUTOR_FAILURE } from "./actionType";
+  import { Auth } from 'aws-amplify'
 // Action Types
 
 
@@ -64,7 +65,11 @@ const TutorSuccess = (data) => ({
 
 const TutorFailure = (error) => ({
   type: FETCH_TUTOR_FAILURE,
-  payload: error,
+  payload: {
+    message: error.message,
+    code: error.code, // If applicable
+    // Other relevant properties
+  },
 });
 
 
@@ -105,4 +110,78 @@ export const fetchTutor = (user_id) => async (dispatch) => {
     // Dispatch a failure action if an error occurs during the API request
     dispatch(TutorFailure());
   }
+};
+// Action Creators
+const becomeTutorRequest = () => ({
+  type: CREATE_TUTOR_REQUEST,
+});
+
+const becomeTutorSuccess = (data) => ({
+  type: CREATE_TUTOR_SUCCESS,
+  payload: data,
+});
+
+// Action Creators
+const becomeTutorFailure = (error) => ({
+    type: CREATE_TUTOR_FAILURE,
+    payload: {
+      message: error.message,
+      code: error.code, // If applicable
+      // Other relevant properties
+    },
+  });
+  
+
+// Async Action: Fetch search results from an API
+export const becomeTutor = (resume, topic, about, picture, video, agree) => async (dispatch) => {
+  // Dispatch a request action to indicate the start of the API call
+  const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/createTutor`;
+
+  dispatch(becomeTutorRequest());
+
+    try {
+        const response = await fetch(queryAddress, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            resume: resume,
+            topic: topic,
+            about: about,
+            picture: picture,
+            video: video,
+            agree: agree
+          }),
+        });
+        const data = await response.json();
+      
+        if (!response.ok) {
+            throw new Error(`${data}`);
+        }        
+        try {
+          const user = await Auth.currentAuthenticatedUser();
+          const result = await Auth.updateUserAttributes(user, {
+            attributes: {
+              'custom:is_tutor' : 'True',
+            }
+          });
+          console.log(result); // SUCCESS
+        } catch(err) {
+          console.log("|Arias Custom message| Update attribute failed!: ", err);
+        }
+
+
+        console.log("passed signup");
+        
+        console.log('Udate tutor attribute successful', response);
+        
+        // Dispatch a success action with the fetched data
+        dispatch(becomeTutorSuccess(resume, topic, about, picture, video, agree));  
+      } catch (error) {
+        // IF there are errors our validations missed we display them
+        console.log("|Aria Custom Message!|Dispatch of tutor failed!: ", error);
+        dispatch(becomeTutorFailure(error));
+         
+      }
 };

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'; // Ensure useState is imported
 import TutorCards_BecomeTutor from './TutorCards_BecomeTutor';
-import {TutorModel } from '../models/tutorModel'; 
 
 
   const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
@@ -54,7 +53,7 @@ import {TutorModel } from '../models/tutorModel';
       {/* Conditional rendering for loading or error messages */}
       {tutors_loading && <p>Loading...</p>}
       {tutors_error && <p>Error: {tutors_error}</p>}
-      {(!tutors_data || tutors_data.length === 0) && <p>No tutors available.</p>}
+      {(!tutors_data || tutors_data.length === 0) && <p style={{ marginTop: '1rem' }}>No tutors available.</p>}
   
       {/* Check that tutors_data is loaded and has data */}
       {tutors_data && tutors_data.length > 0 && (
@@ -91,7 +90,7 @@ import {TutorModel } from '../models/tutorModel';
             primaryLanguages={tutorData.mainLanguages}
             cv={tutorData.cvLink}
             secondaryLanguages={tutorData.otherLanguages}
-            subjects={tutorData.subjects}  // This seems redundant, adjust as needed
+            subjects={tutorData.subjects}  
             rate={tutorData.price}
 
             />

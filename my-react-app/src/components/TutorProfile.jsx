@@ -142,6 +142,7 @@ const LanguageItem = styled.span`
 `;
 
 const TutorProfile = ({
+    isLoggedin =false,
     id,
     firstName,
     lastName,
@@ -182,9 +183,13 @@ const TutorProfile = ({
         <span>Computer Science</span>
         <div>Hourly Rate: ${price}</div>
       </Header>
-      <Link to={`/message/${id}`} style={{ textDecoration: 'none' }}>
-        <Button>Message</Button>
-      </Link>
+      {isLoggedin ? (
+                    <Link to={`/message/${id}`} style={{ textDecoration: 'none' }}>
+                        <Button>Message</Button>
+                    </Link>
+                ) : (
+                    <Button disabled>Message</Button>
+                )}
       <InfoSection>
         {/* ...InfoItems */}
       </InfoSection>

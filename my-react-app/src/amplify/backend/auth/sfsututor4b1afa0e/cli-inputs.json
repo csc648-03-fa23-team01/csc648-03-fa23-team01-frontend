@@ -1,8 +1,6 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "sfsututor4b1afa0e_identitypool_4b1afa0e",
-    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "sfsutu4b1afa0e",
     "userPoolName": "sfsututor4b1afa0e_userpool_4b1afa0e",
     "autoVerifiedAttributes": [
@@ -29,18 +27,21 @@
       "email"
     ],
     "userpoolClientReadAttributes": [
-      "email"
+      "email",
+      "family_name"
     ],
     "userpoolClientLambdaRole": "sfsutu4b1afa0e_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientSetAttributes": true,
     "sharedId": "4b1afa0e",
     "resourceName": "sfsututor4b1afa0e",
-    "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
+    "authSelections": "userPoolOnly",
+    "useDefault": "manual",
     "usernameAttributes": [
       "email"
     ],
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+      "admin"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
@@ -57,6 +58,15 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": []
+    "dependsOn": [],
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": {},
+    "hostedUI": false,
+    "authProviders": [],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "permissions": []
   }
 }

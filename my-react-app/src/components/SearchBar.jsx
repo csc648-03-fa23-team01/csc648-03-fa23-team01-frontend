@@ -3,14 +3,14 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { searchAsync } from '../actions/tutorAction';
-import { Autocomplete, createFilterOptions } from "@material-ui/lab";
+import Autocomplete, {  createFilterOptions } from '@mui/material/Autocomplete';
 import { topics } from '../constants/subject_constants';
 
 const StyledSearchBar = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: ${props => props.large ? '47.87rem' : '66%'};
+  width: ${props => props.large ? '47.87rem' : '56%'};
   margin: 10px auto;  
   position: relative;
   top: 0.625rem;
@@ -25,7 +25,7 @@ const StyledSearchBar = styled.div`
   }
   
   input {
-    width: 70rem;
+    width: 40rem;
     padding: 10px;
     margin-right: 0; /* Remove right margin */
     border: 1px solid #ccc;
@@ -78,7 +78,7 @@ const OPTIONS_LIMIT = 5;
     const handleSearch =  async () =>{
         console.log(`Searching for: ${searchText}`);
         if(isAlphanumeric(searchText) || searchText ==""){
-          dispatch(searchAsync(searchText,searchType ));
+          dispatch(searchAsync(searchText, searchType ));
           console.log(`Searching complete`);
           if(!isResultPage){
               navigate("/ResultPage");
