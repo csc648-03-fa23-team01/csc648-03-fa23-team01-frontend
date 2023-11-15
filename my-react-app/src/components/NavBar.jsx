@@ -83,6 +83,7 @@ export const NavBar = ({users_data, signOut}) => {
           {users_data && <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>}
           {!users_data && <button onClick={() => navigate("/login")}  className="logo" >Login</button>}
           {!users_data && <button onClick={() => navigate("/signup")}  className="logo">Sign up</button>}
+          { users_data &&  <button onClick={()=>navigate("/dashboard")}>Your Dashboard</button> }
           {users_data && (
           <button onClick={handleSignOut} className="logo">
             Sign out

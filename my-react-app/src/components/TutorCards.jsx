@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom'; // Import from React Router if you're using it
 import { Rating } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-// import RatingStars from './RatingStars'; // Import your star rating component
 
 const StyledTutorCard = styled.div`
   display: flex;

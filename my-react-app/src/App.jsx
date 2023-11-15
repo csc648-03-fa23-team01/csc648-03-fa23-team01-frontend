@@ -13,7 +13,8 @@ import {Provider} from "react-redux";
 import store from "./store/store.js";
 import { Helmet } from 'react-helmet';
 import WebFont from 'webfontloader';
-
+import BecomeTutor from './components/BecomeTutor';
+import { Dashboard } from './components/Dashboard.jsx';
 import TrashUI from './components/TrashUI';
 import { Amplify, Storage, Auth } from 'aws-amplify'; // Import Amplify and Storage
 import awsmobile from './amplify-src/aws-exports';
@@ -52,6 +53,7 @@ function App() {
               <Route path="/signup" element={<SignUpPage className = " signup " />} />
               <Route path="/message/:user_id" element={<SendMessagePage className = " Messenger " />} />
               <Route path="/resultPage" element={<ResultPage className = "result"/>} />
+              <Route path="/dashboard" element={<Dashboard className="dashboard" />} />
               <Route path="/BecomeTutor" element={<BecomeTutor className="become-tutor" />} />
               <Route path="/about-Mahdi Hassanpour" element={<Template names = {names[4]} summary = {summary[4]} email = {email[4]} role = {role[4]} image={image[4]} />} />
               <Route path="/about-David Chen" element={<Template names = {names[1]} summary = {summary[1]} email = {email[1]} role = {role[1]} image={image[1]} />} />
