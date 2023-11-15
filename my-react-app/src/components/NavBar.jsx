@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import image1 from '../assets/images/Logo_Image.png';
+import { connect } from 'react-redux';
+import {signOut} from '../actions/userAction';
 
 const StyledNavBar = styled.div`
   background-color: #c4bb8b;
@@ -57,20 +59,45 @@ const StyledNavBar = styled.div`
   }
 `;
 
-export const NavBar = () => {
+export const NavBar = ({users_data, signOut}) => {
   const navigate = useNavigate();
-
+  const handleSignOut = () => {
+    // Perform the sign-out action
+    signOut();
+    // Check if you're already on the home page
+    if (window.location.pathname === "/") {
+      // If on the home page, force a page reload
+      window.location.reload();
+    } else {
+      // Otherwise, navigate to the home page, then force reload
+      navigate("/");
+      window.location.reload();
+    }
+  };
+  console.log("Nav Bar users Data: ", users_data);
   return (
     <StyledNavBar>
         <div className="navbar">
-          <button onClick={() => navigate("/")}  className="logo">Logo</button>
+          <button onClick={() => navigate("/")} className="logo"><img className="img" alt="Rectangle" src={image1} /></button>
           <button onClick={() => navigate("/teampage")}  className="logo" >About </button>
-          <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>
-          <button onClick={() => navigate("/login")}  className="logo" >Login</button>
-          <button onClick={() => navigate("/signup")}  className="logo">Sign up</button>
+          {users_data && <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>}
+          {!users_data && <button onClick={() => navigate("/login")}  className="logo" >Login</button>}
+          {!users_data && <button onClick={() => navigate("/signup")}  className="logo">Sign up</button>}
+          {users_data && (
+          <button onClick={handleSignOut} className="logo">
+            Sign out
+          </button>
+        )}
+
         </div>
     </StyledNavBar>
   );
 };
+const mapStateToProps = state => ({
+  users_data: state.users.userData,
+});
+const mapDispatchToProps = {
+  signOut
+};
 
-export default NavBar;
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

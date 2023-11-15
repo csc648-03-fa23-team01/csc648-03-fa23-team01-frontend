@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'; // Ensure useState is imported
 import TutorCards_BecomeTutor from './TutorCards_BecomeTutor';
-import { TutorModel } from '../models/tutorModel';
 
 
   const TutorList = ({ tutors_data, tutors_loading, tutors_error }) => {
     const [sortKey, setSortKey] = useState('bestMatch'); // Default sort key
     const [sortedArray, setsortedArray] = useState([]); // Default sort key
     useEffect(() => {
+      console.log(tutors_data)
       if (tutors_data) {
         const sorted = [...tutors_data].sort((a, b) => {
-          console.log(a.times_available);
           if (sortKey === 'bestMatch') {
             return b.average_ratings - a.average_ratings;
           } else if (sortKey === 'lowestPrice') {
@@ -61,9 +60,11 @@ import { TutorModel } from '../models/tutorModel';
         <>
         {/* Header container */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0' }}>
-              {/* Centered message */}
-              <h4 style={{ flexGrow: 1, textAlign: 'center' }}>{tutors_data.length} tutors fit your choices</h4>
-              {/* Sort dropdown aligned to the right */}
+          {/* Message with adjusted style and partially bold text */}
+          <h4 style={{ flexGrow: 1, textAlign: 'left', fontSize: '1.5rem', marginLeft: '1rem' }}>
+            <strong>{tutors_data.length} tutors</strong> fit your choices
+          </h4>
+          {/* Sort dropdown aligned to the right */}
               <div>
                 <label htmlFor="sort-select">Sort:</label>
                 <select id="sort-select" value={sortKey} onChange={handleSortChange} style={dropdownStyle}>
@@ -75,23 +76,22 @@ import { TutorModel } from '../models/tutorModel';
   
           {/* Render the list of TutorCards */}
           {sortedArray.map((tutorData) => {
-            const tutor = TutorModel.fromJSON(tutorData);
+            console.log(tutorData)
             return (
               <TutorCards_BecomeTutor
-            id={tutor.id}
-            key={tutor.user_id}
-            name={tutor.name}
-            profilePicture={tutor.profilePicture}
-            ratings={tutor.average_ratings}
-            classes={tutor.classes}
-            description={tutor.description}
-            price={tutor.price}
-            availability={tutor.times_available}
-            primaryLanguages={tutor.main_languages}
-            cv={tutor.cv_link}
-            secondaryLanguages={tutor.other_languages}
-            subjects={tutor.subjects}  // This seems redundant, adjust as needed
-            rate={tutor.rate}
+            id={tutorData.id}
+            name={tutorData.firstName +" " + tutorData.lastName}
+            profilePictureLink={tutorData.profilePictureLink}
+            ratings={tutorData.averageRatings}
+            classes={tutorData.classes}
+            description={tutorData.description}
+            price={tutorData.price}
+            availability={tutorData.timesAvailable}
+            primaryLanguages={tutorData.mainLanguages}
+            cv={tutorData.cvLink}
+            secondaryLanguages={tutorData.otherLanguages}
+            subjects={tutorData.subjects}  
+            rate={tutorData.price}
 
             />
           );

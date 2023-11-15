@@ -6,7 +6,6 @@ import NavBar from './NavBar';
 import TutorProfile from './TutorProfile';
 import { TutorModel } from '../models/tutorModel';  // Adjust the path as needed
 import { connect } from 'react-redux';
-import SearchBar from './SearchBar';
 
 const StyledHomePage = styled.div`
   background-color: #ffffff;
@@ -21,7 +20,6 @@ const StyledHomePage = styled.div`
     align-items: center;
     height: 100vh;
     width: 100vw;
-    max-width: 1280px;
   }
 `;
 
@@ -32,20 +30,25 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
 
   useEffect(() => {
     const user_id = params.user_id;
+    console.log(user_id)
+
     if (user_id) {
       setLoading(true);
+      console.log("loading")
       fetchTutor(user_id);
     }
   }, [fetchTutor, params.user_id]);
 
   useEffect(() => {
     if (tutors_data) {
+      console.log("loading found", tutors_data)
       setLoading(false);
       setTutor(TutorModel.fromJSON(tutors_data)); // Update tutor state
     }
   }, [tutors_data]);
 
   if (loading || tutors_loading) {
+    console.log("test",tutors_data)
     return <div>Loading...</div>;
   }
 
@@ -54,7 +57,6 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
       <StyledHomePage>
         <div className="div">
           <NavBar />
-          <SearchBar/>
           <TutorProfile {...tutor} />
         </div>
         <div>
