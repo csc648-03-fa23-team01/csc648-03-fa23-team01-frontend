@@ -10,11 +10,9 @@ const StyledSearchBar = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: ${props => props.large ? '47.87rem' : '56%'};
-  margin: 10px auto;  
-  position: relative;
+  width: ${props => props.large ? '50rem' : '66%'};
+  margin: auto;  
   top: 0.625rem;
-  left: -17.5rem;
 
   select,
   button {
@@ -78,7 +76,7 @@ const OPTIONS_LIMIT = 5;
     const handleSearch =  async () =>{
         console.log(`Searching for: ${searchText}`);
         if(isAlphanumeric(searchText) || searchText ==""){
-          dispatch(searchAsync(searchText, searchType ));
+          dispatch(searchAsync(searchText,searchType ));
           console.log(`Searching complete`);
           if(!isResultPage){
               navigate("/ResultPage");

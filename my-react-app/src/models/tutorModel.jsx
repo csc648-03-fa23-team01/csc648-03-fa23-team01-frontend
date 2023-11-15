@@ -1,77 +1,106 @@
-export class TutorProfile {
+
+export class TutorModel {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    adminStatus: boolean;
+    profilePictureLink: string;
+    verifiedStatus: boolean;
+    averageRatings: number;
     classes: string;
-    average_ratings: number;
-    price: number;
-    main_languages: string;
-    prefer_in_person: boolean;
-    other_languages: string;
-    user_id: number;
     description: string;
-    times_available: string;
-    cv_link: string;
-    profilePicture: string;
-    name: string;
+    price: number;
+    timesAvailable: string;
+    mainLanguages: string;
+    preferInPerson: boolean;
+    cvLink: string;
+    otherLanguages: string;
     subjects: string[];
+
     constructor({
+        id,
+        firstName,
+        lastName,
+        email,
+        password,
+        adminStatus,
+        profilePictureLink,
+        verifiedStatus,
+        averageRatings,
         classes,
-        average_ratings,
-        price,
-        main_languages,
-        prefer_in_person,
-        other_languages,
-        user_id,
         description,
-        times_available,
-        cv_link,
-        profilePicture,
-        name,
+        price,
+        timesAvailable,
+        mainLanguages,
+        preferInPerson,
+        cvLink,
+        otherLanguages,
         subjects
     }: {
+        id: number,
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string,
+        adminStatus: boolean,
+        profilePictureLink: string,
+        verifiedStatus: boolean,
+        averageRatings: number,
         classes: string,
-        average_ratings: number,
-        price: number,
-        main_languages: string,
-        prefer_in_person: boolean,
-        other_languages: string,
-        user_id: number,
         description: string,
-        times_available: string,
-        cv_link: string,
-        profilePicture: string,
-        name: string,
+        price: number,
+        timesAvailable: string,
+        mainLanguages: string,
+        preferInPerson: boolean,
+        cvLink: string,
+        otherLanguages: string,
         subjects: string[]
     }) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.adminStatus = adminStatus;
+        this.profilePictureLink = profilePictureLink;
+        this.verifiedStatus = verifiedStatus;
+        this.averageRatings = averageRatings;
         this.classes = classes;
-        this.average_ratings = average_ratings;
-        this.price = price;
-        this.main_languages = main_languages;
-        this.prefer_in_person = prefer_in_person;
-        this.other_languages = other_languages;
-        this.user_id = user_id;
         this.description = description;
-        this.times_available = times_available;
-        this.cv_link = cv_link;
-        this.name = name;
-        this.profilePicture = profilePicture;
+        this.price = price;
+        this.timesAvailable = timesAvailable;
+        this.mainLanguages = mainLanguages;
+        this.preferInPerson = preferInPerson;
+        this.cvLink = cvLink;
+        this.otherLanguages = otherLanguages;
         this.subjects = subjects;
     }
 
-    static fromJSON(json: any): TutorProfile {
-        return new TutorProfile({
+    static fromJSON(json): TutorModel {
+        console.log("json:",json)
+
+        return new TutorModel({
+            id: json['user']['id'],
+            firstName: json['user']['first_name'],
+            lastName: json['user']['last_name'],
+            email: json['user']['email'],
+            password: json['user']['password'],
+            adminStatus: json['user']['admin_status'],
+            profilePictureLink: json['profile_picture_link'],
+            verifiedStatus: json['user']['verified_status'],
+            averageRatings: json['average_ratings'],
             classes: json['classes'],
-            average_ratings: json['average_ratings'],
-            price: json['price'],
-            main_languages: json['main_languages'],
-            prefer_in_person: json['prefer_in_person'],
-            other_languages: json['other_languages'],
-            user_id: json['user_id'],
             description: json['description'],
-            times_available: json['times_available'],
-            cv_link: json['cv_link'],
-            name: json['user']['first_name'] + " " + json['user']['last_name'],
-            profilePicture: json['user']['profile_picture_link'],
+            price: json['price'],
+            timesAvailable: json['times_available'],
+            mainLanguages: json['main_languages'],
+            preferInPerson: json['prefer_in_person'],
+            cvLink: json['cv_link'],
+            otherLanguages: json['other_languages'],
             subjects: json['topics'].map(topic => topic.name)
+            
         });
     }
-
 }
