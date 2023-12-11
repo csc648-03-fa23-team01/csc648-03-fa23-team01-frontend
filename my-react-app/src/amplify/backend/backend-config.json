@@ -32,7 +32,8 @@
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
-            "AppClientID"
+            "AppClientID",
+            "IdentityPoolId"
           ],
           "category": "auth",
           "resourceName": "sfsututor4b1afa0e"
@@ -43,7 +44,7 @@
     }
   },
   "storage": {
-    "sfsututor": {
+    "WorkPlease": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"

@@ -5,6 +5,9 @@ import InputField from './InputField'; // Import the InputField component
 import image from '../assets/images/Upload_File_Icon.png';
 import {becomeTutor} from '../actions/tutorAction'; 
 import { connect } from 'react-redux';
+import uploadMedia from '../utilities/media';
+import { v4 as uuidv4 } from 'uuid';
+import { Storage } from 'aws-amplify';
 
 
 const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor}) => {
@@ -28,35 +31,70 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
    const [selectedDays, setSelectedDays] = useState([]);
 
 
-   const handleResumeChange = (e) => {
-    // Get the selected file from the input
+   const handleUpload = async (selectedFile, fileType) => {
+    if (!selectedFile) {
+      return; // No file selected, nothing to upload
+    }
+  
+    try {
+      // Specify the folder path and default file extension
+      const folderPath = ''; // Replace with your desired folder path
+      let fileExtension = 'png'; // Default extension (e.g., for images)
+  
+      // Determine the file extension based on fileType
+      if (fileType === 'resume') {
+        fileExtension = 'pdf';
+      } else if (fileType === 'video') {
+        fileExtension = 'mp4'; // Change to the appropriate video format extension
+      }
+  
+      // Generate the file name with the determined extension
+      const fileName = `${fileType}-${uuidv4()}.${fileExtension}`;
+  
+      // // Use the uploadMedia function to upload the selected file
+      // const uploadedKey = await uploadMedia(selectedFile, folderPath, fileName);
+  
+      // // Do something with the uploaded key (e.g., store it or display it)
+      // console.log('Uploaded key:', uploadedKey);
+    
+      // Do something with the fileURL (e.g., store it or display it)
+      console.log('Uploaded URL:', fileName);
+      // Clear the selected file input
+      switch (fileType) {
+        case 'resume':
+          setResume(fileName);
+          break;
+        case 'picture':
+          setPicture(fileName);
+          break;
+        case 'video':
+          setVideo(fileName);
+          break;
+        default:
+          // Handle other file types if needed
+          break;
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+  
+  const handleResumeChange = (e) => {
     const selectedFile = e.target.files[0];
     setResume(selectedFile); // Store the selected file in state
+    
   };
-   const handlePictureChange = (e) => {
+  
+  const handlePictureChange = (e) => {
     const selectedFile = e.target.files[0];
     setPicture(selectedFile);
-
-    // If you want to display the selected picture, you can use FileReader
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const pictureDataUrl = event.target.result;
-      // You can use pictureDataUrl to display the picture if needed
-    };
-    reader.readAsDataURL(selectedFile);
+    
   };
-
+  
   const handleVideoChange = (e) => {
     const selectedFile = e.target.files[0];
     setVideo(selectedFile);
-
-    // If you want to display the selected video, you can use FileReader
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const videoDataUrl = event.target.result;
-      // You can use videoDataUrl to display the video if needed
-    };
-    reader.readAsDataURL(selectedFile);
+    
   };
 
   // const [errors, setErrors] = useState({
@@ -74,7 +112,7 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
     else if(tutors_error){
       // Handle sign-up failure locally
       console.error('Become Tutor failed:', tutors_error);
-      console.error('Become Tutor failed:', JSON.stringify(tutors_error, null, 2));
+
 
       alert('Tutors failed: ' + tutors_error.message);
     }
@@ -83,8 +121,14 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
 
 
   const handleSubmit = async (event) => {
+    if (!agree) {
+      alert("Please agree to the terms and conditions.");
+      return;
+    }
     event.preventDefault();
-
+    handleUpload(resume, 'resume');
+    handleUpload(picture, 'picture');
+    handleUpload(video, 'video');
     // const newErrors = {
     //   resume: !resume,
     //   topic: topic.trim() === "",
@@ -264,34 +308,36 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
         </div>
 
             {/* Label and custom file input for picture */}
-        <div style={formGroupStyle}>
-              {/* Picture input */}
-          <label htmlFor="classesInput">*Upload your Profile Picture:</label>
-          <input
-            type="file"
-            accept="image/*" // Restrict to image files
-            onChange={handlePictureChange}
-          />
-        {picture && <img src={URL.createObjectURL(picture)} alt="Selected Picture" />}
-        </div>
-        {/* Video input */}
-        <div style={{...formGroupStyle, display: 'block'}}> {/* Ensures this section is on a new line */}
-
-        <label htmlFor="classesInput">*Upload a short video about why your a good tutor:</label>
-        <input
-          type="file"
-          accept="video/*" // Restrict to video files
-          onChange={handleVideoChange}
-        />
-        </div>
-        <div style={{...formGroupStyle, display: 'block'}}> 
-        {video && (
-          <video controls>
-            <source src={URL.createObjectURL(video)} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        )}
-        </div>
+    <div style={formGroupStyle}>
+      {/* Picture input */}
+      <label htmlFor="pictureInput">*Upload your Profile Picture:</label>
+      <input
+        id="pictureInput"
+        type="file"
+        accept="image/*" // Restrict to image files
+        onChange={handlePictureChange}
+      />
+      {/* {picture && <img src={URL.createObjectURL(picture)} alt="Selected Picture" />} */}
+    </div>
+    
+    {/* Video input */}
+    <div style={{ ...formGroupStyle, display: 'block' }}>
+      <label htmlFor="videoInput">*Upload a short video about why you're a good tutor:</label>
+      <input
+        id="videoInput"
+        type="file"
+        accept="video/*" // Restrict to video files
+        onChange={handleVideoChange}
+      />
+    </div>
+    <div style={{ ...formGroupStyle, display: 'block' }}>
+      {video && (
+        <video controls>
+          {/* <source src={URL.createObjectURL(video)} type="video/mp4" /> */}
+          Your browser does not support the video tag.
+        </video>
+      )}
+    </div>
 
             {/* Submit button*/}
             <div style={formGroupStyle}>
