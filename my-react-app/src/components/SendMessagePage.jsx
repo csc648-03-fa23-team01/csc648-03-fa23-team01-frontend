@@ -14,30 +14,31 @@ const StyledResultPage = styled.div`
 
 const getUserIdByEmail = async (email) => {
   try {
-    const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/user/${email.toString()}`;
+    // Constructing the query URL with a query parameter for email
+    const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/getUserByEmail?email=${encodeURIComponent(email)}`;
 
     const response = await fetch(queryAddress, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         // Include other headers as required by your API
       },
-      body: JSON.stringify({ email: email }) // Sending email in the body of the request
     });
 
     const data = await response.json();
+    console.log("Received", data);
 
     if (response.ok) {
-      return data; // Assuming the response contains a 'user_id' field
+      // Assuming the response structure contains an object with a 'user' field
+      return data.user; 
     } else {
       throw new Error(data.detail || 'Unknown error occurred');
     }
   } catch (error) {
-    console.error('Error fetching user ID:', error);
+    console.error('Error fetching user:', error);
     return null; // Handle the error as per your app's design
   }
 };
-
 
 
 export const SendMessagePage = ({ users_data,tutors_data, tutors_loading, tutors_error }) => {
@@ -65,19 +66,18 @@ export const SendMessagePage = ({ users_data,tutors_data, tutors_loading, tutors
     }
   }, [tutors_data]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchUser = async () => {
       if (users_data) {
         const fetchedUser = await getUserIdByEmail(users_data.email);
-        setUser(fetchedUser);
-        console.log("Logged in as :",users_data);
-        console.log("userid", user);
+        setUser(fetchedUser); // Update user state
+        console.log("Logged in as:", users_data);
+        console.log("userid", fetchedUser); // Log the fetched user
       }
-      
     };
-
+  
     fetchUser();
-  }, [getUserTutors, users_data]);
+  }, [users_data]);
   
   const [query, setQuery] = useState('');
   if (tutor) {

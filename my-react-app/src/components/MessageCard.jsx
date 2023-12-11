@@ -7,6 +7,13 @@ const CardWrapper = styled.div`
   padding: 16px;
   margin: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); // simple shadow for depth
+  img {
+    width: 8vw; // Adjust for smaller image size
+    height: 8vw; // Adjust for smaller image size
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1vw;
+  }
 `;
 
 const MessageContent = styled.p`
@@ -21,10 +28,16 @@ const RecipientName = styled.h3`
   text-align: left; // Align text to the left
 `;
 
+const imageStyle = {
+  width: '3.375rem',
+  height: '3.375rem',
+  'margin-right': '0.3rem',
+}
 
-const MessageCard = ({ content, recipient_first_name, recipient_last_name }) => {
+const MessageCard = ({ content, recipient_first_name, recipient_last_name, profilePicture}) => {
   return (
     <CardWrapper>
+      <img style={imageStyle} src={profilePicture} />
       <RecipientName>{recipient_first_name} {recipient_last_name}</RecipientName>
       <MessageContent>{content}</MessageContent>
     </CardWrapper>

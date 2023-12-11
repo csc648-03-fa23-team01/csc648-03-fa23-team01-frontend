@@ -1,103 +1,128 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchSentMessages } from "../actions/userAction"; // Assuming you have an action to fetch messages
-import MessageCard from './MessageCard'; 
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchSentMessages, getUser } from "../actions/userAction"; // Assuming you have an action to fetch messages
+import MessageCard from "./MessageCard";
+import { getUserTutors } from "../actions/userAction";
 
 const styles = {
   container: {
-    fontFamily: 'Arial, sans-serif',
-    display: 'flex', // Enable Flexbox
-    justifyContent: 'center', // Center the content horizontally
-    margin: 'auto',
-    textAlign: 'center',
-    width: '100%', // Set width to 100% of the page
+    fontFamily: "Arial, sans-serif",
+    display: "flex", // Enable Flexbox
+    justifyContent: "center", // Center the content horizontally
+    margin: "auto",
+    textAlign: "center",
+    width: "100%", // Set width to 100% of the page
   },
   dashboardSection: {
     flex: 1, // Take up equal space
-
   },
   messagesSection: {
-    margin: '8px',
+    margin: "8px",
     flex: 2, // Take up double space compared to dashboardSection
-    textAlign: 'left', // Align text to the left for messages
+    textAlign: "left", // Align text to the left for messages
   },
   header: {
-    margin: '20px 0',
-    fontWeight: 'bold',
+    margin: "20px 0",
+    fontWeight: "bold",
   },
   welcome: {
-    margin: '10px 0',
-    fontWeight: 'normal',
+    margin: "10px 0",
+    fontWeight: "normal",
   },
   menuContainer: {
-    border: '1px solid #000',
-    borderRadius: '10px',
-    padding: '20px',
+    border: "1px solid #000",
+    borderRadius: "10px",
+    padding: "20px",
   },
   button: {
-    display: 'block',
-    width: '100%',
-    padding: '10px',
-    margin: '10px 0',
-    border: '1px solid #000',
-    borderRadius: '5px',
-    background: '#fff',
-    cursor: 'pointer',
+    display: "block",
+    width: "100%",
+    padding: "10px",
+    margin: "10px 0",
+    border: "1px solid #000",
+    borderRadius: "5px",
+    background: "#fff",
+    cursor: "pointer",
   },
   resourcesSection: {
     flex: 2, // Same as messagesSection to take up double space
-    padding: '10px', // Add padding for spacing
-    border: '1px solid #ccc', // Add a border for visual separation
-    borderRadius: '8px', // Rounded corners
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)', // Box shadow for depth
-    margin: '8px'
-
+    padding: "10px", // Add padding for spacing
+    border: "1px solid #ccc", // Add a border for visual separation
+    borderRadius: "8px", // Rounded corners
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)", // Box shadow for depth
+    margin: "8px",
   },
   resourceList: {
-    listStyleType: 'none', // Remove default list styling
+    listStyleType: "none", // Remove default list styling
     padding: 0,
   },
   resourceItem: {
-    marginBottom: '10px', // Space out the items
+    marginBottom: "10px", // Space out the items
   },
   resourceLink: {
-    textDecoration: 'none', // Remove underline from links
-    color: '#007bff', // Link color, can be adjusted
-    ':hover': {
-      textDecoration: 'underline', // Underline on hover for better UX
+    textDecoration: "none", // Remove underline from links
+    color: "#007bff", // Link color, can be adjusted
+    ":hover": {
+      textDecoration: "underline", // Underline on hover for better UX
     },
   },
 
   accountSection: {
-    textAlign: 'center',
+    textAlign: "center",
     flex: 2, // Consistent with messagesSection for layout
-    textAlign: 'left',
-    padding: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    margin: '8px'
-
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    margin: "8px",
   },
   accountHeader: {
-    fontWeight: 'bold',
-    fontSize: '18px',
-    marginBottom: '10px',
+    fontWeight: "bold",
+    textAlign: "center",
+
+    fontSize: "18px",
+    marginBottom: "10px",
   },
   accountInfo: {
-    fontSize: '14px',
-    lineHeight: '1.5',
-    color: '#333',
-  }
+    fontSize: "14px",
+    lineHeight: "1.5",
+    color: "#333",
+  },
+};
 
+const getUserIdByEmail = async (email) => {
+  try {
+    const queryAddress = `${
+      process.env.REACT_APP_BACKEND_URL
+    }/user/${email.toString()}`;
+
+    const response = await fetch(queryAddress, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Include other headers as required by your API
+      },
+      body: JSON.stringify({ email: email }), // Sending email in the body of the request
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return data; // Assuming the response contains a 'user_id' field
+    } else {
+      throw new Error(data.detail || "Unknown error occurred");
+    }
+  } catch (error) {
+    console.error("Error fetching user ID:", error);
+    return null; // Handle the error as per your app's design
+  }
 };
 
 const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
-  const [showMessages, setShowMessages] = useState(false);
+  const [showMessages, setShowMessages] = useState(true);
   const [showResources, setShowResources] = useState(false); // New state for resources menu
   const [showAccount, setShowAccount] = useState(false); // New state for My Account section
-
-
+  const [user, setUser] = useState(null); // Use state for tutor
 
   useEffect(() => {
     if (showMessages && users_data) {
@@ -105,6 +130,17 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
     }
   }, [showMessages, users_data, fetchSentMessages]);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (users_data) {
+        const fetchedUser = await getUserIdByEmail(users_data.email);
+        setUser(fetchedUser);
+        console.log("Logged in as :", users_data);
+      }
+    };
+
+    fetchUser();
+  }, [getUserTutors, users_data]);
 
   const handleMessagesClick = () => {
     setShowMessages(true);
@@ -127,55 +163,91 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
     <div style={styles.container}>
       <div style={styles.dashboardSection}>
         <div style={styles.header}>Dashboard</div>
-        <div style={styles.welcome}>Welcome, {users_data ? users_data.firstName : 'John'}</div>
+        <div style={styles.welcome}>
+          Welcome, {users_data ? users_data.firstName : "John"}
+        </div>
         <div style={styles.menuContainer}>
-        <button style={styles.button} onClick={handleAccountClick}>My Account</button>
-          <button style={styles.button} onClick={handleMessagesClick}>Messages</button>
-        <button style={styles.button} onClick={handleResourcesClick}>Resources</button>
+          <button style={styles.button} onClick={handleAccountClick}>
+            My Account
+          </button>
+          <button style={styles.button} onClick={handleMessagesClick}>
+            Messages
+          </button>
+          <button style={styles.button} onClick={handleResourcesClick}>
+            Resources
+          </button>
         </div>
       </div>
-      {showMessages && (<div style={styles.messagesSection}>
-        { !messages_data?.loading && Array.isArray(messages_data.data) && messages_data.data.length > 0 ? (
-          messages_data.data.map((message, index) => (
-            <MessageCard content={message.message_text} recipient_first_name={message.receiver_first_name} recipient_last_name={message.receiver_last_name} key={index} />
-          ))
-        ) : (
-          <p></p>
-        )}
-        {showMessages && messages_data.error && <p>Error loading messages.</p>}
-      </div>)}
+      {showMessages && (
+        <div style={styles.messagesSection}>
+          {!messages_data?.loading &&
+          Array.isArray(messages_data.data) &&
+          messages_data.data.length > 0 ? (
+            messages_data.data.map((message, index) => (
+              <MessageCard
+                content={message.message_text}
+                recipient_first_name={message.receiver_first_name}
+                recipient_last_name={message.receiver_last_name}
+                key={index}
+                profilePicture={message.receiver_profile_pic}
+              />
+            ))
+          ) : (
+            <p></p>
+          )}
+          {/* {showMessages && messages_data.error && <p>Error loading messages.</p>} */}
+        </div>
+      )}
       {showResources && (
-  <div style={styles.resourcesSection}>
-    <p>Resource Links:</p>
-    <ul style={styles.resourceList}>
-      <li style={styles.resourceItem}><a style={styles.resourceLink} href="#link1">https://canvas.sfsu.edu/</a></li>
-      <li style={styles.resourceItem}><a style={styles.resourceLink} href="#link2">https://gateway.sfsu.edu</a></li>
-      <li style={styles.resourceItem}><a style={styles.resourceLink} href="#link2">https://www.khanacademy.org/</a></li>
-      <li style={styles.resourceItem}><a style={styles.resourceLink} href="#link2">https://gateway.sfsu.edu</a></li>
-    </ul>
-  </div>
-)}
- {/* My Account Section */}
- {showAccount && (
+        <div style={styles.resourcesSection}>
+          <p>Resource Links:</p>
+          <ul style={styles.resourceList}>
+            <li style={styles.resourceItem}>
+              <a style={styles.resourceLink} href="#link1">
+                https://canvas.sfsu.edu/
+              </a>
+            </li>
+            <li style={styles.resourceItem}>
+              <a style={styles.resourceLink} href="#link2">
+                https://gateway.sfsu.edu
+              </a>
+            </li>
+            <li style={styles.resourceItem}>
+              <a style={styles.resourceLink} href="#link2">
+                https://www.khanacademy.org/
+              </a>
+            </li>
+            <li style={styles.resourceItem}>
+              <a style={styles.resourceLink} href="#link2">
+                https://gateway.sfsu.edu
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
+      {/* My Account Section */}
+      {showAccount && (
         <div style={styles.accountSection}>
-        <h2 style={styles.accountHeader}>My Account</h2>
-        <p style={styles.accountInfo}>{users_data.firstName} {users_data.lastName}</p>
-        <p style={styles.accountInfo}>{users_data.email}</p>
-        {/* Add more account details as needed */}
-      </div>
+          <h2 style={styles.accountHeader}>My Account</h2>
+          <p style={styles.accountInfo}>
+            {users_data.firstName} {users_data.lastName}
+          </p>
+          <p style={styles.accountInfo}>{users_data.email}</p>
+          {/* Add more account details as needed */}
+        </div>
       )}
     </div>
   );
 };
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   users_data: state.users.userData, // Assuming 'users' reducer is setup correctly
-  messages_data: state.messages // Assuming 'messages' reducer is setup correctly
+  messages_data: state.messages, // Assuming 'messages' reducer is setup correctly
 });
 
 const mapDispatchToProps = {
-  fetchSentMessages
+  fetchSentMessages,
+  getUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);

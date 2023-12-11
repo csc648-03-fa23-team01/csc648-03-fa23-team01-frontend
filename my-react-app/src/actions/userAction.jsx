@@ -273,7 +273,8 @@ const getUserRequest = () => ({
       }
   
       const data = await response.json();
-  
+
+      console.log(data)
       dispatch(fetchSentMessagesSuccess(data));
     } catch (error) {
       dispatch(fetchSentMessagesFailure(error.message));
