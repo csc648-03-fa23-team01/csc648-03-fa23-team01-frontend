@@ -76,7 +76,7 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
           <NavBar />
           <div className="search-bar-container">
       </div>          
-      <TutorProfile {...tutor} isLoggedin={true} />
+      <TutorProfile {...tutor}  />
        
         </div>
         <div>

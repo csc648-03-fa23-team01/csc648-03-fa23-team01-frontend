@@ -450,7 +450,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  signUp,
+  signUp
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

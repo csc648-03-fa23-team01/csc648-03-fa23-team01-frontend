@@ -1,6 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useEffect,useState } from 'react';
+ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { getUserTutors } from "../actions/userAction";
+import { connect } from 'react-redux';
 
 const ProfileWrapper = styled.div`
   display: flex;
@@ -142,7 +144,6 @@ const LanguageItem = styled.span`
 `;
 
 const TutorProfile = ({
-    isLoggedin =false,
     id,
     firstName,
     lastName,
@@ -158,7 +159,7 @@ const TutorProfile = ({
     preferInPerson,
     cvLink,
     otherLanguages,
-    subjects
+    subjects,users_data, getUserTutors
 }
 
 ) => {
@@ -166,7 +167,16 @@ const TutorProfile = ({
     const languageList = mainLanguages
       ? [mainLanguages, ...(otherLanguages ? otherLanguages.split(',') : [])]
       : [];
+      const [isLoggedin, setIsLoggedin] = useState(false);
 
+      useEffect(() => {
+        if (users_data) {
+            console.log("Logged in as :", users_data);
+            setIsLoggedin(true); // Set isLoggedin to true if users_data exists
+        } else {
+            setIsLoggedin(false); // Set to false if users_data is not available
+        }
+    }, [users_data]);
 
     return (
         <ProfileWrapper>
@@ -188,7 +198,10 @@ const TutorProfile = ({
                         <Button>Message</Button>
                     </Link>
                 ) : (
-                    <Button disabled>Message</Button>
+                  <Link to={`/login`} style={{ textDecoration: 'none' }}>
+                    <Button>Login</Button>
+                    </Link>
+
                 )}
       <InfoSection>
         {/* ...InfoItems */}
@@ -233,6 +246,11 @@ const TutorProfile = ({
 
       );
     };
-    
+    const mapStateToProps = (state) => ({
+      users_data: state.users.userData
+    });
+    const mapDispatchToProps = {
+      getUserTutors
+    };
 
-export default TutorProfile;
+export default connect(mapStateToProps, mapDispatchToProps)(TutorProfile);

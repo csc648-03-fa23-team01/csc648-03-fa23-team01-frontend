@@ -12,7 +12,6 @@ const StyledSearchBar = styled.div`
   align-items: center;
   width: ${props => props.large ? '47.87rem' : '56%'};
   margin: 10px auto;  
-  position: relative;
   top: 0.625rem;
   left: -17.5rem;
 

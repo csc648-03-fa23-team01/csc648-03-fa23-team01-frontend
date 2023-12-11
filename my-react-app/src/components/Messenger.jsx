@@ -69,7 +69,7 @@ const StyledMessenger = styled.div`
 `;
 
 
-const Messenger = ({ recipient }) => {
+const Messenger = ({ recipient, sender}) => {
     const [message, setMessage] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -79,7 +79,7 @@ const Messenger = ({ recipient }) => {
         console.log('Message sent:', message);
         // Define the payload
         const queryParams = new URLSearchParams({
-            sender_id: 9,
+            sender_id: sender.user_id,
             receiver_id: recipient.id,
             text: message
         });

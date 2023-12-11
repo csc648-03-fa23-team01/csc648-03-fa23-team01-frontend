@@ -1,6 +1,6 @@
 // Import action types for both reducers
 import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE, FETCH_TUTOR_REQUEST, FETCH_TUTOR_SUCCESS, FETCH_TUTOR_FAILURE, 
-    CREATE_TUTOR_REQUEST, CREATE_TUTOR_SUCCESS, CREATE_TUTOR_FAILURE, GET_USER_TUTORS_REQUEST, GET_USER_TUTORS_SUCCESS, GET_USER_TUTORS_FAILURE } from "../actions/actionType";
+    CREATE_TUTOR_REQUEST, CREATE_TUTOR_SUCCESS, CREATE_TUTOR_FAILURE, GET_USER_TUTORS_REQUEST, GET_USER_TUTORS_SUCCESS, GET_USER_TUTORS_FAILURE,FETCH_SENT_MESSAGES_REQUEST, FETCH_SENT_MESSAGES_SUCCESS, FETCH_SENT_MESSAGES_FAILURE  } from "../actions/actionType";
 import { combineReducers } from 'redux';
 
 // Search Reducer
@@ -124,10 +124,44 @@ export const userReducer = (state = userInitialState, action) => {
     }
   };
 
+
+const sentMessagesInitial ={
+      data: [],
+      loading: false,
+      error: null
+    };
+
+export const sentMessagesReducer = (state = sentMessagesInitial, action) => {
+    switch (action.type) {
+      case FETCH_SENT_MESSAGES_REQUEST:
+        return {
+          ...state,
+          loading: true,
+          error: null
+        };
+      case FETCH_SENT_MESSAGES_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          data: action.payload
+        };
+      case FETCH_SENT_MESSAGES_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload
+        };
+      default:
+        return state;
+    }
+  };
+  
+
 const rootReducer = combineReducers({
   search: searchReducer,
   tutor: tutorReducer,
   user: userReducer,
+  messages: sentMessagesReducer
 });
 
 export default rootReducer;
