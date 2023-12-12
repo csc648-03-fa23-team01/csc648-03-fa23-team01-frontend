@@ -106,6 +106,7 @@ const parentStyles = {
   padding: '1vw',
 };
 
+
 const renderTutorAccountSection = (tutorInfo) => (
   <div style={styles.AccountSection}>
     <div style={styles.AccountHeader}>Tutor Account</div>
@@ -260,7 +261,7 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
         <div style={styles.dashboardSection}>
           <div style={styles.header}>Dashboard</div>
           <div style={styles.welcome}>
-            Welcome, {users_data ? users_data.firstName : "John"}
+            Welcome, {user ? user.first_name : "John"}
           </div>
           <div style={styles.menuContainer}>
             <button
