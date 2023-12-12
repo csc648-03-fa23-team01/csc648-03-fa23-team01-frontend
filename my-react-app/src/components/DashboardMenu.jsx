@@ -19,110 +19,92 @@ const getButtonStyle = (isActive) => ({
 });
 
 const styles = {
-  button: (isActive) => ({
-    display: "block",
-    width: "100%",
-    padding: "10px",
-    margin: "10px 0",
-    border: "1px solid #000",
-    borderRadius: "5px",
-    background: isActive ? "#007bff" : "#fff", // Change background color based on isActive
-    color: isActive ? "#fff" : "#000", // Change text color based on isActive
-    cursor: "pointer",
-  }),
+  // Use percentage and viewport width (vw) for relative width and padding
   container: {
     fontFamily: "Arial, sans-serif",
-    display: "flex", // Enable Flexbox
-    justifyContent: "flex-start", // Align content to the left
-    width: "33%", // Set width to 33% of the screen size
-    flexDirection: "column", // Stack children vertically
-    textAlign: "center", // Align text to the left
+    display: "flex",
+    justifyContent: "flex-start",
+    width: "33vw", // 33% of the viewport width
+    flexDirection: "column",
+    textAlign: "center",
+    padding: '1vw', // Relative padding
   },
   dashboardSection: {
-    width: "100%", // Ensure the dashboard takes the full width of the container
-
-    flex: 1, // Take up equal space
+    width: "100%",
+    padding: '1vw',
   },
   messagesSection: {
-    margin: "8px",
-    flex: 2, // Take up double space compared to dashboardSection
-    textAlign: "left", // Align text to the left for messages
-  },
-  header: {
-    margin: "20px 0",
-    fontWeight: "bold",
-  },
-  welcome: {
-    margin: "10px 0",
-    fontWeight: "normal",
+    margin: "1vw",
+    width: "66vw", // 66% of the viewport width
+    textAlign: "left",
   },
   menuContainer: {
     border: "1px solid #000",
     borderRadius: "10px",
-    padding: "20px",
+    padding: "1vw",
+    margin: '1vw 0',
   },
   button: {
     display: "block",
     width: "100%",
-    padding: "10px",
-    margin: "10px 0",
+    padding: "1vw",
+    margin: "1vw 0",
     border: "1px solid #000",
     borderRadius: "5px",
     background: "#fff",
     cursor: "pointer",
   },
   resourcesSection: {
-    flex: 2, // Same as messagesSection to take up double space
-    padding: "10px", // Add padding for spacing
-    border: "1px solid #ccc", // Add a border for visual separation
-    borderRadius: "8px", // Rounded corners
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)", // Box shadow for depth
-    margin: "8px",
+    margin: "1vw",
+    padding: "1vw",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    width: "66vw", // 66% of the viewport width
   },
   resourceList: {
-    listStyleType: "none", // Remove default list styling
+    listStyleType: "none",
     padding: 0,
   },
   resourceItem: {
-    marginBottom: "10px", // Space out the items
+    marginBottom: "1vw",
   },
   resourceLink: {
-    textDecoration: "none", // Remove underline from links
-    color: "#007bff", // Link color, can be adjusted
-    ":hover": {
-      textDecoration: "underline", // Underline on hover for better UX
-    },
+    textDecoration: "none",
+    color: "#007bff",
   },
   AccountSection: {
-    padding: "20px",
-    flex: 2, // Take up double space compared to dashboardSection
+    padding: "1vw",
     textAlign: "center",
-    bordeRadius: "10px",
+    borderRadius: "10px",
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-    maxWidth: "400px",
-    margin: "8px",
+    maxWidth: "66vw", // 66% of the viewport width
+    margin: "1vw",
   },
   AccountHeader: {
     color: "#333",
-    marginBottom: "20px",
+    marginBottom: "1vw",
   },
   AccountInfo: {
     textAlign: "left",
     color: "#666",
-    margin: "5px 0",
+    margin: "1vw 0",
   },
   ProfileImage: {
-    width: "100px",
-    height: "100px",
+    width: "10vw", // Use vw unit for responsive width
+    height: "10vw", // Use vw unit for responsive height, keep it equal to width for a circle
     borderRadius: "50%",
-    marginTop: "10px",
+    marginTop: "1vw",
   },
 };
-const parentStyles = {
-  display: "flex", // Enable Flexbox
-  justifyContent: "flex-start", // Align children to the start (left)
-};
 
+// For parent container to fill the screen
+const parentStyles = {
+  display: "flex",
+  flexDirection: "row", // Change to 'column' on smaller screens if needed
+  width: '100vw',
+  padding: '1vw',
+};
 
 const renderTutorAccountSection = (tutorInfo) => (
   <div style={styles.AccountSection}>
