@@ -4,8 +4,7 @@ import { fetchSentMessages, getUser } from "../actions/userAction"; // Assuming 
 import MessageCard from "./MessageCard";
 import { getUserTutors } from "../actions/userAction";
 import styled from "styled-components";
-import { useNavigate } from 'react-router-dom'; // For React Router v6
-
+import { useNavigate } from "react-router-dom"; // For React Router v6
 
 const getButtonStyle = (isActive) => ({
   display: "block",
@@ -94,35 +93,95 @@ const styles = {
       textDecoration: "underline", // Underline on hover for better UX
     },
   },
+  AccountSection: {
+    padding: "20px",
+    flex: 2, // Take up double space compared to dashboardSection
+    textAlign: "center",
+    bordeRadius: "10px",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+    maxWidth: "400px",
+    margin: "8px",
+  },
+  AccountHeader: {
+    color: "#333",
+    marginBottom: "20px",
+  },
+  AccountInfo: {
+    textAlign: "left",
+    color: "#666",
+    margin: "5px 0",
+  },
+  ProfileImage: {
+    width: "100px",
+    height: "100px",
+    borderRadius: "50%",
+    marginTop: "10px",
+  },
 };
 const parentStyles = {
   display: "flex", // Enable Flexbox
   justifyContent: "flex-start", // Align children to the start (left)
 };
-const AccountSection = styled.div`
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 8px;
-`;
 
-const AccountHeader = styled.h2`
-  color: #333;
-  margin-bottom: 20px;
-`;
 
-const AccountInfo = styled.p`
-  color: #666;
-  margin: 5px 0;
-`;
+const renderTutorAccountSection = (tutorInfo) => (
+  <div style={styles.AccountSection}>
+    <div style={styles.AccountHeader}>Tutor Account</div>
+    <div style={styles.AccountInfo}>Email: {tutorInfo.user_email}</div>
+    <div style={styles.AccountInfo}>Average Ratings: {tutorInfo.average_ratings.toFixed(2)}</div>
+    <div style={styles.AccountInfo}>Classes: {tutorInfo.classes}</div>
+    <div style={styles.AccountInfo}>Description: {tutorInfo.description}</div>
+    <div style={styles.AccountInfo}>Price per hour: ${tutorInfo.price.toFixed(2)}</div>
+    <div style={styles.AccountInfo}>Main Languages: {tutorInfo.main_languages}</div>
+    <div style={styles.AccountInfo}>Prefer In-Person: {tutorInfo.prefer_in_person ? "Yes" : "No"}</div>
+    {tutorInfo.cv_link && <a href={tutorInfo.cv_link} target="_blank" style={styles.resourceLink}>View CV</a>}
+    <div style={styles.AccountInfo}>Other Languages: {tutorInfo.other_languages}</div>
+    {tutorInfo.profile_picture_link && (
+      <img
+        style={styles.ProfileImage}
+        src={tutorInfo.profile_picture_link}
+        alt="Profile"
+      />
+    )}
+    {tutorInfo.video_link && <a href={tutorInfo.video_link} target="_blank" style={styles.resourceLink}>Introduction Video</a>}
+    {/* Additional fields and relationships */}
+  </div>
+);
 
-const ProfileImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-top: 10px;
-`;
+const renderUserAccountSection = (user) => (
+  <div style={styles.AccountSection}>
+          <div style={styles.AccountHeader}>My Account</div>
+          {user && (
+            <>
+              <div style={styles.AccountInfo}>
+                Name: {user.first_name} {user.last_name}
+              </div>
+              <div style={styles.AccountInfo}>Email: {user.email}</div>
+
+              {user.profilePictureLink && (
+                <img
+                  style={styles.ProfileImage}
+                  src={user.profilePictureLink}
+                  alt="Profile"
+                />
+              )}
+
+              {user.admin_status ? (
+                <div style={styles.AccountInfo}>Role: Admin</div>
+              ) : (
+                <div style={styles.AccountInfo}>Role: User</div>
+              )}
+              {user.verified_status ? (
+                <div style={styles.AccountInfo}>Status: Verified</div>
+              ) : (
+                <div style={styles.AccountInfo}>Status: Unverified</div>
+              )}
+
+              {/* Additional fields */}
+            </>
+          )}
+        </div>
+);
 
 const getUserIdByEmail = async (email) => {
   try {
@@ -144,7 +203,7 @@ const getUserIdByEmail = async (email) => {
 
     if (response.ok) {
       // Assuming the response structure contains an object with a 'user' field
-      return data.user;
+      return data;
     } else {
       throw new Error(data.detail || "Unknown error occurred");
     }
@@ -161,14 +220,14 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
   const [user, setUser] = useState(null); // Use state for tutor
   const navigate = useNavigate();
 
+
   useEffect(() => {
     // Check if the user is not logged in
     if (!users_data) {
-      navigate('/login'); // Redirect to login page
+      navigate("/login"); // Redirect to login page
       // history.push('/login'); // For older versions
     }
   }, [users_data, navigate]);
-
 
   useEffect(() => {
     if (showMessages && users_data) {
@@ -182,7 +241,7 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
         try {
           const fetchedUser = await getUserIdByEmail(users_data.email);
           if (fetchedUser) {
-            setUser(fetchedUser);
+            setUser(fetchedUser.user);
             console.log("Fetched user:", fetchedUser); // Logs the fetched user details
           } else {
             console.log("No user data returned from fetch.");
@@ -222,23 +281,25 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
             Welcome, {users_data ? users_data.firstName : "John"}
           </div>
           <div style={styles.menuContainer}>
-  <button
-    style={getButtonStyle(showAccount)}
-    onClick={handleAccountClick}>
-    My Account
-  </button>
-  <button
-    style={getButtonStyle(showMessages)}
-    onClick={handleMessagesClick}>
-    Messages
-  </button>
-  <button
-    style={getButtonStyle(showResources)}
-    onClick={handleResourcesClick}>
-    Resources
-  </button>
-</div>
-
+            <button
+              style={getButtonStyle(showAccount)}
+              onClick={handleAccountClick}
+            >
+              My Account
+            </button>
+            <button
+              style={getButtonStyle(showMessages)}
+              onClick={handleMessagesClick}
+            >
+              Messages
+            </button>
+            <button
+              style={getButtonStyle(showResources)}
+              onClick={handleResourcesClick}
+            >
+              Resources
+            </button>
+          </div>
         </div>
       </div>
 
@@ -301,30 +362,7 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
         </div>
       )}
       {/* My Account Section */}
-      {showAccount && (
-        <AccountSection>
-          <AccountHeader>My Account</AccountHeader>
-          {user && (
-            <>
-              <AccountInfo>
-                Name: {user.first_name} {user.last_name}
-              </AccountInfo>
-              <AccountInfo>Email: {user.email}</AccountInfo>
-
-              {user.profilePictureLink && (
-                <ProfileImage src={user.profilePictureLink} alt="Profile" />
-              )}
-
-              {user.admin_status && <AccountInfo>Role: Admin</AccountInfo>}
-              {user.verified_status && (
-                <AccountInfo>Status: Verified</AccountInfo>
-              )}
-
-              {/* Additional fields */}
-            </>
-          )}
-        </AccountSection>
-      )}
+      {showAccount && (user && user.isTutor ? renderTutorAccountSection(user.tutor) : renderUserAccountSection(user))}
     </div>
   );
 };
@@ -336,7 +374,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchSentMessages,
-  getUser,
+  getUser
 };
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardMenu);
