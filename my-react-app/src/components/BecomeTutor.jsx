@@ -161,20 +161,7 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
           <h1>Apply to be a Tutor</h1>
           <form onSubmit={handleSubmit}>
             
-           {/* Resume */}
-          <div style={formGroupStyle}>
-            <label>*Resume</label>
-            <label htmlFor="resumeInput" style={chooseFileButtonStyle}>
-              <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
-            </label>
-            <input
-              id="resumeInput"
-              type="file"
-              style={hiddenFileInputStyle}
-              onChange={handleResumeChange}
-            />
-            {/* Handle picture error if any */}
-            </div>
+           
 
 
             {/* Topic dropdown */}
@@ -262,7 +249,20 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
           />
           {/* {errors.classes && <span style={errorTextStyle}>This field is required.</span>} */}
         </div>
-
+        {/* Resume */}
+        <div style={formGroupStyle}>
+            <label>*Resume</label>
+            <label htmlFor="resumeInput" style={chooseFileButtonStyle}>
+              <img src={image} alt="Upload" style={{ width: '20px', height: '20px', verticalAlign: 'middle' }} /> CHOOSE A FILE
+            </label>
+            <input
+              id="resumeInput"
+              type="file"
+              style={hiddenFileInputStyle}
+              onChange={handleResumeChange}
+            />
+            {/* Handle picture error if any */}
+            </div>
             {/* Label and custom file input for picture */}
         <div style={formGroupStyle}>
               {/* Picture input */}
