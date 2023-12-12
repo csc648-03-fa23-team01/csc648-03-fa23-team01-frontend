@@ -24,7 +24,6 @@ const SearchFailure = (error) => ({
 export const searchAsync = (query, type) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   let typeValue = String(type);  // Convert to string just in case
-  console.log("typeValue: " + typeValue);
   const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/search?type=${encodeURIComponent(typeValue)}`;
 
   dispatch(SearchRequest());
@@ -78,14 +77,12 @@ export const fetchTutor = (user_id) => async (dispatch) => {
   user_id = String(user_id);
 
   const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/tutor?id=${encodeURIComponent(user_id)}`;
-  console.log(queryAddress);
   // Dispatch the request action
 
   dispatch(TutorRequest());
 
   try {
     // Execute the API request
-    console.log("Sending request"); // Debugging log
 
     const response = await fetch(queryAddress, {
       method: 'GET',
@@ -102,8 +99,6 @@ export const fetchTutor = (user_id) => async (dispatch) => {
     // Parse the JSON response
     const data = await response.json();
 
-    // Dispatch a success action with the fetched data
-    console.log("Data received:", data); // Debugging log
 
     dispatch(TutorSuccess (data ));
   } catch (error) {
@@ -166,7 +161,6 @@ export const becomeTutor = (resume, topic, about, picture, video, agree) => asyn
               'custom:is_tutor' : 'True',
             }
           });
-          console.log(result); // SUCCESS
         } catch(err) {
           console.log("|Arias Custom message| Update attribute failed!: ", err);
         }

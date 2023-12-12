@@ -19,7 +19,6 @@ const SideBar = styled.div`  flex: 2; // Takes up 2/3 of the space
 `;
 
 const MainContent = styled.div`
-flex: 1; // Takes up the remaining 1/3 of the space
 
 `;
 

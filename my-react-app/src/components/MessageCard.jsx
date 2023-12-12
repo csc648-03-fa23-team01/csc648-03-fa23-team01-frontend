@@ -34,12 +34,23 @@ const imageStyle = {
   'margin-right': '0.3rem',
 }
 
-const MessageCard = ({ content, recipient_first_name, recipient_last_name, profilePicture}) => {
+const MessageCard = ({ content, recipient_first_name, recipient_last_name, profilePicture,sender_first_name, sender_last_name, isTutor}) => {
   return (
     <CardWrapper>
-      <img style={imageStyle} src={profilePicture} />
-      <RecipientName>{recipient_first_name} {recipient_last_name}</RecipientName>
-      <MessageContent>{content}</MessageContent>
+      {isTutor ? (
+        // Card for when the sender is a tutor
+        <div>
+          <RecipientName> {sender_first_name} {sender_last_name}</RecipientName>
+          <MessageContent>{content}</MessageContent>
+        </div>
+      ) : (
+        // Card for regular sender
+        <div>
+          <img style={imageStyle} src={profilePicture} alt={`${recipient_first_name} ${recipient_last_name}`} />
+          <RecipientName>{recipient_first_name} {recipient_last_name}</RecipientName>
+          <MessageContent>{content}</MessageContent>
+        </div>
+      )}
     </CardWrapper>
   );
 };
