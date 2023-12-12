@@ -399,19 +399,16 @@ function TutorApply() {
             <TextWrapper>.</TextWrapper>
           </IAgreeToWebsite>
           
-          <TextWrapper2>*Resume</TextWrapper2>
+          
           <TextWrapper3>*Topic</TextWrapper3>
-          <Paragraph>*Classes you took at SFSU</Paragraph>
+          <Paragraph>*Classes you took at SFSU EX:CSC413</Paragraph>
           <TextWrapper4>*Tell us about yourself</TextWrapper4>
           <TextWrapper5>Language</TextWrapper5>
           <TextWrapper6>Available times</TextWrapper6>
           <TextWrapper7>In Person or Virtual</TextWrapper7>
+          <TextWrapper2>*Resume</TextWrapper2>
           <ClickOnTheChoose>Click on the "Choose File" button to upload your picture:</ClickOnTheChoose>
           <ClickOnTheChoose2>Click on the "Choose File" button to upload your video:</ClickOnTheChoose2>
-          <Resume type="file"
-                    accept = "application/pdf"
-                        value={resume}
-                        onChange={e => setResume(e.target.value)}/>
           <Topic type="text"
                         value={topic}
                         onChange={e => setTopic(e.target.value)}/>
@@ -422,6 +419,10 @@ function TutorApply() {
           <DescriptionInput  type="text"
                         value={description}
                         onChange={e => setDescription(e.target.value)}/>
+          <Resume type="file"
+                        accept = "application/pdf"
+                        value={resume}
+                        onChange={e => setResume(e.target.value)}/>
           <UploadPhoto  type="file"
                         accept="image/jpeg, image/png, image/gif"
                         value={uploadPicture}
