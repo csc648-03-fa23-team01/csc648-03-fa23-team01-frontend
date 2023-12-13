@@ -1,6 +1,8 @@
 {
   "version": "1",
   "cognitoConfig": {
+    "identityPoolName": "sfsututor4b1afa0e_identitypool_0b046bf2",
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "sfsutu4b1afa0e",
     "userPoolName": "sfsututor4b1afa0e_userpool_4b1afa0e",
     "autoVerifiedAttributes": [
@@ -34,7 +36,7 @@
     "userpoolClientSetAttributes": true,
     "sharedId": "4b1afa0e",
     "resourceName": "sfsututor4b1afa0e",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "usernameAttributes": [
       "email"

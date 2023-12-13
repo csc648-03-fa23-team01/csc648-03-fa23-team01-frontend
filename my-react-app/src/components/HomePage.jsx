@@ -58,12 +58,22 @@ const TutorProfilesWrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  margin-top: 12rem; // Adjust this value to position the wrapper as desired
+  margin-top: 0rem; // Adjust this value to position the wrapper as desired
   margin-right: 2rem;
   margin-left: 2rem;
   margin-bottom: 2rem;
 `;
+const TextWrapper1 = styled.p`
+  color: #000; /* This sets the text color to black */
+  text-align: center;
 
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: 'Inter';
+  margin-top: 17rem; /* Push the button to the bottom */
+  display: flex;
+  justify-content: center;
+`;
 // HomePage component definition
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -74,8 +84,8 @@ const HomePage = () => {
       <Overlay />
       <ContentContainer>
         <NavBar />
-        <TextWrapper>"Welcome to the world of learning!"</TextWrapper>
-        <SearchBar isResultPage={false} large ={true} onSearch={(query) => dispatch(searchAsync(query,"Subject"))} />
+        <TextWrapper>"Welcome to the world of learning in SFSU!"</TextWrapper>
+        <TextWrapper1>Recently tutors</TextWrapper1>
         <TutorProfilesWrapper  >
           {tutorProfiles.map((profile, index) => (
             <TutorCard

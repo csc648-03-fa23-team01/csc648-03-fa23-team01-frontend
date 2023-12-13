@@ -11,21 +11,22 @@ const StyledSearchBar = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: ${props => props.large ? '47.87rem' : '56%'};
-  margin: 10px auto;  
+  margin: 10px 0rem;  
+  margin-left: 10rem;
   position: relative;
-  top: 0.625rem;
-  left: -17.5rem;
+  top: 0rem;
+  
 
   select,
   button {
     padding: 10px;
-    margin-right: 20px; /* Adjust if needed */
+    margin-right: 5px; /* Adjust if needed */
     border: 1px solid #ccc;
     border-radius: 4px;
   }
   
   input {
-    width: 40rem;
+    width: 20rem;
     padding: 10px;
     margin-right: 0; /* Remove right margin */
     border: 1px solid #ccc;
@@ -37,20 +38,22 @@ const StyledSearchBar = styled.div`
     font-size: ${props => props.large ? '1.56rem' : 'auto'};
   }
   
-  button {
+  .button {
     padding: 10px;
     background-color: #F6A833;
     color: black;
     width: auto;
-    margin-left: 0; /* Remove left margin */
+    margin-left: 0rem; /* Remove left margin */
     border: 1px solid #F6A833;
     border-left: none;
     cursor: pointer;
     border-radius: 0 4px 4px 0;
     box-sizing: border-box;
     height: ${props => props.large ? '5.06rem' : 'auto'};
+    height: 2.5rem;
     font-family: 'Inter';
     font-size: ${props => props.large ? '1.56rem' : 'auto'};
+    font-size: .8rem;
     &:hover {
       background-color: #555;
     }
@@ -120,7 +123,7 @@ const OPTIONS_LIMIT = 5;
                   </div>
                 )}
         />
-            <button onClick={handleSearch}>Search</button>
+            <button onClick={handleSearch} className='button'>Search</button>
         </StyledSearchBar>
     );
 }

@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'; // Import from React Router if you're using it
-import { Rating } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-
+import { useNavigate } from "react-router-dom";
 const StyledTutorCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
   padding: 1.5vw;
   width: 20rem;
-  height: 13.94rem;
+  height: 18rem;
   margin: 0; // Add 'auto' to keep it centered horizontally and '2vw' for top and bottom margin
   margin-right: 2rem;
   border: 0.7vw solid #ccc;
@@ -49,6 +47,11 @@ const StyledTutorCard = styled.div`
     margin: 0.5rem 0;
     line-height: 1.4;
   }
+  .message{
+    margin-top: auto; /* Push the button to the bottom */
+    display: flex;
+    justify-content: flex-end;
+  }
 `;
 
 const profileGroupStyle1 = {
@@ -72,15 +75,27 @@ const fullStyle = {
   display: 'flex',
   'flex-direction' : 'column'
 }
-
+const Button = styled.button`
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 30px;
+  font-size: 1em;
+  cursor: pointer;
+  &:hover {
+    background-color: #ec971f;
+  }
+`;
 
 // TutorCard component
 
 const TutorCard = ({
+  id,
+  isLoggedin =false,
   profilePicture,
   name,
   description,
-  rating,
   subject,
   link, // Assuming you have a link prop for the tutor's profile page
   // ... other props
@@ -89,7 +104,7 @@ const TutorCard = ({
   const truncateText = (text, length) => {
     return text.length > length ? text.substring(0, length) + '...' : text;
   };
-
+  const navigate = useNavigate();
   return (
     <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}> {/* Use Link for navigation */}
       <StyledTutorCard>
@@ -98,20 +113,20 @@ const TutorCard = ({
         <img style={imageStyle} src={profilePicture} alt={`Tutor ${name}`} />
           <div>
           <h3 style={tutorCardNameStyle}>{name}</h3>
-          <Rating
-            name="customized-rating"
-            value={rating}
-            readOnly
-            precision={0.5}
-            icon={<StarIcon style={{ width: '0.7rem', height: '0.7rem' }} fontSize="inherit" />}
-            emptyIcon = {<StarIcon style={{ width: '0.7rem', height: '0.7rem' }} fontSize="inherit" />}
-          />
           </div>
         </div>
         <div className="description">{truncateText(description, 200)}</div> {/* Limit the bio to 80 characters */}
         </div>
         <div className="subject" >{subject} tutor</div>
-        
+        {isLoggedin ? (
+                    <Link to={`/message/${id}`} style={{ textDecoration: 'none' }} className='message'>
+                        <Button>Message</Button>
+                    </Link>
+                ) : (
+                    <Link to={`/signup`} style={{ textDecoration: 'none' }} className='message'>
+                        <Button disabled>Message</Button>
+                    </Link>
+                )}
       </StyledTutorCard>
     </Link>
   );

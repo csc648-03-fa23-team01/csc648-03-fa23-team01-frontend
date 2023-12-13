@@ -25,7 +25,7 @@ const GetUserTutorsFailure = (error) => ({
 export const getUserTutors = (user_id) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/userTutors?user_id=${encodeURIComponent(user_id)}`;
-
+  console.log(process.env.REACT_APP_BACKEND_URL);
   dispatch(GetUserTutorsRequest());
 
   try {
@@ -73,7 +73,7 @@ const signUpFailure = (error) => ({
 export const signUp = (firstName, lastName, email, password, sfsuId) => async (dispatch) => {
   // Dispatch a request action to indicate the start of the API call
   const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/createUsers`;
-  
+  console.log(process.env.REACT_APP_BACKEND_URL);
   dispatch(signUpRequest());
 
     try {
@@ -101,6 +101,9 @@ export const signUp = (firstName, lastName, email, password, sfsuId) => async (d
             family_name: lastName,
             'custom:is_tutor' : 'False',
             'custom:sfsuId' : sfsuId
+          },
+          autoSignIn: {
+            enabled: true
           }
         });
         console.log("passed signup");
@@ -147,8 +150,8 @@ export const login = (email, password) => async (dispatch) => {
     try {
       console.log("Type of email: ", typeof email);
         const user = await Auth.signIn({ username: email, password });
-        console.log("User: ", user.attributes);
-        dispatch(loginSuccess({firstName: user.attributes.given_name, lastName: user.attributes.family_name, email: user.attributes.email,isTutor: user.attributes['custom:is_tutor']=='True'}));  
+        console.log("User: ", user);
+        dispatch(loginSuccess({firstName: user.attributes.given_name, lastName: user.attributes.family_name, email: user.attributes.email,isTutor: user.attributes['custom:is_tutor']=='True', id:user.attributes.id}));  
       } catch (error) {
         // IF there are errors our validations missed we display them
         console.log("error: ", error);
@@ -240,3 +243,43 @@ const getUserRequest = () => ({
       dispatch(getUserFailure());
     }
   };
+
+  const fetchSentMessagesRequest = () => ({
+    type: ActionTypes.FETCH_SENT_MESSAGES_REQUEST,
+  });
+  
+  const fetchSentMessagesSuccess = (data) => ({
+    type: ActionTypes.FETCH_SENT_MESSAGES_SUCCESS,
+    payload: data,
+  });
+  
+  const fetchSentMessagesFailure = (error) => ({
+    type: ActionTypes.FETCH_SENT_MESSAGES_FAILURE,
+    payload: error,
+  });
+  
+  export const fetchSentMessages = (userEmail) => async (dispatch) => {
+    dispatch(fetchSentMessagesRequest());
+  
+    const queryAddress = `${process.env.REACT_APP_BACKEND_URL}/messages/sent/byemail/${encodeURIComponent(userEmail)}`;
+  
+    try {
+      const response = await fetch(queryAddress, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+
+      dispatch(fetchSentMessagesSuccess(data));
+    } catch (error) {
+      dispatch(fetchSentMessagesFailure(error.message));
+    }
+  };
+  
