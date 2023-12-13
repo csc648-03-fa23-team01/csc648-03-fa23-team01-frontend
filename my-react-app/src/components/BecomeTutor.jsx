@@ -51,6 +51,7 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
       const fileName = `${fileType}-${uuidv4()}.${fileExtension}`;
       // Use the uploadMedia function to upload the selected file
       await uploadMedia(selectedFile, folderPath, fileName);
+      navigate("/");
       return fileName;
     } catch (error) {
       console.error('Error uploading file:', error);
