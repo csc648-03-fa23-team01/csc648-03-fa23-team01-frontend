@@ -106,6 +106,20 @@ const parentStyles = {
   padding: '1vw',
 };
 
+const Badge = styled.span`
+  display: inline-block;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  background-color: #007bff; // Blue background for the badge
+  color: white;
+  border-radius: 10px;
+  font-size: 0.8em;
+  text-align: center;
+`;
+
+const RoleBadge = ({ isTutor }) => {
+  return <Badge>{isTutor ? "Tutor" : "Student"}</Badge>;
+};
 
 const renderTutorAccountSection = (tutorInfo) => (
   <div style={styles.AccountSection}>
@@ -126,6 +140,7 @@ const renderTutorAccountSection = (tutorInfo) => (
         alt="Profile"
       />
     )}
+    <Badge>{"Tutor"}</Badge>
     {tutorInfo.video_link && <a href={tutorInfo.video_link} target="_blank" style={styles.resourceLink}>Introduction Video</a>}
     {/* Additional fields and relationships */}
   </div>
@@ -154,13 +169,8 @@ const renderUserAccountSection = (user) => (
               ) : (
                 <div style={styles.AccountInfo}>Role: User</div>
               )}
-              {user.verified_status ? (
-                <div style={styles.AccountInfo}>Status: Verified</div>
-              ) : (
-                <div style={styles.AccountInfo}>Status: Unverified</div>
-              )}
+              <Badge>{"Student"}</Badge>
 
-              {/* Additional fields */}
             </>
           )}
         </div>

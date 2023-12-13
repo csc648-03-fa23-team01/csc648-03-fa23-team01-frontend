@@ -140,29 +140,40 @@ export const becomeTutor = (resume, selectedTopic, classes, language, days, sess
     // Get the current authenticated user
     const user = await Auth.currentAuthenticatedUser();
 
-    // Generate unique file names for media uploads
-    const resumeFileName = `resume-${uuidv4()}.pdf`;
-    const pictureFileName = `picture-${uuidv4()}.jpg`;
-    const videoFileName = `video-${uuidv4()}.mp4`;
+    let resumeKey, pictureKey, videoKey;
 
-    // Upload media files to S3
-    const [resumeKey, pictureKey, videoKey] = await Promise.all([
-      Storage.put(`${user.user_id}/${resumeFileName}`, resume, { contentType: 'application/pdf' }).catch((error) => {
+    // Upload resume to S3 if not null
+    if (resume) {
+      const resumeFileName = `resume-${uuidv4()}.pdf`;
+      resumeKey = await Storage.put(`${user.user_id}/${resumeFileName}`, resume, { contentType: 'application/pdf' }).catch((error) => {
         console.error('Error uploading resume:', error);
-        throw error; // Rethrow the error for handling at a higher level.
-      }),
-      Storage.put(`${user.user_id}/${pictureFileName}`, picture, { contentType: 'image/jpeg' }).catch((error) => {
+        throw error;
+      });
+    }
+
+    // Upload picture to S3 if not null
+    if (picture) {
+      const pictureFileName = `picture-${uuidv4()}.jpg`;
+      pictureKey = await Storage.put(`${user.user_id}/${pictureFileName}`, picture, { contentType: 'image/jpeg' }).catch((error) => {
         console.error('Error uploading picture:', error);
         throw error;
-      }),
-      Storage.put(`${user.user_id}/${videoFileName}`, video, { contentType: 'video/mp4' }).catch((error) => {
+      });
+    }
+
+    // Upload video to S3 if not null
+    if (video) {
+      const videoFileName = `video-${uuidv4()}.mp4`;
+      videoKey = await Storage.put(`${user.user_id}/${videoFileName}`, video, { contentType: 'video/mp4' }).catch((error) => {
         console.error('Error uploading video:', error);
         throw error;
-      }),
-    ]);
-    
+      });
+    }
 
+    await Auth.updateUserAttributes(user, {
+      'custom:is_tutor': 'True',
+    });
 
+    var inPerson = sessionType === "In Person";
     // Update user attributes to mark as a tutor
     await Auth.updateUserAttributes(user, {
       'custom:is_tutor': 'True',
@@ -188,10 +199,10 @@ export const becomeTutor = (resume, selectedTopic, classes, language, days, sess
       price: 0.0, // Set appropriate initial values
       main_languages: language, // Set appropriate initial values
       prefer_in_person: inPerson, // Set appropriate initial values
-      cv_link: resumeKey, // Use the S3 key for the resume file
       other_languages: '', // Set appropriate initial values
-      profile_picture_link: pictureKey, // Use the S3 key for the profile picture file
-      video_link: videoKey, // Use the S3 key for the video file
+      cv_link: resumeKey || '', // Use the S3 key for the resume file or empty string if null
+      profile_picture_link: pictureKey || '', // Use the S3 key for the profile picture file or empty string if null
+      video_link: videoKey || '',
       topics: selectedTopic.split(","), // An array of selected topics
       times: days, // An array of selected times
     };

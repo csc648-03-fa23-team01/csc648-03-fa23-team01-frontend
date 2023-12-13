@@ -35,7 +35,7 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
     if (!selectedFile) {
       return; // No file selected, nothing to upload
     }
-  
+    console.log("selected File",selectedFile);
     try {
       // Specify the folder path and default file extension
       const folderPath = ''; // Replace with your desired folder path

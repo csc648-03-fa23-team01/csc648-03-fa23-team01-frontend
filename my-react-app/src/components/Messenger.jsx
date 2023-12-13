@@ -132,7 +132,7 @@ const Messenger = ({ recipient, sender, users_data}) => {
             
             setShowSuccessMessage(true);
             setTimeout(() => {setShowSuccessMessage(false);navigate('/ResultPage');  // Navigate to ResultsPage after 3 seconds
-        }, 2000); // Hide the message after 3 seconds
+        }, 500); // Hide the message after 3 seconds
             
             setMessage(''); // Clear the message input after sending
         } catch (error) {

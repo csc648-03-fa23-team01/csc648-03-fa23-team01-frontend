@@ -84,7 +84,7 @@ export const NavBar = ({users_data, signOut, isLoggedin =false}) => {
           {isLoggedin? (
                   <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>
                 ) : (
-                  <button onClick={() => navigate("/signup")}  className="logo" >Become a Tutor</button>
+                  <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>
                 )}
           {!users_data && <button onClick={() => navigate("/login")}  className="logo" >Login</button>}
           {!users_data && <button onClick={() => navigate("/signup")}  className="logo">Sign up</button>}

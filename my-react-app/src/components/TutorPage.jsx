@@ -55,7 +55,7 @@ const TutorPage = ({ tutors_data, tutors_loading, tutors_error, fetchTutor }) =>
       fetchTutor(user_id);
     }
   }, [fetchTutor, params.user_id]);
-
+  console.log("modelof",tutor);
   useEffect(() => {
     if (tutors_data) {
       console.log("loading found", tutors_data)
