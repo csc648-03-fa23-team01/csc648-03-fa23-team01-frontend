@@ -478,7 +478,7 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
       )}
       {/* My Account Section */}
       {showAccount && (
-          user &&  (user && user.isTutor && user.tutor ? renderTutorAccountSection(user.tutor) : renderUserAccountSection(user, isEditing, firstName, setFirstName, lastName, setLastName,handleSubmit, handleCancelClick, handleEditClick ))
+          user &&  (user && user.tutor ? renderTutorAccountSection(user.tutor) : renderUserAccountSection(user, isEditing, firstName, setFirstName, lastName, setLastName,handleSubmit, handleCancelClick, handleEditClick ))
         )}
     </div>
   );
