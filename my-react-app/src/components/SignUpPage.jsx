@@ -406,12 +406,12 @@ const SignUpPage = ({users_data, users_loading, users_error, signUp}) => {
             <TextWrapper12>.</TextWrapper12>
           </IAgreeToWebsite>
           
-          <TextWrapper14>Email address</TextWrapper14>
+          <TextWrapper14>*Email address</TextWrapper14>
           
-          <TextWrapper15>SFSU ID</TextWrapper15>
-          <TextWrapper16>Create password</TextWrapper16>
-          <TextWrapper17>First name</TextWrapper17>
-          <TextWrapper18>Last name</TextWrapper18>
+          <TextWrapper15>*SFSU ID</TextWrapper15>
+          <TextWrapper16>*Create password</TextWrapper16>
+          <TextWrapper17>*First name</TextWrapper17>
+          <TextWrapper18>*Last name</TextWrapper18>
           <Rectangle4  type="text"
                         value={sfsuId}
                         onChange={e => setSfsuId(e.target.value)}/>
@@ -450,7 +450,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  signUp,
+  signUp
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

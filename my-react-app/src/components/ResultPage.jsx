@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Navbar from "./NavBar.jsx";
-import SearchBar from "./SearchBar.jsx";
 import styled from "styled-components";
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
@@ -24,7 +23,7 @@ const StyledResultPage = styled.div`
     flex-basis: 15.625rem;
     padding: 1.25rem; 
     border-right: 0.0625rem solid #ccc; 
-    margin-top: 7rem; /* No change as it's already in rem */
+    margin-top: 3rem; /* No change as it's already in rem */
   }
 
   .tutor-cards-wrapper {
@@ -150,7 +149,6 @@ return (
         {renderAvailabilityCheckboxes()}
       </div>
       <div className="tutor-cards-wrapper">
-        <SearchBar isHomePage={false} />
         <TutorList
           tutors_data={applyFilters()} // Apply filters here
           tutors_loading={tutors_loading}

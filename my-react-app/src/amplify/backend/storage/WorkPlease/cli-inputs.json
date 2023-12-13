@@ -1,11 +1,12 @@
 {
-  "resourceName": "sfsututor",
-  "policyUUID": "2b864153",
-  "bucketName": "group1media",
+  "resourceName": "WorkPlease",
+  "policyUUID": "810db476",
+  "bucketName": "workbucket",
   "storageAccess": "authAndGuest",
   "guestAccess": [
     "CREATE_AND_UPDATE",
-    "READ"
+    "READ",
+    "DELETE"
   ],
   "authAccess": [
     "CREATE_AND_UPDATE",
