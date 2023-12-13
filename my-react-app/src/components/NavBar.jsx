@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import image1 from '../assets/images/Logo_Image.png';
 import { connect } from 'react-redux';
 import {signOut} from '../actions/userAction';
-
+import Searchbar from './SearchBar';
 const StyledNavBar = styled.div`
   background-color: #c4bb8b;
   display: flex;
@@ -57,9 +57,10 @@ const StyledNavBar = styled.div`
   .logo {
     font-size: 1.25rem;
   }
+
 `;
 
-export const NavBar = ({users_data, signOut}) => {
+export const NavBar = ({users_data, signOut, isLoggedin =false}) => {
   const navigate = useNavigate();
   const handleSignOut = () => {
     // Perform the sign-out action
@@ -78,8 +79,13 @@ export const NavBar = ({users_data, signOut}) => {
     <StyledNavBar>
         <div className="navbar">
           <button onClick={() => navigate("/")} className="logo"><img  alt="Rectangle" src={image1} /></button>
+          <Searchbar />
           <button onClick={() => navigate("/teampage")}  className="logo" >About </button>
-          {users_data && <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>}
+          {isLoggedin? (
+                  <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>
+                ) : (
+                  <button onClick={() => navigate("/BecomeTutor")}  className="logo" >Become a Tutor</button>
+                )}
           {!users_data && <button onClick={() => navigate("/login")}  className="logo" >Login</button>}
           {!users_data && <button onClick={() => navigate("/signup")}  className="logo">Sign up</button>}
           { users_data &&  <button onClick={()=>navigate("/dashboard")} className="logo">Your Dashboard</button> }

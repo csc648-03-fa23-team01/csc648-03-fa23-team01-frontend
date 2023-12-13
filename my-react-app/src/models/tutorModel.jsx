@@ -12,7 +12,7 @@ export class TutorModel {
     classes: string;
     description: string;
     price: number;
-    timesAvailable: string;
+    times: string;
     mainLanguages: string;
     preferInPerson: boolean;
     cvLink: string;
@@ -32,7 +32,7 @@ export class TutorModel {
         classes,
         description,
         price,
-        timesAvailable,
+        times,
         mainLanguages,
         preferInPerson,
         cvLink,
@@ -51,7 +51,7 @@ export class TutorModel {
         classes: string,
         description: string,
         price: number,
-        timesAvailable: string,
+        times: string[],
         mainLanguages: string,
         preferInPerson: boolean,
         cvLink: string,
@@ -70,7 +70,7 @@ export class TutorModel {
         this.classes = classes;
         this.description = description;
         this.price = price;
-        this.timesAvailable = timesAvailable;
+        this.times = times;
         this.mainLanguages = mainLanguages;
         this.preferInPerson = preferInPerson;
         this.cvLink = cvLink;
@@ -94,7 +94,7 @@ export class TutorModel {
             classes: json['classes'],
             description: json['description'],
             price: json['price'],
-            timesAvailable: json['times_available'],
+            times: json['times'],
             mainLanguages: json['main_languages'],
             preferInPerson: json['prefer_in_person'],
             cvLink: json['cv_link'],

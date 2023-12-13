@@ -1,6 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { getUserTutors } from "../actions/userAction";
+import { connect } from "react-redux";
 
 const ProfileWrapper = styled.div`
   display: flex;
@@ -14,7 +16,7 @@ const ProfileAboutContainer = styled.div`
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   padding: 30px;
   display: flex;
   flex: 1 1 45%; // Adjusted for closer spacing, represents the maximum width
@@ -26,10 +28,12 @@ const ProfileContainer = styled.div`
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   padding: 30px;
   flex: 1 1 300px; // Flex-grow, flex-shrink and flex-basis
-  max-width: calc(50% - 15px); // Subtract half the gap to account for flex spacing
+  max-width: calc(
+    50% - 15px
+  ); // Subtract half the gap to account for flex spacing
   max-width: 540px; // Half of the ProfileWrapper's max-width minus the gap
   display: flex;
   flex-direction: column;
@@ -72,12 +76,10 @@ const InfoSection = styled.div`
   width: 100%;
 `;
 
-
 const Skills = styled.div`
   gap: 10px;
   margin-top: 20px;
   text-align: center;
-
 `;
 
 const SkillItem = styled.div`
@@ -98,7 +100,7 @@ const Title = styled.h2`
   font-size: 1.5em;
   color: #000;
   margin-bottom: 10px;
-  text-align:center;
+  text-align: center;
 `;
 
 const DescriptionText = styled.p`
@@ -142,97 +144,130 @@ const LanguageItem = styled.span`
 `;
 
 const TutorProfile = ({
-    isLoggedin =false,
-    id,
-    firstName,
-    lastName,
-    email,
-    profilePictureLink,
-    verifiedStatus,
-    averageRatings,
-    classes,
-    description,
-    price,
-    timesAvailable,
-    mainLanguages,
-    preferInPerson,
-    cvLink,
-    otherLanguages,
-    subjects
-}
+  id,
+  firstName,
+  lastName,
+  email,
+  profilePictureLink,
+  verifiedStatus,
+  averageRatings,
+  classes,
+  description,
+  price,
+  times = [], // Set default to empty array
+  subjects = [], // Set default to empty array
+  timesAvailable,
+  mainLanguages,
+  preferInPerson,
+  cvLink,
+  otherLanguages,
+  users_data,
+  getUserTutors,
+  video_link
+}) => {
+  const courseList = classes.split(",").map((course) => course.trim());
+  const languageList = mainLanguages
+    ? [mainLanguages, ...(otherLanguages ? otherLanguages.split(",") : [])]
+    : [];
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
-) => {
-    const courseList = classes.split(',').map((course) => course.trim());
-    const languageList = mainLanguages
-      ? [mainLanguages, ...(otherLanguages ? otherLanguages.split(',') : [])]
-      : [];
+  const displayTimes = times ? times.map((time, index) => (
+    <div key={index}>{`${time.day}: ${time.start_time} - ${time.end_time}`}</div>
+  )) : null;
+
+  // Check if topics is defined before mapping
+  const displayTopics = subjects ? subjects.map((topic, index) => (
+    <LanguageItem>{topic}</LanguageItem>
+  )) : null;
+
+  useEffect(() => {
+    if (users_data) {
+      console.log("Logged in as :", users_data);
+      setIsLoggedin(true); // Set isLoggedin to true if users_data exists
+    } else {
+      setIsLoggedin(false); // Set to false if users_data is not available
+    }
+  }, [users_data]);
+
+  return (
+    <ProfileWrapper>
+      <ProfileContainer>
+        <Header>
+          <img src={profilePictureLink} alt={`${firstName} ${lastName}`} />
+          <h1>{`${firstName} ${lastName}`}</h1>
+          <div>
+            {Array.from({ length: 5 }, (_, index) => (
+              <span key={index}>★</span>
+            ))}
+            {averageRatings}
+          </div>
+          <span>{email}</span>
+          <div>Hourly Rate: ${price}</div>
+        </Header>
+        {isLoggedin ? (
+          <Link to={`/message/${id}`} style={{ textDecoration: "none" }}>
+            <Button>Message</Button>
+          </Link>
+        ) : (
+          <Link to={`/login`} style={{ textDecoration: "none" }}>
+            <Button>Login</Button>
+          </Link>
+        )}
+        <InfoSection>{/* ...InfoItems */}</InfoSection>
+        <Skills>{timesAvailable}</Skills>
+      </ProfileContainer>
 
 
-    return (
-        <ProfileWrapper>
-        <ProfileContainer>
-      <Header>
-        <img src={profilePictureLink} alt={`${firstName} ${lastName}`} />
-        <h1>{`${firstName} ${lastName}`}</h1>
-        <div>
-          {Array.from({ length: 5 }, (_, index) => (
-            <span key={index}>★</span>
-          ))}
-          {averageRatings}
-        </div>
-        <span>Computer Science</span>
-        <div>Hourly Rate: ${price}</div>
-      </Header>
-      {isLoggedin ? (
-                    <Link to={`/message/${id}`} style={{ textDecoration: 'none' }}>
-                        <Button>Message</Button>
-                    </Link>
-                ) : (
-                    <Button disabled>Message</Button>
-                )}
+      <ProfileAboutContainer>
       <InfoSection>
-        {/* ...InfoItems */}
-      </InfoSection>
-      <Skills>
-        {timesAvailable}
-      </Skills>
-    </ProfileContainer>
-
-        <ProfileAboutContainer>
-            <AboutSection>
-                <Title>About</Title>
-                <DescriptionText>{description}</DescriptionText>
-            </AboutSection>
-            <CoursesSection>
-                <Title>SFSU Courses</Title>
-                <CourseList>
-                    {courseList.map((course, index) => (
-                        // Assuming each even index is a course code and each odd index is the course name
-                        index % 2 === 0 ? (
-                            <CourseItem key={course}>
-                                <span>{course}</span> 
-                                <span>{courseList[index + 1]}</span>
-                            </CourseItem>
-                        ) : null
-                    ))}
-                </CourseList>
-            </CoursesSection>
-            {languageList.length > 0 && (
-                <LanguagesSection>
-                    <Title>Languages</Title>
-                    <LanguageList>
-                        {languageList.map((language, index) => (
-                            <LanguageItem key={index}>{language.trim()}</LanguageItem>
-                        ))}
-                    </LanguageList>
-                </LanguagesSection>
+        </InfoSection>
+        <Title>Teaching Topics</Title>
+            <SkillItem>
+              {displayTopics}
+            </SkillItem>
+        <Skills>
+          {displayTimes}
+        </Skills>
+        <AboutSection>
+          <Title>About</Title>
+          <DescriptionText>{description}</DescriptionText>
+        </AboutSection>
+        <CoursesSection>
+          <Title>SFSU Courses</Title>
+          <CourseList>
+            {courseList.map((course, index) =>
+              // Assuming each even index is a course code and each odd index is the course name
+              index % 2 === 0 ? (
+                <CourseItem key={course}>
+                  <span>{course}</span>
+                  <span>{courseList[index + 1]}</span>
+                </CourseItem>
+              ) : null
             )}
-        </ProfileAboutContainer>
+          </CourseList>
+        </CoursesSection>
+        {languageList.length > 0 && (
+          <LanguagesSection>
+            <Title>Languages</Title>
+            <LanguageList>
+              {languageList.map((language, index) => (
+                <LanguageItem key={index}>{language.trim()}</LanguageItem>
+              ))}
+            </LanguageList>
+          </LanguagesSection>
+        )}
+                  {cvLink && <a href={cvLink} target="_blank" rel="noopener noreferrer">View CV</a>}
+          {video_link && <a href={video_link} target="_blank" rel="noopener noreferrer">View Introduction Video</a>}
 
-      </ProfileWrapper>
+      </ProfileAboutContainer>
+    </ProfileWrapper>
+  );
+};
+const mapStateToProps = (state) => ({
+  users_data: state.users.userData,
+});
+const mapDispatchToProps = {
+  getUserTutors,
+};
 
-      );
-    };
-    
-
-export default TutorProfile;
+export default connect(mapStateToProps, mapDispatchToProps)(TutorProfile);
