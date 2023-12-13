@@ -101,6 +101,9 @@ export const signUp = (firstName, lastName, email, password, sfsuId) => async (d
             family_name: lastName,
             'custom:is_tutor' : 'False',
             'custom:sfsuId' : sfsuId
+          },
+          autoSignIn: {
+            enabled: true
           }
         });
         console.log("passed signup");

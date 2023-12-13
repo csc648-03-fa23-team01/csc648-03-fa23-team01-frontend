@@ -7,14 +7,13 @@ import {becomeTutor} from '../actions/tutorAction';
 import { connect } from 'react-redux';
 import uploadMedia from '../utilities/media';
 import { v4 as uuidv4 } from 'uuid';
-import { Storage } from 'aws-amplify';
+import { useNavigate } from "react-router-dom";
 
 
 const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor}) => {
 
   const [resume, setResume] = useState(null);
-
-
+  const navigate = useNavigate();
   const [classes, setClasses] = useState("");
   const [language, setLanguage] = useState('');
   const [days, setDays] = useState([]);
@@ -40,7 +39,7 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
       // Specify the folder path and default file extension
       const folderPath = ''; // Replace with your desired folder path
       let fileExtension = 'png'; // Default extension (e.g., for images)
-  
+      console.log("File Type: ", fileType);
       // Determine the file extension based on fileType
       if (fileType === 'resume') {
         fileExtension = 'pdf';
@@ -50,30 +49,9 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
   
       // Generate the file name with the determined extension
       const fileName = `${fileType}-${uuidv4()}.${fileExtension}`;
-  
-      // // Use the uploadMedia function to upload the selected file
-      // const uploadedKey = await uploadMedia(selectedFile, folderPath, fileName);
-  
-      // // Do something with the uploaded key (e.g., store it or display it)
-      // console.log('Uploaded key:', uploadedKey);
-    
-      // Do something with the fileURL (e.g., store it or display it)
-      console.log('Uploaded URL:', fileName);
-      // Clear the selected file input
-      switch (fileType) {
-        case 'resume':
-          setResume(fileName);
-          break;
-        case 'picture':
-          setPicture(fileName);
-          break;
-        case 'video':
-          setVideo(fileName);
-          break;
-        default:
-          // Handle other file types if needed
-          break;
-      }
+      // Use the uploadMedia function to upload the selected file
+      await uploadMedia(selectedFile, folderPath, fileName);
+      return fileName;
     } catch (error) {
       console.error('Error uploading file:', error);
     }
@@ -97,21 +75,21 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
     
   };
 
-  // const [errors, setErrors] = useState({
-  //   resume: false,
-  //   topic: false,
-  //   classes: false,
-  //   about: false, // Added error state for the 'about' field
-  //   agree: false,
-  // });
+  const [errors, setErrors] = useState({
+    resume: false,
+    topic: false,
+    classes: false,
+    about: false, // Added error state for the 'about' field
+    agree: false,
+  });
   useEffect(() => {
-    console.log("Tutor DAta: ", tutors_data);
+    console.log("Tutor data: ", tutors_data);
     if(tutors_data){
-      // navigate("/");
+      navigate("/");
     }
     else if(tutors_error){
       // Handle sign-up failure locally
-      console.error('Become Tutor failed:', tutors_error);
+      console.error('Become Tutor failed:', JSON.stringify(tutors_error));
 
 
       alert('Tutors failed: ' + tutors_error.message);
@@ -126,27 +104,27 @@ const BecomeTutorPage = ({tutors_data, tutors_loading, tutors_error, becomeTutor
       return;
     }
     event.preventDefault();
-    handleUpload(resume, 'resume');
-    handleUpload(picture, 'picture');
-    handleUpload(video, 'video');
-    // const newErrors = {
-    //   resume: !resume,
-    //   topic: topic.trim() === "",
-    //   classes: classes.trim() === "",
-    //   agree: !agree,
-    // };
+    var resumeName =  await handleUpload(resume, 'resume');
+    var pictureName = await handleUpload(picture, 'picture');
+    var videoName = await handleUpload(video, 'video');
+    const newErrors = {
+      resume: !resume,
+      // topic: topic.trim() === "",
+      classes: classes.trim() === "",
+      agree: !agree,
+    };
     
-    // setErrors(newErrors);
+    setErrors(newErrors);
 
-    // if (Object.values(newErrors).some((error) => error)) {
-    //   return;
-    // }
+    if (Object.values(newErrors).some((error) => error)) {
+      return;
+    }
 
     // Handle form submission here
-    const tutorData = { resume, selectedTopic, classes, language, days, sessionType, about, picture, video, agree };
+    const tutorData = { resumeName, selectedTopic, classes, language, days, sessionType, about, pictureName, videoName, agree };
     console.log("Data being passed to tutorAction: ", tutorData);
     // In your component
-    becomeTutor(resume, selectedTopic, classes, language, days, sessionType, about, picture, video, agree ); 
+    becomeTutor(resumeName, selectedTopic, classes, language, days, sessionType, about, pictureName, videoName, agree ); 
   };
 
   const formBoxStyle = {
