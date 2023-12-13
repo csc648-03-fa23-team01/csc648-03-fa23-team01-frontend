@@ -86,7 +86,6 @@ const styles = {
     marginBottom: "1vw",
   },
   AccountInfo: {
-    textAlign: "left",
     color: "#666",
     margin: "1vw 0",
   },
@@ -105,7 +104,43 @@ const parentStyles = {
   width: '100vw',
   padding: '1vw',
 };
+const inputStyles = {
+  width: '24%', // Full width of the container
+  Height: '20%', // Full width of the container
 
+  padding: '10px', // Comfortable padding
+  margin: '10px 0', // Space between inputs
+  borderRadius: '5px', // Rounded corners
+  border: '1px solid #ccc', // Light gray border
+  fontSize: '16px', // Readable font size
+};
+
+const buttonStyles = {
+  width: '15%', // Adjust the width as needed
+  padding: '10px',
+  margin: '5px 0', // Adjust margins to fit the layout
+  borderRadius: '5px',
+  border: '1px solid #007bff',
+  backgroundColor: '#007bff',
+  color: 'white',
+  // fontSize: '16px',
+  cursor: 'pointer',
+};
+
+const buttonStylesEdit = {
+  padding: '10px',
+  margin: '5px 0', // Adjust margins to fit the layout
+  borderRadius: '5px',
+  border: '1px solid #007bff',
+  backgroundColor: '#007bff',
+  color: 'white',
+  // fontSize: '16px',
+  cursor: 'pointer',
+};
+const cancelButtonStyles = {
+  ...buttonStyles, // Use the same base styles as the submit button
+  backgroundColor: '#6c757d', // Different color for the cancel button
+}; 
 const Badge = styled.span`
   display: inline-block;
   padding: 0.5em 1em;
@@ -146,7 +181,7 @@ const renderTutorAccountSection = (tutorInfo) => (
   </div>
 );
 
-const renderUserAccountSection = (user) => (
+const renderUserAccountSection = (user, isEditing, firstName, setFirstName, lastName, setLastName,handleSubmit, handleCancelClick, handleEditClick) => (
   <div style={styles.AccountSection}>
           <div style={styles.AccountHeader}>My Account</div>
           {user && (
@@ -154,6 +189,31 @@ const renderUserAccountSection = (user) => (
               <div style={styles.AccountInfo}>
                 Name: {user.first_name} {user.last_name}
               </div>
+           <div>
+            { isEditing ? (
+                <>
+                    <input 
+                        type="text" 
+                        value={firstName} 
+                        style={inputStyles}
+                        onChange={(e) => setFirstName(e.target.value)} 
+                    />
+                    <input 
+                        style={inputStyles}
+                        type="text" 
+                        value={lastName} 
+                        onChange={(e) => setLastName(e.target.value)} 
+                    />
+                    <button style={buttonStyles}onClick={handleSubmit}>Submit</button>
+                    <button style={cancelButtonStyles} onClick={handleCancelClick}>Cancel</button>
+                </>
+            ) : (
+                <>
+                    <div>{firstName} {lastName}</div>
+                    <button style={buttonStylesEdit} onClick={handleEditClick}>Edit Name</button>
+                </>
+            )}
+        </div>
               <div style={styles.AccountInfo}>Email: {user.email}</div>
 
               {user.profilePictureLink && (
@@ -206,13 +266,70 @@ const getUserIdByEmail = async (email) => {
   }
 };
 
+const updateUser = async (userId, firstName, lastName) => {
+  const url = `${process.env.REACT_APP_BACKEND_URL}/user/${userId}`; // Replace with your actual server URL
+
+  try {
+      const response = await fetch(url, {
+          method: 'PATCH',
+          headers: {
+              'Content-Type': 'application/json',
+              // Include other necessary headers, such as authorization tokens
+          },
+          body: JSON.stringify({
+              first_name: firstName,
+              last_name: lastName
+          })
+      });
+
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.detail || 'Error updating user');
+      }
+
+      const data = await response.json();
+      console.log('User updated successfully:', data);
+      return data; // Or handle the updated data as needed
+  } catch (error) {
+      console.error('Failed to update user:', error);
+      // Handle errors here, such as displaying a notification to the user
+  }
+};
+
 const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
   const [showMessages, setShowMessages] = useState(true);
   const [showResources, setShowResources] = useState(false); // New state for resources menu
   const [showAccount, setShowAccount] = useState(false); // New state for My Account section
   const [user, setUser] = useState(null); // Use state for tutor
-  const navigate = useNavigate();
+  const [editingAccount, setEditingAccount] = useState(false);
 
+  const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const [firstName, setFirstName] = useState(users_data.first_name);
+  const [lastName, setLastName] = useState(users_data.last_name);
+
+  const handleEditClick = () => {
+      setIsEditing(true);
+  };
+
+  const handleCancelClick = () => {
+      setIsEditing(false);
+      setFirstName(users_data.first_name);
+      setLastName(users_data.last_name);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await updateUser(user.id, firstName, lastName);
+      setIsEditing(false);
+      alert("User information updated successfully!");
+
+      navigate('/'); // Navigate to the homepage
+    } catch (error) {
+      console.error('Error updating user:', error);
+      // Optionally handle the error (e.g., display an error message)
+    }
+  };
 
   useEffect(() => {
     // Check if the user is not logged in
@@ -265,6 +382,11 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
     setShowResources(false);
     console.log(user);
   };
+
+  const toggleEditAccount = () => {
+    setEditingAccount(!editingAccount);
+  };
+
   return (
     <div style={parentStyles}>
       <div style={styles.container}>
@@ -355,7 +477,9 @@ const DashboardMenu = ({ users_data, messages_data, fetchSentMessages }) => {
         </div>
       )}
       {/* My Account Section */}
-      {showAccount && (user && user.isTutor ? renderTutorAccountSection(user.tutor) : renderUserAccountSection(user))}
+      {showAccount && (
+          user &&  (user && user.isTutor && user.tutor ? renderTutorAccountSection(user.tutor) : renderUserAccountSection(user, isEditing, firstName, setFirstName, lastName, setLastName,handleSubmit, handleCancelClick, handleEditClick ))
+        )}
     </div>
   );
 };
