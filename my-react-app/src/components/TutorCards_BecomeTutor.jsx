@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
-import StarIcon from '@mui/icons-material/Star';
 
 // import RatingStars from './RatingStars'; // Import your star rating component
 
@@ -97,13 +95,6 @@ const DescriptionStyle = {
   fontSize: '1rem', // Adjust as needed for your layout
 };
 
-const ratingContainerStyle = {
-    position: 'absolute', // This positions the rating container absolutely within the StyledTutorCard
-    top: '2rem', // Adjust as needed for your layout
-    right: '4.4rem', // Adjust as needed for your layout
-    display: 'flex', // This will align the Rating component and the text next to each other
-    alignItems: 'center', // This will vertically center align the items in the container
-  };
   
 const imageStyle = {
   width: '3.375rem',
@@ -119,8 +110,7 @@ const fullStyle = {
   'flex-direction' : 'column'
 }
 
-const ratingValue = 4.5; // Your dynamic rating value
-const reviewCount = 100; // Your dynamic review count value
+
 
 // TutorCards_BecomeTutor component
 
@@ -150,17 +140,6 @@ const TutorCards_BecomeTutor = ({
                 <div>
                   <h3 style={tutorCardNameStyle}>{name}</h3>
                   {/* Absolute positioned rating div */}
-          <div style={ratingContainerStyle}>
-            <Rating
-              name="text-feedback"
-              value={ratings}
-              readOnly
-              precision={0.5}
-              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-            />
-            {/* Span for rating value and review count */}
-            <span><strong>{ratingValue}</strong> ({reviewCount})</span>
-          </div>
                 </div>
               </div>
               <div style={DescriptionStyle}>{description}</div>
@@ -172,7 +151,7 @@ const TutorCards_BecomeTutor = ({
             </div>
           )}
       <Link to={`/tutor/${id || '404'}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <ViewProfileButton>View Tutor Profile</ViewProfileButton>
+              <ViewProfileButton>View Full Tutor Profile</ViewProfileButton>
               </Link>
             </div>
           </StyledTutorCard>

@@ -17,7 +17,7 @@ const StyledSearchBar = styled.div`
   select,
   button {
     padding: 10px;
-    margin-right: 20px; /* Adjust if needed */
+    margin-right: 5px; /* Adjust if needed */
     border: 1px solid #ccc;
     border-radius: 4px;
   }
