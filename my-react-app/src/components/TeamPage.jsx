@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-
+import NavBar from './NavBar';
 
 const TeamPage1 = styled('div')({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -188,6 +188,8 @@ const ButtonContained6 = styled(Button)(({ theme }) => ({
 function TeamPage(props) {
   return (
     <TeamPage1 className={props.className}>
+      <NavBar />
+
       <Section>
         <Software>{`Software Engineering Class SFSU`}</Software>
         <Q2023Fal>{`2023 Fall Section 3`}</Q2023Fal>

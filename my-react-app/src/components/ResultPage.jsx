@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Navbar from "./NavBar.jsx";
-import SearchBar from "./SearchBar.jsx";
 import styled from "styled-components";
 import { connect } from 'react-redux';
 import { searchAsync } from '../actions/tutorAction';
