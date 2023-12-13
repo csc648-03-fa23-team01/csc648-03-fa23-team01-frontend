@@ -201,7 +201,7 @@ const TutorProfile = ({
             ))}
             {averageRatings}
           </div>
-          <span>Computer Science</span>
+          <span>{email}</span>
           <div>Hourly Rate: ${price}</div>
         </Header>
         {isLoggedin ? (
