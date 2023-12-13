@@ -151,6 +151,11 @@ const Badge = styled.span`
   font-size: 0.8em;
   text-align: center;
 `;
+const imageStyle = {
+  width: '3.375rem',
+  height: '3.375rem',
+  'margin-right': '0.3rem',
+}
 
 const RoleBadge = ({ isTutor }) => {
   return <Badge>{isTutor ? "Tutor" : "Student"}</Badge>;
@@ -158,6 +163,12 @@ const RoleBadge = ({ isTutor }) => {
 
 const renderTutorAccountSection = (tutorInfo) => (
   <div style={styles.AccountSection}>
+{tutorInfo.profilePicture && 
+  <img 
+    style={imageStyle} 
+    src={`https://group1media194050-dev.s3.us-east-2.amazonaws.com/${tutorInfo.profilePicture}`} 
+  />
+}
     <div style={styles.AccountHeader}>Tutor Account</div>
     <div style={styles.AccountInfo}>Email: {tutorInfo.user_email}</div>
     <div style={styles.AccountInfo}>Average Ratings: {tutorInfo.average_ratings.toFixed(2)}</div>
@@ -166,15 +177,8 @@ const renderTutorAccountSection = (tutorInfo) => (
     <div style={styles.AccountInfo}>Price per hour: ${tutorInfo.price.toFixed(2)}</div>
     <div style={styles.AccountInfo}>Main Languages: {tutorInfo.main_languages}</div>
     <div style={styles.AccountInfo}>Prefer In-Person: {tutorInfo.prefer_in_person ? "Yes" : "No"}</div>
-    {tutorInfo.cv_link && <a href={tutorInfo.cv_link} target="_blank" style={styles.resourceLink}>View CV</a>}
+    {tutorInfo.cv_link && <a href={`https://group1media194050-dev.s3.us-east-2.amazonaws.com/${tutorInfo.cv_link}`} target="_blank" style={styles.resourceLink}>View CV</a>}
     <div style={styles.AccountInfo}>Other Languages: {tutorInfo.other_languages}</div>
-    {tutorInfo.profile_picture_link && (
-      <img
-        style={styles.ProfileImage}
-        src={tutorInfo.profile_picture_link}
-        alt="Profile"
-      />
-    )}
     <Badge>{"Tutor"}</Badge>
     {tutorInfo.video_link && <a href={tutorInfo.video_link} target="_blank" style={styles.resourceLink}>Introduction Video</a>}
     {/* Additional fields and relationships */}
